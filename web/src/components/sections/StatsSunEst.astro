@@ -1,0 +1,122 @@
+---
+// Section "Sun Est en chiffres" — 5 stats clés, compteurs animés au reveal scroll.
+// Utilisable sur toutes les pages services.
+const stats = [
+  { value: 1500, prefix: '+', suffix: '', label: 'Installations' },
+  { value: 10, prefix: '', suffix: 'ans', label: "D'expériences" },
+  { value: 0, prefix: '', suffix: '%', label: 'Sous-traitance' },
+  { value: 100, prefix: '', suffix: '%', label: 'Grand-Est' },
+  { value: 100, prefix: '', suffix: '%', extra: 'Suivi', label: 'SAV sous 72h' },
+];
+---
+
+<section
+  id="stats-sun-est"
+  class="relative w-full py-20 lg:py-28 bg-ink overflow-hidden border-t border-white/5"
+  data-stats-section
+>
+  <!-- Halo signature en fond -->
+  <div
+    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] rounded-full bg-sky-brand/[0.07] blur-[180px] pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
+    <!-- Titre centré -->
+    <h2
+      class="text-center font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight"
+      data-split-words
+    >
+      <span class="text-sun">Sun Est</span> en chiffres.
+    </h2>
+
+    <!-- Grid 5 stats responsive : 2 mobile / 3 tablette / 5 desktop -->
+    <div
+      class="mt-10 lg:mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-10 gap-x-6 lg:gap-x-4"
+    >
+      {
+        stats.map((s) => (
+          <div class="text-center min-w-0" data-stat>
+            <p class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tabular-nums leading-none whitespace-nowrap">
+              {s.prefix}
+              <span data-stat-counter data-target={s.value}>
+                0
+              </span>
+              {s.suffix && <span class="ml-0.5">{s.suffix}</span>}
+              {s.extra && (
+                <>
+                  {' '}
+                  <span class="text-white">{s.extra}</span>
+                </>
+              )}
+            </p>
+            <p class="mt-3 lg:mt-4 text-white/65 text-sm lg:text-base leading-snug">
+              {s.label}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-stats-section]');
+  const stats = gsap.utils.toArray<HTMLElement>('[data-stat]');
+  const counters = document.querySelectorAll<HTMLElement>('[data-stat-counter]');
+
+  if (section && !prefersReducedMotion) {
+    // Stagger reveal des stats (fade-up)
+    stats.forEach((s, i) => {
+      gsap.fromTo(
+        s,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          delay: i * 0.08,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      );
+    });
+
+    // Compteurs : count-up de 0 → target quand la section entre dans le viewport
+    counters.forEach((counter) => {
+      const target = parseInt(counter.dataset.target || '0', 10);
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 1.6,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          once: true,
+        },
+        onUpdate: () => {
+          // Format avec espace milliers pour 1500 → "1 500"
+          const v = Math.round(obj.val);
+          counter.textContent = v >= 1000 ? v.toLocaleString('fr-FR') : v.toString();
+        },
+      });
+    });
+  } else if (prefersReducedMotion) {
+    counters.forEach((c) => {
+      const v = parseInt(c.dataset.target || '0', 10);
+      c.textContent = v >= 1000 ? v.toLocaleString('fr-FR') : v.toString();
+    });
+  }
+</script>

@@ -1,0 +1,207 @@
+---
+const faqs = [
+  {
+    q: "Qu'est-ce que l'énergie photovoltaïque ?",
+    a: "L'énergie photovoltaïque est une forme d'énergie renouvelable qui convertit la lumière du soleil en électricité à l'aide de panneaux solaires. Ces panneaux sont constitués de cellules photovoltaïques qui produisent un courant électrique lorsqu'elles sont exposées à la lumière.",
+  },
+  {
+    q: 'Comment fonctionnent les panneaux solaires photovoltaïques ?',
+    a: "Les panneaux solaires utilisent des cellules photovoltaïques pour transformer la lumière du soleil en électricité. Les cellules captent l'énergie solaire et la convertissent en courant électrique continu, qui est ensuite transformé en courant alternatif par un onduleur pour alimenter votre maison.",
+  },
+  {
+    q: "Quels sont les avantages d'installer des panneaux solaires ?",
+    a: "L'installation de panneaux solaires permet de réduire vos factures d'électricité, de diminuer votre empreinte carbone, d'augmenter la valeur de votre propriété, et de potentiellement revendre l'excédent d'électricité produit à EDF.",
+  },
+  {
+    q: "Est-ce que le Grand Est est une région adaptée à l'installation de panneaux solaires ?",
+    a: "Oui, le Grand Est est tout à fait adapté à l'installation de panneaux solaires. Bien que l'ensoleillement soit moins intense que dans le sud de la France, les technologies actuelles permettent d'optimiser la production d'électricité même par temps nuageux ou en hiver.",
+  },
+  {
+    q: "Quel est le coût moyen d'une installation photovoltaïque ?",
+    a: "Le coût d'une installation photovoltaïque dans le Grand Est varie généralement entre 8 000 et 15 000 euros, selon la taille et le type de l'installation. Ce coût peut être réduit grâce aux aides financières disponibles.",
+  },
+  {
+    q: "Quelles sont les aides financières disponibles pour l'installation de panneaux solaires ?",
+    a: "Les principales aides financières incluent le crédit d'impôt pour la transition énergétique (CITE), la prime à l'autoconsommation, et l'obligation d'achat par EDF de l'électricité produite en excédent.",
+  },
+  {
+    q: 'Quelle est la durée de vie des panneaux solaires ?',
+    a: "Les panneaux solaires ont une durée de vie moyenne de 25 à 30 ans. Bien que leur efficacité puisse légèrement diminuer avec le temps, ils continuent de produire de l'électricité bien au-delà de cette période.",
+  },
+  {
+    q: 'Comment entretenir mes panneaux solaires ?',
+    a: "L'entretien des panneaux solaires est simple. Un nettoyage annuel pour enlever la poussière et les débris est généralement suffisant. Un contrôle régulier par un professionnel est également recommandé pour s'assurer du bon fonctionnement de l'installation.",
+  },
+  {
+    q: "Quelle est la rentabilité d'une installation photovoltaïque ?",
+    a: "Une installation photovoltaïque est généralement rentabilisée en 7 à 12 ans, selon l'ensoleillement, les aides disponibles, et le coût de l'électricité. Dans le Grand Est, malgré un ensoleillement modéré, la rentabilité reste intéressante grâce aux technologies modernes.",
+  },
+  {
+    q: "Est-il possible de revendre l'électricité produite par mes panneaux solaires ?",
+    a: "Oui, il est possible de revendre l'excédent d'électricité que vous produisez à EDF ou à d'autres fournisseurs d'énergie. Le tarif d'achat est fixé par l'État et dépend de la puissance de votre installation.",
+  },
+  {
+    q: 'Quel est le temps de retour sur investissement pour une installation photovoltaïque ?',
+    a: "Le temps de retour sur investissement varie entre 7 et 12 ans, en fonction de votre consommation d'électricité, du coût initial de l'installation, des aides perçues, et de l'ensoleillement dans la région Grand Est.",
+  },
+  {
+    q: 'Faut-il un permis de construire pour installer des panneaux solaires ?',
+    a: "Dans la plupart des cas, un permis de construire n'est pas nécessaire pour installer des panneaux solaires dans le Grand Est. Cependant, une déclaration préalable de travaux peut être requise, notamment si votre installation modifie l'aspect extérieur de votre bâtiment.",
+  },
+  {
+    q: "Quelle est la différence entre l'autoconsommation totale et l'autoconsommation avec revente du surplus ?",
+    a: "L'autoconsommation totale signifie que vous utilisez toute l'électricité produite pour vos besoins domestiques. L'autoconsommation avec revente du surplus vous permet de vendre à EDF l'électricité que vous ne consommez pas, générant ainsi des revenus supplémentaires.",
+  },
+  {
+    q: 'Les panneaux solaires fonctionnent-ils par temps nuageux ou en hiver ?',
+    a: "Oui, les panneaux solaires continuent de produire de l'électricité même par temps nuageux ou en hiver. Bien que la production soit réduite en l'absence de soleil direct, les panneaux restent efficaces grâce à la lumière diffuse.",
+  },
+  {
+    q: 'Quelles sont les garanties offertes pour les installations photovoltaïques ?',
+    a: "Les panneaux solaires sont généralement garantis pour une période de 20 à 25 ans, tandis que les onduleurs sont garantis entre 5 et 10 ans. De plus, certaines entreprises offrent des garanties supplémentaires pour l'installation et la performance de votre système.",
+  },
+];
+---
+
+<section id="faq" class="relative py-24 lg:py-36 border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1fr_1.6fr] gap-12 lg:gap-20 items-start">
+      <!-- Sticky gauche : titre + pitch + CTA + compteur -->
+      <div class="lg:sticky lg:top-32">
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-4">FAQ</p>
+        <h2
+          class="font-display font-black text-4xl lg:text-5xl leading-[1.0] tracking-tight"
+          data-split-words
+        >
+          Foire aux
+          <br />
+          <span class="text-white/50">questions.</span>
+        </h2>
+        <p class="mt-6 text-white/65 text-base leading-relaxed max-w-sm">
+          Tout ce qu'il faut savoir sur le photovoltaïque dans le Grand-Est. Si vous ne trouvez
+          pas votre réponse, on vous rappelle gratuitement.
+        </p>
+        <a
+          href="#devis"
+          class="mt-8 inline-flex items-center gap-2 px-6 py-3.5 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.03] transition-transform duration-200"
+        >
+          Demander une étude 100 % gratuite
+          <span aria-hidden="true">→</span>
+        </a>
+        <p class="mt-10 text-white/40 text-xs uppercase tracking-[0.2em]">
+          {faqs.length} questions · mise à jour 2026
+        </p>
+      </div>
+
+      <!-- Liste droite : numérotée 01-15 avec accordéons custom -->
+      <ul class="divide-y divide-white/10 border-y border-white/10">
+        {
+          faqs.map((f, i) => (
+            <li data-faq-item style="opacity: 0;">
+              <details class="group/d" data-faq-details>
+                <summary
+                  class="cursor-pointer flex items-start gap-4 lg:gap-6 list-none py-5 lg:py-6 hover:bg-white/[0.02] transition-colors duration-300 px-2 -mx-2 rounded-md"
+                  data-faq-summary
+                >
+                  <span class="font-display font-bold text-sun text-xs shrink-0 mt-1 w-7">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span class="flex-1 font-display font-bold text-base lg:text-lg leading-snug">
+                    {f.q}
+                  </span>
+                  <span
+                    class="shrink-0 w-8 h-8 rounded-full border border-white/20 text-sun flex items-center justify-center text-lg leading-none transition-transform duration-300 group-open/d:rotate-45"
+                    aria-hidden="true"
+                  >
+                    +
+                  </span>
+                </summary>
+                <div class="overflow-hidden" data-faq-content style="height: 0;">
+                  <p class="pb-6 pl-11 pr-2 lg:pr-12 text-white/65 leading-relaxed text-sm lg:text-base max-w-2xl">
+                    {f.a}
+                  </p>
+                </div>
+              </details>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reveal des items au scroll (stagger)
+  const items = gsap.utils.toArray<HTMLElement>('[data-faq-item]');
+  if (items.length) {
+    if (prefersReducedMotion) {
+      items.forEach((el) => (el.style.opacity = '1'));
+    } else {
+      gsap.set(items, { opacity: 0, y: 24 });
+      ScrollTrigger.batch(items, {
+        start: 'top 88%',
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+            stagger: 0.06,
+          }),
+        once: true,
+      });
+    }
+  }
+
+  // Accordéons custom : animation height smooth + rotation +
+  document.querySelectorAll<HTMLDetailsElement>('[data-faq-details]').forEach((details) => {
+    const summary = details.querySelector<HTMLElement>('[data-faq-summary]');
+    const content = details.querySelector<HTMLElement>('[data-faq-content]');
+    if (!summary || !content) return;
+
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      if (details.open) {
+        // Fermeture
+        const currentH = content.scrollHeight;
+        gsap.fromTo(
+          content,
+          { height: currentH },
+          {
+            height: 0,
+            duration: 0.45,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              details.open = false;
+              content.style.height = '0px';
+            },
+          }
+        );
+      } else {
+        // Ouverture
+        details.open = true;
+        const targetH = content.scrollHeight;
+        gsap.fromTo(
+          content,
+          { height: 0 },
+          {
+            height: targetH,
+            duration: 0.45,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              content.style.height = 'auto';
+            },
+          }
+        );
+      }
+    });
+  });
+</script>

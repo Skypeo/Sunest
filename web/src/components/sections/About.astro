@@ -1,0 +1,72 @@
+---
+const points = [
+  { title: 'Certifications RGE', text: 'QualiPV Élec et QualiPV Bâti — l’assurance du sérieux.' },
+  { title: 'Garantie 25 ans', text: 'Pièces, main-d’œuvre et performance des panneaux.' },
+  { title: 'Étude gratuite', text: 'Simulation de production et retour sur investissement personnalisé.' },
+  { title: 'Aides incluses', text: 'Prime à l’autoconsommation, TVA réduite, MaPrimeRénov’ en option.' },
+];
+---
+
+<section id="about" class="relative py-24 lg:py-36 border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-start">
+      <div class="lg:sticky lg:top-32">
+        <p class="text-sun font-bold uppercase tracking-[0.2em] text-xs mb-4">Qui sommes-nous</p>
+        <h2
+          class="font-display font-black text-4xl lg:text-6xl tracking-tight leading-[1.05]"
+          data-split-words
+        >
+          Une équipe d'artisans,
+          <span class="text-white/50">pas de commerciaux.</span>
+        </h2>
+        <p class="mt-6 text-white/70 text-lg leading-relaxed max-w-xl">
+          Sun Est est née en 2014 d'une conviction simple : les particuliers méritent un installateur
+          honnête, technique et joignable. Aujourd'hui, c'est 12 personnes basées à Metz qui couvrent
+          toute la région Grand Est avec un seul mot d'ordre : on installe ce qu'on poserait chez nous.
+        </p>
+        <a
+          href="#devis"
+          class="mt-8 inline-flex items-center gap-2 px-6 py-3.5 rounded-pill border border-white/20 hover:bg-white/5 text-sm font-bold transition-colors duration-200"
+        >
+          Demander une étude gratuite →
+        </a>
+      </div>
+
+      <ul class="space-y-3">
+        {
+          points.map((p, i) => (
+            <li
+              class="group flex gap-6 p-6 rounded-md bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors reveal-up"
+              data-about-point
+              style={`--i:${i}`}
+            >
+              <span class="font-display font-black text-2xl text-sun w-10 shrink-0">
+                0{i + 1}
+              </span>
+              <div>
+                <h3 class="font-display font-bold text-xl">{p.title}</h3>
+                <p class="mt-2 text-white/60 text-sm leading-relaxed">{p.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from('[data-about-point]', {
+    scrollTrigger: { trigger: '[data-about-point]', start: 'top 85%' },
+    opacity: 0,
+    y: 24,
+    duration: 0.8,
+    stagger: 0.08,
+    ease: 'power3.out',
+  });
+</script>

@@ -1,0 +1,28 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import SiteHeader from '~/components/SiteHeader.astro';
+import HeroRealisations from '~/components/sections/HeroRealisations.astro';
+import GalerieRealisations from '~/components/sections/GalerieRealisations.astro';
+import VideoRealisations from '~/components/sections/VideoRealisations.astro';
+import FAQ from '~/components/sections/FAQ.astro';
+import ContactCta from '~/components/sections/Contact.astro';
+import Footer from '~/components/sections/Footer.astro';
+---
+
+<Layout
+  title="Nos réalisations — Sun Est | + de 1500 installations en Grand-Est"
+>
+  <SiteHeader />
+
+  <main>
+    <HeroRealisations />
+    <GalerieRealisations />
+    <VideoRealisations />
+
+    <!-- Sections partagées : FAQ + CTA + Footer -->
+    <FAQ />
+    <ContactCta />
+  </main>
+
+  <Footer />
+</Layout>

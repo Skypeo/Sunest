@@ -1,0 +1,312 @@
+---
+// Galerie en GRILLE UNIFORME 4 colonnes × 9 rangées (36 photos).
+// Mobile : 2 cols × 18 rangs ; tablette : 3 cols × 12 rangs ; desktop : 4 cols × 9 rangs.
+// Clic sur une photo → lightbox plein écran.
+const photos = [
+  '216001655_3060078640915156_4346250971797247799_n.webp',
+  '218289330_3065546320368388_3256278246610757195_n.webp',
+  '240802587_3104131079843245_6238716242222601785_n-1.webp',
+  '240833724_3104131049843248_2733441731859699640_n-1.webp',
+  '241267625_3109593869296966_4371879259074467817_n-1.webp',
+  '241273680_3109593829296970_2968168772399260744_n-1.webp',
+  '241641239_3115295938726759_5092370930694769255_n-1.webp',
+  '241642516_3115295898726763_8359615487449291644_n-1.webp',
+  '242590806_3128787837377569_1175567066902575141_n-1.webp',
+  '242713900_3128787927377560_7298158117905431108_n-1.webp',
+  '242838040_3128787870710899_5018436176244047321_n-1.webp',
+  '243239529_3133698553553164_2985274373707526858_n-1.webp',
+  '243246357_3133698616886491_2773502020698191268_n-1.webp',
+  '243499272_3133698533553166_781850415118848053_n-1.webp',
+  '265061172_3184372381819114_1115041323347413980_n.webp',
+  '265473201_3185043185085367_7636974084112109556_n.webp',
+  '268836777_566067381449107_6067579635089370126_n.webp',
+  '272174326_3216076951981990_2300932281585175356_n.webp',
+  '280870534_3298462433743441_4908521278026233064_n.webp',
+  '6837018066036443285.webp',
+  '7337345118000991350.webp',
+  'facebook_1621407637134_6800676538062728551_Personnalise_1.webp',
+  'FB_IMG_1618396611594.webp',
+  'FB_IMG_1618396617216.webp',
+  'FB_IMG_1618396621539.webp',
+  'FB_IMG_1618396648810.webp',
+  'FB_IMG_1618396654923.webp',
+  'inova-2-65c5e9d051b2e.webp',
+  'inova-3-65c5e9d158351.webp',
+  'inova-65c5e9d394fcd.webp',
+  'inova8-65c5e9d3aac79.webp',
+  'NOS-REALISATIONS-3.webp',
+  'plaquette-5-65c5e9d4e5b8b.webp',
+  'plaquette-7-65c5e9d5253bc.webp',
+  'realisation.webp',
+  'Sun_Est-4.webp',
+];
+---
+
+<section
+  id="galerie"
+  class="relative w-full py-20 lg:py-32 bg-ink overflow-hidden border-t border-white/5"
+>
+  <!-- Halo signature en fond -->
+  <div
+    class="absolute left-1/2 top-1/3 -translate-x-1/2 w-[60vw] h-[50vh] rounded-full bg-sky-brand/[0.07] blur-[180px] pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10">
+    <!-- Header titre -->
+    <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
+      <p
+        class="text-sky-brand font-bold uppercase tracking-[0.22em] text-[10px] lg:text-xs mb-4"
+      >
+        Galerie chantiers
+      </p>
+      <h2
+        class="font-display font-black text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.0] tracking-tight"
+        data-split-words
+      >
+        Visualisez certaines de nos réalisations dans le <span class="text-sun">Grand-Est.</span>
+      </h2>
+      <p class="mt-5 lg:mt-6 text-white/65 text-base lg:text-lg leading-relaxed">
+        <span class="text-white font-bold">{photos.length}</span> chantiers en images — cliquez sur
+        une photo pour l'agrandir.
+      </p>
+    </div>
+
+    <!-- Grille uniforme : 1 / 2 / 3 / 4 colonnes selon breakpoint -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
+      {
+        photos.map((p, i) => (
+          <button
+            type="button"
+            class="galerie-tile relative w-full overflow-hidden rounded-md ring-1 ring-white/[0.08] bg-white/[0.02] group focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-brand transition-all duration-300 hover:ring-sky-brand/45"
+            style="aspect-ratio: 4 / 3; cursor: zoom-in;"
+            data-galerie-photo
+            data-photo-index={i}
+            data-photo-src={`/images/Realisations_Sunest/${p}`}
+            aria-label={`Agrandir la photo ${i + 1} sur ${photos.length}`}
+          >
+            <img
+              src={`/images/Realisations_Sunest/${p}`}
+              alt={`Réalisation Sun Est ${i + 1}`}
+              class="block w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06] pointer-events-none"
+              loading="lazy"
+              decoding="async"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-ink/60 via-ink/0 to-ink/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              aria-hidden="true"
+            />
+            <span
+              class="absolute top-3 right-3 w-9 h-9 rounded-full bg-sky-brand/90 text-ink flex items-center justify-center text-base font-bold opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300 pointer-events-none"
+              aria-hidden="true"
+            >
+              ⤢
+            </span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ─── LIGHTBOX overlay (déplacée vers body au mount via JS) ─── -->
+  <div
+    class="lightbox-root"
+    style="position: fixed; inset: 0; z-index: 9000; display: none;"
+    data-lightbox
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-label="Visualiseur de photos"
+  >
+    <!-- Backdrop opaque -->
+    <button
+      type="button"
+      style="position: absolute; inset: 0; background: #05142e; border: 0; padding: 0; margin: 0; cursor: zoom-out;"
+      aria-label="Fermer le visualiseur"
+      data-lightbox-close
+    >
+    </button>
+
+    <!-- Image -->
+    <div
+      style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 24px; pointer-events: none;"
+    >
+      <img
+        style="max-width: 95vw; max-height: 88vh; object-fit: contain; border-radius: 8px; box-shadow: 0 30px 120px -10px rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.15);"
+        data-lightbox-img
+        alt=""
+      />
+    </div>
+
+    <!-- Fermer -->
+    <button
+      type="button"
+      class="lightbox-btn"
+      style="position: absolute; top: 20px; right: 20px; width: 56px; height: 56px; border-radius: 9999px; background: #ffffff; color: #05142e; border: 0; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; line-height: 1; cursor: pointer; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.6); transition: background 0.2s ease, transform 0.2s ease;"
+      aria-label="Fermer"
+      data-lightbox-close
+    >
+      ×
+    </button>
+
+    <!-- Précédent -->
+    <button
+      type="button"
+      class="lightbox-btn"
+      style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 56px; height: 56px; border-radius: 9999px; background: #ffffff; color: #05142e; border: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; line-height: 1; cursor: pointer; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.6); transition: background 0.2s ease, transform 0.2s ease;"
+      aria-label="Photo précédente"
+      data-lightbox-prev
+    >
+      ←
+    </button>
+
+    <!-- Suivant -->
+    <button
+      type="button"
+      class="lightbox-btn"
+      style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 56px; height: 56px; border-radius: 9999px; background: #ffffff; color: #05142e; border: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; line-height: 1; cursor: pointer; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.6); transition: background 0.2s ease, transform 0.2s ease;"
+      aria-label="Photo suivante"
+      data-lightbox-next
+    >
+      →
+    </button>
+
+    <!-- Compteur -->
+    <p
+      style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 20px; border-radius: 9999px; background: #ffffff; color: #05142e; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; margin: 0; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.6);"
+      data-lightbox-counter
+    >
+      1 / {photos.length}
+    </p>
+  </div>
+</section>
+
+<style is:global>
+  .lightbox-root.is-open {
+    display: block !important;
+  }
+  .lightbox-btn:hover {
+    background: #20b8f1 !important;
+  }
+  .lightbox-btn:focus-visible {
+    outline: 2px solid #20b8f1;
+    outline-offset: 3px;
+  }
+</style>
+
+<style>
+  .galerie-tile:hover {
+    box-shadow:
+      0 20px 50px -15px rgba(32, 184, 241, 0.4),
+      0 8px 20px -8px rgba(0, 0, 0, 0.5);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tiles = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-galerie-photo]'));
+
+  // ─── Stagger reveal au scroll ───
+  if (tiles.length && !prefersReducedMotion) {
+    tiles.forEach((p) => {
+      gsap.fromTo(
+        p,
+        { opacity: 0, y: 24, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: p,
+            start: 'top 92%',
+            once: true,
+          },
+        }
+      );
+    });
+  }
+
+  // ─── LIGHTBOX ───
+  const lightbox = document.querySelector<HTMLElement>('[data-lightbox]');
+  const lightboxImg = document.querySelector<HTMLImageElement>('[data-lightbox-img]');
+  const lightboxCounter = document.querySelector<HTMLElement>('[data-lightbox-counter]');
+  const closeBtns = Array.from(document.querySelectorAll<HTMLElement>('[data-lightbox-close]'));
+  const prevBtn = document.querySelector<HTMLElement>('[data-lightbox-prev]');
+  const nextBtn = document.querySelector<HTMLElement>('[data-lightbox-next]');
+
+  if (lightbox && lightboxImg && lightboxCounter && tiles.length) {
+    // Déplacer la lightbox en enfant direct du body pour passer au-dessus
+    // de tous les stacking contexts (notamment la navbar fixed z-50)
+    if (lightbox.parentElement !== document.body) {
+      document.body.appendChild(lightbox);
+    }
+
+    // Accès Lenis (smooth scroll global) pour stop/start
+    const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
+
+    const srcs = tiles.map((p) => p.dataset.photoSrc || '');
+    const total = srcs.length;
+    let currentIndex = 0;
+
+    const open = (index: number) => {
+      currentIndex = ((index % total) + total) % total;
+      lightboxImg.src = srcs[currentIndex];
+      lightboxImg.alt = `Réalisation Sun Est ${currentIndex + 1}`;
+      lightboxCounter.textContent = `${currentIndex + 1} / ${total}`;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      // Bloquer le scroll : à la fois Lenis et le body
+      lenis?.stop();
+      document.body.style.overflow = 'hidden';
+      // Préchargement adjacent
+      [currentIndex + 1, currentIndex - 1].forEach((idx) => {
+        const i = ((idx % total) + total) % total;
+        const im = new Image();
+        im.src = srcs[i];
+      });
+    };
+
+    const close = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lenis?.start();
+      document.body.style.overflow = '';
+    };
+
+    const next = () => open(currentIndex + 1);
+    const prev = () => open(currentIndex - 1);
+
+    tiles.forEach((tile) => {
+      tile.addEventListener('click', (e) => {
+        e.preventDefault();
+        const i = parseInt(tile.dataset.photoIndex || '0', 10);
+        open(i);
+      });
+    });
+
+    closeBtns.forEach((b) => b.addEventListener('click', close));
+    prevBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      prev();
+    });
+    nextBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      next();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.getAttribute('aria-hidden') === 'true') return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') prev();
+      else if (e.key === 'ArrowRight') next();
+    });
+  }
+</script>

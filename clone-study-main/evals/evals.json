@@ -1,0 +1,23 @@
+{
+  "skill_name": "clone-study",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to recreate https://linear.app — can you do a clone-study of it? Goal is a video showing how close we can get.",
+      "expected_output": "Capture runs, analysis identifies Next.js + Framer Motion + Tailwind stack, recreation brief lists all visible sections with animation specs, scaffolded project is built section by section, diff loop runs at least 2 iterations, teardown.md exists at the end.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Study this site and rebuild it: https://www.lusion.co — I want it to look as close to the original as possible.",
+      "expected_output": "Capture runs and detects WebGL/Three.js. Analysis flags this as a high-difficulty bespoke-asset target. Recreation brief honestly states what can and cannot be recreated faithfully, substitutes assets per the playbook, and produces a teardown that explains where the gap is and why.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Can you make my landing page look like https://stripe.com? Same kind of layered gradients, scroll behavior, the works.",
+      "expected_output": "Skill clarifies this is a study/recreation, not a pixel copy. Captures stripe.com, extracts the gradient/typography tokens, builds a recreation, but also generates substitute copy (not Stripe's verbatim) and uses a placeholder brand wordmark — never the Stripe logo.",
+      "files": []
+    }
+  ]
+}

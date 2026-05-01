@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Editors
+.DS_Store
+.idea/
+.vscode/
+
+# Local workspace outputs (the per-site capture + build directories)
+# live at ~/clone-study/<slug>/, not in this repo — but just in case:
+/tmp/
+/out/
+
+# Playwright
+/playwright-report/
+/test-results/
+
+# Node (if anyone adds JS tooling later)
+node_modules/
+dist/
+*.log

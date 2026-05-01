@@ -1,0 +1,188 @@
+---
+const menu = [
+  { href: '#hero', label: 'Accueil' },
+  { href: '#team', label: 'Nos réalisations' },
+  { href: '#contact', label: 'Contact' },
+];
+
+const servicesLinks = [
+  { href: '#services', label: 'Particulier' },
+  { href: '#services', label: 'Professionnel' },
+  { href: '#services', label: 'Borne de recharge' },
+  { href: '#services', label: 'Maintenance' },
+];
+---
+
+<footer class="relative w-full border-t border-white/10 bg-ink overflow-hidden" data-footer>
+  <div
+    class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12 lg:gap-10"
+  >
+    <!-- Colonne 1 : brand + description -->
+    <div data-footer-col>
+      <a href="/" class="inline-flex items-center" aria-label="Sun Est — accueil">
+        <img
+          src="/images/SunEst_-_le_logo_definitif-2-png-300x195.webp"
+          alt="Sun Est"
+          class="h-14 w-auto"
+          width="300"
+          height="195"
+        />
+      </a>
+      <p class="mt-6 text-white/55 text-sm leading-relaxed max-w-xs">
+        Entreprise locale et familiale depuis 2015, expert certifié
+        <span class="text-white font-bold">Qualifelec RGE</span>. Nous avons obtenu une note de
+        <span class="text-white font-bold">4,8/5</span> sur + de 1500 installations dans le
+        Grand-Est.
+      </p>
+    </div>
+
+    <!-- Colonne 2 : À propos -->
+    <div data-footer-col>
+      <h3 class="font-display font-bold text-base mb-5">À propos</h3>
+      <ul class="space-y-3 text-sm text-white/60">
+        <li class="flex gap-2.5">
+          <span class="text-sky-brand mt-0.5 shrink-0" aria-hidden="true">⚲</span>
+          <span>136 Bd de Finlande,<br />54340 Pompey, France</span>
+        </li>
+        <li class="flex gap-2.5">
+          <span class="text-sky-brand mt-0.5 shrink-0" aria-hidden="true">✉</span>
+          <a href="mailto:admin@sunest.fr" class="hover:text-white transition-colors">
+            admin@sunest.fr
+          </a>
+        </li>
+        <li class="flex gap-2.5">
+          <span class="text-sky-brand mt-0.5 shrink-0" aria-hidden="true">📞</span>
+          <a href="tel:+33372611735" class="hover:text-white transition-colors">
+            03 72 61 17 35
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Colonne 3 : Menu -->
+    <div data-footer-col>
+      <h3 class="font-display font-bold text-base mb-5">Menu</h3>
+      <ul class="space-y-3 text-sm text-white/60">
+        {
+          menu.map((m) => (
+            <li>
+              <a href={m.href} class="hover:text-white transition-colors">
+                {m.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Colonne 4 : Nos services -->
+    <div data-footer-col>
+      <h3 class="font-display font-bold text-base mb-5">Nos services</h3>
+      <ul class="space-y-3 text-sm text-white/60">
+        {
+          servicesLinks.map((s) => (
+            <li>
+              <a href={s.href} class="hover:text-white transition-colors">
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Colonne 5 : CTAs Besoin d'info -->
+    <div data-footer-col>
+      <h3 class="font-display font-bold text-base mb-5">Besoin d'info ?</h3>
+      <div class="space-y-3">
+        <a
+          href="#devis"
+          class="inline-flex w-full items-center justify-center gap-2 px-5 py-3 rounded-pill bg-sky-brand text-ink text-sm font-bold hover:scale-[1.02] transition-transform duration-200"
+        >
+          Mon bilan gratuit
+        </a>
+        <a
+          href="tel:+33372611735"
+          class="inline-flex w-full items-center justify-center gap-2 px-5 py-3 rounded-pill bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-sm font-bold transition-colors duration-200"
+        >
+          Contactez-nous
+        </a>
+      </div>
+      <ul class="mt-6 space-y-2 text-xs text-white/40">
+        <li>
+          <a href="#" class="hover:text-white transition-colors">Mentions Légales</a>
+        </li>
+        <li>
+          <a href="#" class="hover:text-white transition-colors">Politique de confidentialité</a>
+        </li>
+        <li>
+          <a
+            href="https://skypeo.fr"
+            target="_blank"
+            rel="noopener"
+            class="hover:text-white transition-colors"
+          >
+            Made by Skypeo
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bandeau bas : copyright + wordmark géant en outline (touche oryzo) -->
+  <div class="relative border-t border-white/5 overflow-hidden">
+    <div
+      class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-8 flex flex-wrap items-center justify-between gap-4"
+    >
+      <p class="text-white/40 text-xs">
+        © {new Date().getFullYear()} Sun Est. Tous droits réservés.
+      </p>
+      <p class="text-white/40 text-xs uppercase tracking-[0.2em]">
+        Installateur photovoltaïque · Grand-Est
+      </p>
+    </div>
+
+    <!-- Wordmark géant outline en arrière-plan -->
+    <div
+      class="pointer-events-none select-none absolute -bottom-4 lg:-bottom-10 inset-x-0 text-center z-0"
+      aria-hidden="true"
+    >
+      <span
+        class="font-display font-black leading-[0.85] tracking-tighter text-transparent whitespace-nowrap"
+        style="font-size: clamp(120px, 22vw, 320px); -webkit-text-stroke: 1px rgba(255,255,255,0.06);"
+      >
+        SUN EST
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cols = gsap.utils.toArray<HTMLElement>('[data-footer-col]');
+
+  if (cols.length) {
+    if (prefersReducedMotion) {
+      cols.forEach((el) => (el.style.opacity = '1'));
+    } else {
+      gsap.set(cols, { opacity: 0, y: 24 });
+      gsap.to(cols, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: '[data-footer]',
+          start: 'top 88%',
+          once: true,
+        },
+      });
+    }
+  }
+</script>

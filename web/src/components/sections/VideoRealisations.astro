@@ -1,0 +1,106 @@
+---
+// Section vidéo "Découvrez le savoir-faire Sun Est"
+// — Section linéaire avec halo bleu signature, vidéo YouTube en cadre stylé
+//   (ring sky-brand + glow + shadow), reveal scale + fade au scroll.
+---
+
+<section
+  id="video-savoir-faire"
+  class="relative w-full py-20 lg:py-32 bg-ink overflow-hidden border-t border-white/5"
+>
+  <!-- Halo bleu signature en fond -->
+  <div
+    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[60vh] rounded-full bg-sky-brand/[0.10] blur-[200px] pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative max-w-5xl mx-auto px-6 lg:px-10">
+    <!-- Header titre -->
+    <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-14">
+      <p
+        class="text-sky-brand font-bold uppercase tracking-[0.22em] text-[10px] lg:text-xs mb-4"
+      >
+        En vidéo
+      </p>
+      <h2
+        class="font-display font-black text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.0] tracking-tight"
+        data-split-words
+      >
+        Découvrez le savoir-faire <span class="text-sun">Sun Est.</span>
+      </h2>
+      <p class="mt-5 lg:mt-6 text-white/65 text-base lg:text-lg leading-relaxed">
+        Une installation, des techniciens engagés, du matériel de pointe — voyez nos chantiers
+        prendre vie sur les toits du Grand-Est.
+      </p>
+    </div>
+
+    <!-- Cadre vidéo : aspect-video, ring + shadow signature -->
+    <div
+      class="relative w-full will-change-transform"
+      data-video-frame
+    >
+      <div
+        class="relative w-full overflow-hidden rounded-md ring-1 ring-white/15 shadow-[0_30px_100px_-20px_rgba(32,184,241,0.45)] bg-black/50"
+        style="aspect-ratio: 16 / 9;"
+      >
+        <iframe
+          class="absolute inset-0 w-full h-full"
+          src="https://www.youtube.com/embed/Ey1oSh-2nuU?rel=0&modestbranding=1"
+          title="Sun Est — installation photovoltaïque en Grand-Est"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          loading="lazy"
+        >
+        </iframe>
+      </div>
+
+      <!-- Petite mention sous la vidéo -->
+      <p class="mt-5 text-center text-white/55 text-xs lg:text-sm">
+        Vidéo officielle Sun Est ·
+        <a
+          href="https://www.youtube.com/watch?v=Ey1oSh-2nuU"
+          class="text-sky-brand hover:text-white transition-colors underline-offset-4 hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Voir sur YouTube
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const frame = document.querySelector<HTMLElement>('[data-video-frame]');
+
+  if (frame && !prefersReducedMotion) {
+    // Reveal au scroll : scale-up + fade-in quand le cadre arrive dans le viewport
+    gsap.fromTo(
+      frame,
+      { opacity: 0, scale: 0.92, y: 32 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 1.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: frame,
+          start: 'top 85%',
+          once: true,
+        },
+      }
+    );
+  } else if (prefersReducedMotion && frame) {
+    frame.style.opacity = '1';
+    frame.style.transform = 'none';
+  }
+</script>

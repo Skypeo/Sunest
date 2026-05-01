@@ -1,0 +1,127 @@
+---
+---
+
+<section id="devis" class="relative py-24 lg:py-36 border-t border-white/5">
+  <div class="max-w-5xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-start">
+      <div>
+        <p class="text-sun font-bold uppercase tracking-[0.2em] text-xs mb-4">Devis gratuit</p>
+        <h2
+          class="font-display font-black text-4xl lg:text-5xl tracking-tight leading-[1.05]"
+          data-split-words
+        >
+          Quelques infos,
+          <br />
+          <span class="text-white/50">on revient sous 24 h.</span>
+        </h2>
+        <p class="mt-6 text-white/70 leading-relaxed">
+          Étude personnalisée, simulation de production, calcul des aides. Sans engagement.
+        </p>
+
+        <div class="mt-8 space-y-3 text-sm text-white/60">
+          <div class="flex items-center gap-3">
+            <span class="text-sun" aria-hidden="true">✓</span>
+            Réponse sous 24 h ouvrées
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-sun" aria-hidden="true">✓</span>
+            Simulation de production gratuite
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-sun" aria-hidden="true">✓</span>
+            Aucun engagement
+          </div>
+        </div>
+      </div>
+
+      <form
+        class="grid gap-4 p-8 lg:p-10 rounded-md bg-white/[0.03] border border-white/5"
+        method="post"
+        action="/api/quote"
+      >
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="block text-xs text-white/60 mb-2">Nom complet</span>
+            <input
+              type="text"
+              name="name"
+              required
+              class="w-full bg-ink border border-white/10 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+              placeholder="Jean Dupont"
+            />
+          </label>
+          <label class="block">
+            <span class="block text-xs text-white/60 mb-2">Code postal</span>
+            <input
+              type="text"
+              name="zip"
+              required
+              pattern="[0-9]{5}"
+              class="w-full bg-ink border border-white/10 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+              placeholder="57000"
+            />
+          </label>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="block text-xs text-white/60 mb-2">Email</span>
+            <input
+              type="email"
+              name="email"
+              required
+              class="w-full bg-ink border border-white/10 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+              placeholder="vous@exemple.fr"
+            />
+          </label>
+          <label class="block">
+            <span class="block text-xs text-white/60 mb-2">Téléphone</span>
+            <input
+              type="tel"
+              name="phone"
+              required
+              class="w-full bg-ink border border-white/10 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+              placeholder="06 12 34 56 78"
+            />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="block text-xs text-white/60 mb-2">Type de projet</span>
+          <select
+            name="project"
+            required
+            class="w-full bg-ink border border-white/10 rounded-md px-4 py-3 text-white focus:outline-none focus:border-sky-brand transition-colors"
+          >
+            <option value="">Sélectionnez…</option>
+            <option>Panneaux en toiture</option>
+            <option>Autoconsommation + revente</option>
+            <option>Batterie de stockage</option>
+            <option>Maintenance / SAV</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="block text-xs text-white/60 mb-2">Message (facultatif)</span>
+          <textarea
+            name="message"
+            rows="3"
+            class="w-full bg-ink border border-white/10 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors resize-none"
+            placeholder="Surface de toiture, exposition, consommation actuelle…"></textarea>
+        </label>
+
+        <button
+          type="submit"
+          class="mt-2 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-sun text-ink font-bold hover:scale-[1.02] transition-transform duration-200"
+        >
+          Recevoir mon devis →
+        </button>
+
+        <p class="text-xs text-white/40 mt-1 leading-relaxed">
+          En soumettant ce formulaire, vous acceptez d'être recontacté par Sun Est. Vos données ne
+          sont jamais partagées.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

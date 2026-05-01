@@ -1,0 +1,270 @@
+---
+const points = [
+  {
+    title: '0 % sous-traitance',
+    desc: "Du devis à la mise en service, c'est notre équipe qui intervient chez vous.",
+  },
+  {
+    title: 'Qualifelec RGE',
+    desc: "Certification reconnue par l'État : éligibilité aux aides et primes.",
+  },
+  {
+    title: '100 % Grand-Est',
+    desc: 'Strasbourg, Nancy, Metz, Reims, Mulhouse, Besançon, Troyes, Colmar, Belfort, Thionville…',
+  },
+  {
+    title: 'SAV sous 72 h',
+    desc: 'Une question, un capteur, une optimisation ? On est là.',
+  },
+];
+---
+
+<section
+  id="pourquoi"
+  class="relative w-full"
+  style="height: 360vh;"
+  data-pourquoi-section
+>
+  <div class="sticky top-0 h-screen w-full overflow-hidden bg-ink">
+    <!-- Photo : démarre petite/centrée, grandit jusqu'à full bleed -->
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md overflow-hidden bg-white/5 will-change-transform"
+      data-pourquoi-frame
+    >
+      <img
+        src="/images/pourquoiSunEst/DSC06837-1024x683.webp"
+        alt="L'équipe Sun Est avec un panneau"
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover will-change-transform"
+        data-pourquoi-img
+      />
+    </div>
+
+    <!-- Voile sombre côté gauche : apparaît quand la photo grandit pour rendre le texte lisible -->
+    <div
+      class="absolute inset-0 z-10 bg-gradient-to-r from-ink via-ink/70 to-transparent pointer-events-none opacity-0"
+      data-pourquoi-overlay
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- Acte 1 : intro centrée (visible début, fade out tôt) -->
+    <div
+      class="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 text-center"
+      data-pourquoi-intro
+    >
+      <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-4">
+        Pourquoi Sun Est
+      </p>
+      <h2
+        class="font-display font-black text-3xl sm:text-4xl lg:text-6xl leading-[1.0] tracking-tight max-w-4xl"
+      >
+        Une entreprise familiale,
+        <br />
+        <span class="text-white/50">un engagement total.</span>
+      </h2>
+      <p class="mt-6 text-white/60 text-xs lg:text-sm uppercase tracking-[0.2em]">
+        Scroll ↓
+      </p>
+    </div>
+
+    <!-- Acte 2 : texte final à gauche par-dessus la photo + 4 points cumulatifs -->
+    <div
+      class="absolute inset-y-0 left-0 z-30 flex items-center pointer-events-none opacity-0 will-change-[opacity,transform]"
+      data-pourquoi-final
+    >
+      <div class="max-w-md px-6 lg:px-12 pointer-events-auto">
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-3">
+          Pourquoi Sun Est
+        </p>
+        <h2
+          class="font-display font-black text-2xl lg:text-4xl leading-[1.0] tracking-tight"
+        >
+          Une entreprise familiale,
+          <br />
+          <span class="text-white/50">un engagement total.</span>
+        </h2>
+        <p class="mt-4 text-white/70 text-sm lg:text-base leading-relaxed">
+          Depuis 2015, nous équipons les toits du Grand-Est sans sous-traiter.
+          1500 chantiers, une seule équipe.
+        </p>
+
+        <ul class="mt-6 space-y-3.5">
+          {
+            points.map((p, i) => (
+              <li
+                data-pourquoi-point={i}
+                class="flex gap-3 items-start"
+                style="opacity: 0;"
+              >
+                <span
+                  class="shrink-0 mt-0.5 w-6 h-6 rounded-full bg-sky-brand text-ink flex items-center justify-center text-xs font-bold transition-all duration-500"
+                  data-pourquoi-check={i}
+                  aria-hidden="true"
+                >
+                  ✓
+                </span>
+                <div>
+                  <h3 class="font-display font-bold text-base lg:text-lg leading-tight">
+                    {p.title}
+                  </h3>
+                  <p class="mt-1 text-white/55 text-xs lg:text-sm leading-relaxed">
+                    {p.desc}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Badge en bas-droite (apparaît dans la phase finale) -->
+    <div
+      class="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 z-30 inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-ink/65 backdrop-blur-md border border-white/15 opacity-0"
+      data-pourquoi-badge
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-sun" aria-hidden="true"></span>
+      <span class="font-display font-bold text-sm">+1500 chantiers · Depuis 2015</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-pourquoi-section]');
+  const frame = document.querySelector<HTMLElement>('[data-pourquoi-frame]');
+  const img = document.querySelector<HTMLElement>('[data-pourquoi-img]');
+  const overlay = document.querySelector<HTMLElement>('[data-pourquoi-overlay]');
+  const intro = document.querySelector<HTMLElement>('[data-pourquoi-intro]');
+  const final = document.querySelector<HTMLElement>('[data-pourquoi-final]');
+  const badge = document.querySelector<HTMLElement>('[data-pourquoi-badge]');
+  const pts = document.querySelectorAll<HTMLElement>('[data-pourquoi-point]');
+
+  // Dimensions (recalculées au resize)
+  let vw = window.innerWidth;
+  let vh = window.innerHeight;
+  let startW = 0;
+  let startH = 0;
+  let endW = 0;
+  let endH = 0;
+
+  function recompute() {
+    vw = window.innerWidth;
+    vh = window.innerHeight;
+    // Petit format de départ (centré, paysage 4/3)
+    startW = Math.min(vw * 0.42, 520);
+    startH = startW * (683 / 1024); // ratio natif image
+    // Final : couvre tout le viewport
+    endW = vw;
+    endH = vh;
+  }
+  recompute();
+  window.addEventListener('resize', () => {
+    recompute();
+    ScrollTrigger.refresh();
+  });
+
+  // État initial
+  if (frame) {
+    frame.style.width = `${startW}px`;
+    frame.style.height = `${startH}px`;
+    frame.style.borderRadius = '8px';
+  }
+
+  if (section && frame && !prefersReducedMotion) {
+    function lerp(a: number, b: number, t: number): number {
+      return a + (b - a) * t;
+    }
+    function smoothstep(t: number): number {
+      const c = Math.max(0, Math.min(1, t));
+      return c * c * (3 - 2 * c);
+    }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const p = self.progress;
+        // Phase A 0-55 % : la photo grandit du centre vers full bleed
+        const growT = smoothstep(p / 0.55);
+        const w = lerp(startW, endW, growT);
+        const h = lerp(startH, endH, growT);
+        const radius = lerp(8, 0, growT);
+        if (frame) {
+          frame.style.width = `${w}px`;
+          frame.style.height = `${h}px`;
+          frame.style.borderRadius = `${radius}px`;
+        }
+        // Légère "venue du fond" : opacité et flou au tout début
+        if (img) {
+          const focus = smoothstep(p / 0.2);
+          img.style.opacity = String(0.55 + focus * 0.45);
+          img.style.filter = `blur(${(1 - focus) * 6}px)`;
+        }
+
+        // Overlay gauche : 0 → 1 entre 35-65 %
+        if (overlay) {
+          const overT = smoothstep((p - 0.35) / 0.3);
+          overlay.style.opacity = String(overT);
+        }
+
+        // Intro centrée : visible 0-25 %, fade out + scale out
+        if (intro) {
+          const introOp = Math.max(0, 1 - p / 0.25);
+          intro.style.opacity = String(introOp);
+          intro.style.transform = `scale(${1 - (1 - introOp) * 0.08})`;
+        }
+
+        // Acte final (texte + points à gauche) : apparaît à partir de 55 %
+        if (final) {
+          const finalT = smoothstep((p - 0.55) / 0.18);
+          final.style.opacity = String(finalT);
+          final.style.transform = `translateX(${(1 - finalT) * -32}px)`;
+        }
+
+        // Badge en bas-droite : apparaît à 65 %
+        if (badge) {
+          const badgeT = smoothstep((p - 0.65) / 0.15);
+          badge.style.opacity = String(badgeT);
+          badge.style.transform = `translateY(${(1 - badgeT) * 16}px)`;
+        }
+
+        // Points : reveal cumulatif sur 72-100 %
+        const N = pts.length;
+        for (let i = 0; i < N; i++) {
+          const startP = 0.72 + i * 0.06;
+          const localT = (p - startP) / 0.08;
+          const op = Math.max(0, Math.min(1, localT));
+          if (pts[i]) {
+            pts[i].style.opacity = String(op);
+            pts[i].style.transform = `translateY(${(1 - op) * 12}px)`;
+          }
+        }
+      },
+    });
+  } else if (prefersReducedMotion) {
+    // Reduced motion : tout visible direct, pas d'animation
+    if (frame) {
+      frame.style.width = '100%';
+      frame.style.height = '100%';
+      frame.style.borderRadius = '0';
+      frame.style.position = 'absolute';
+      frame.style.inset = '0';
+      frame.style.transform = 'none';
+    }
+    if (intro) intro.style.opacity = '0';
+    if (final) final.style.opacity = '1';
+    if (overlay) overlay.style.opacity = '1';
+    if (badge) badge.style.opacity = '1';
+    pts.forEach((el) => (el.style.opacity = '1'));
+  }
+</script>

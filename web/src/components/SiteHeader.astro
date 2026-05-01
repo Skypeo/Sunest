@@ -1,0 +1,187 @@
+---
+type NavLink = {
+  href: string;
+  label: string;
+  match: string | null;
+  children?: { href: string; label: string; match: string }[];
+};
+
+const links: NavLink[] = [
+  { href: '/', label: 'Accueil', match: '/' },
+  {
+    href: '/#services',
+    label: 'Services',
+    match: null,
+    children: [
+      { href: '/services/particulier', label: 'Particulier', match: '/services/particulier' },
+      {
+        href: '/services/professionnel',
+        label: 'Professionnel',
+        match: '/services/professionnel',
+      },
+      {
+        href: '/services/borne-de-recharge',
+        label: 'Borne de recharge',
+        match: '/services/borne-de-recharge',
+      },
+      {
+        href: '/services/maintenance',
+        label: 'Maintenance',
+        match: '/services/maintenance',
+      },
+    ],
+  },
+  { href: '/realisations', label: 'Nos réalisations', match: '/realisations' },
+  { href: '/contact', label: 'Contact', match: '/contact' },
+];
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const inServicesSection = pathname.startsWith('/services');
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-ink/40 border-b border-white/5 transition-transform duration-500 ease-out will-change-transform"
+  data-site-header
+>
+  <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between gap-6">
+    <a href="/" class="flex items-center" aria-label="Sun Est — accueil">
+      <img
+        src="/images/SunEst_-_le_logo_definitif-2-png-300x195.webp"
+        alt="Sun Est"
+        class="h-10 lg:h-11 w-auto"
+        width="300"
+        height="195"
+      />
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8 text-sm text-white/70">
+      {
+        links.map((l) => {
+          const active = l.match && pathname === l.match;
+          // Item parent actif si on est dans une de ses pages enfants (cas Services)
+          const branchActive =
+            l.children && (active || (l.label === 'Services' && inServicesSection));
+
+          if (l.children) {
+            return (
+              <li class="relative group">
+                <a
+                  href={l.href}
+                  class:list={[
+                    'inline-flex items-center gap-1 transition-colors duration-200',
+                    branchActive ? 'text-white' : 'hover:text-white',
+                  ]}
+                  aria-haspopup="menu"
+                  data-nav-link
+                >
+                  {l.label}
+                  <span
+                    class="text-[10px] transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+                    aria-hidden="true"
+                  >
+                    ▾
+                  </span>
+                </a>
+
+                {/* wrapper avec pt-3 transparent pour couvrir le gap au survol */}
+                <div
+                  class="absolute top-full left-0 pt-3 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-200"
+                  role="menu"
+                >
+                  <ul class="min-w-[220px] py-2 rounded-md bg-ink/95 backdrop-blur-md border border-white/10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]">
+                    {l.children.map((c) => {
+                      const cActive = pathname === c.match;
+                      return (
+                        <li>
+                          <a
+                            href={c.href}
+                            class:list={[
+                              'block px-4 py-2.5 text-sm transition-colors duration-150',
+                              cActive
+                                ? 'text-sky-brand bg-sky-brand/10'
+                                : 'text-white/75 hover:text-white hover:bg-white/[0.06]',
+                            ]}
+                            role="menuitem"
+                          >
+                            {c.label}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </li>
+            );
+          }
+
+          return (
+            <li>
+              <a
+                href={l.href}
+                class:list={[
+                  'transition-colors duration-200',
+                  active ? 'text-white' : 'hover:text-white',
+                ]}
+                data-nav-link
+              >
+                {l.label}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <div class="flex items-center gap-2 lg:gap-3">
+      <a
+        href="tel:+33372611735"
+        class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-pill text-xs lg:text-sm text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-colors duration-200"
+      >
+        <span aria-hidden="true">📞</span>
+        <span class="hidden lg:inline">03 72 61 17 35</span>
+        <span class="lg:hidden">Appeler</span>
+      </a>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-sky-brand text-ink text-xs lg:text-sm font-bold hover:scale-105 transition-transform duration-200"
+      >
+        Simuler mon installation
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Hide-on-scroll-down, show-on-scroll-up
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  if (header) {
+    let lastY = window.scrollY;
+    let hidden = false;
+    const threshold = 80;
+    window.addEventListener(
+      'scroll',
+      () => {
+        const y = window.scrollY;
+        const dy = y - lastY;
+        if (y < 24) {
+          if (hidden) {
+            header.style.transform = 'translateY(0)';
+            hidden = false;
+          }
+          lastY = y;
+          return;
+        }
+        if (dy > 6 && !hidden && y > threshold) {
+          header.style.transform = 'translateY(-110%)';
+          hidden = true;
+        } else if (dy < -6 && hidden) {
+          header.style.transform = 'translateY(0)';
+          hidden = false;
+        }
+        lastY = y;
+      },
+      { passive: true }
+    );
+  }
+</script>

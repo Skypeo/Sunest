@@ -1,0 +1,369 @@
+---
+// Hero "Services > Particulier"
+// Split conversion : à gauche → kicker + titre + stats compteurs + CTAs + card Avis Google
+//                    à droite → formulaire de bilan gratuit (toggle Particulier/Pro + champs)
+// Photo background + Ken Burns subtil + voile gauche.
+const stats = [
+  { value: 1000, suffix: '', label: 'installations' },
+  { value: 10, suffix: '', label: "ans d'expérience" },
+  { value: 0, suffix: ' %', label: 'sous-traitance' },
+  { value: 100, suffix: ' %', label: 'Grand-Est' },
+];
+---
+
+<section
+  id="hero-particulier"
+  class="relative w-full mt-16 overflow-hidden bg-ink"
+  data-hero-particulier
+>
+  <!-- Photo background avec Ken Burns au scroll -->
+  <img
+    src="/images/hero_service_particulier.webp"
+    alt="Installation photovoltaïque chez un particulier en Grand-Est"
+    class="absolute inset-0 w-full h-full object-cover object-center will-change-transform"
+    loading="eager"
+    fetchpriority="high"
+    data-hero-photo
+  />
+
+  <!-- Voile gradient principal (gauche → droite) -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/30 lg:to-ink/55 pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
+  <!-- Voile bottom doux pour transition vers section suivante -->
+  <div
+    class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
+
+  <!-- Container principal -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-12 lg:py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-start">
+
+      <!-- ─── COLONNE GAUCHE : pitch + stats + CTAs + Avis Google ─── -->
+      <div class="lg:pt-4" data-hero-text>
+        <p
+          class="text-sky-brand font-bold uppercase tracking-[0.22em] text-xs lg:text-sm mb-4"
+        >
+          Particulier
+        </p>
+        <h1
+          class="font-display font-bold text-lg sm:text-xl lg:text-2xl xl:text-[1.875rem] leading-[1.25] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
+          data-split-words
+        >
+          Vous habitez dans le Grand-Est, profitez d'un
+          <span class="text-sun">bilan solaire gratuit</span>
+          et sur mesure à votre domicile.
+        </h1>
+        <p
+          class="mt-4 lg:mt-5 text-white/80 text-sm lg:text-base leading-relaxed max-w-xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
+        >
+          Sun Est, entreprise locale et familiale, vous accompagne de l'étude personnalisée à
+          la mise en service.
+        </p>
+
+        <!-- Bandeau stats compteurs animés (compact, labels nowrap) -->
+        <div
+          class="mt-6 lg:mt-7 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 p-4 lg:p-5 rounded-md bg-white/[0.05] border border-white/10 backdrop-blur-md"
+          data-hero-stats
+        >
+          {
+            stats.map((s) => (
+              <div class="text-center lg:text-left min-w-0">
+                <p class="font-display font-bold text-lg sm:text-xl lg:text-2xl text-white tabular-nums leading-none">
+                  <span data-hero-counter data-target={s.value}>
+                    0
+                  </span>
+                  {s.suffix}
+                </p>
+                <p class="mt-1.5 text-white/60 text-[10px] uppercase tracking-[0.1em] leading-tight whitespace-nowrap">
+                  {s.label}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- CTAs + card Avis Google -->
+        <div class="mt-7 lg:mt-9 flex flex-col sm:flex-row sm:items-center gap-4">
+          <a
+            href="#hero-form"
+            class="inline-flex items-center gap-2 px-6 py-3.5 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
+            data-magnetic
+          >
+            Simuler mon potentiel solaire
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-white/[0.06] hover:bg-white/[0.16] border border-white/15 hover:border-white/30 font-bold transition-colors duration-200 backdrop-blur-md"
+          >
+            Contactez-nous
+          </a>
+        </div>
+
+        <!-- Card Avis Google -->
+        <div
+          class="mt-6 lg:mt-7 inline-flex items-center gap-4 px-5 py-3.5 rounded-md bg-white/[0.05] border border-white/10 backdrop-blur-md"
+        >
+          <svg
+            class="w-9 h-9 shrink-0"
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              fill="#4285F4"
+              d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+            />
+            <path
+              fill="#34A853"
+              d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+            />
+            <path
+              fill="#EA4335"
+              d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+            />
+          </svg>
+          <div>
+            <p class="text-white/55 text-[11px] uppercase tracking-[0.18em]">Avis Google</p>
+            <div class="flex items-baseline gap-2 mt-0.5">
+              <span class="font-display font-black text-lg leading-none">4,8</span>
+              <span class="text-sun text-sm tracking-[0.18em]" aria-hidden="true">★★★★★</span>
+            </div>
+            <p class="text-white/55 text-[11px] mt-0.5">
+              + de <span class="text-white font-bold">1500 installations</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── COLONNE DROITE : formulaire bilan gratuit ─── -->
+      <form
+        id="hero-form"
+        class="grid gap-4 p-6 lg:p-7 rounded-md bg-white/[0.06] border border-white/12 backdrop-blur-md shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+        method="post"
+        action="/api/contact"
+        novalidate
+        data-hero-form
+      >
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs">
+          Bilan solaire gratuit
+        </p>
+
+        <!-- Toggle Particulier / Professionnel -->
+        <fieldset class="grid grid-cols-2 gap-2 p-1 rounded-pill bg-ink/60 border border-white/10">
+          <legend class="sr-only">Vous êtes</legend>
+          <label class="relative cursor-pointer">
+            <input
+              type="radio"
+              name="type"
+              value="particulier"
+              checked
+              class="peer sr-only"
+            />
+            <span
+              class="block text-center py-2 rounded-pill text-sm font-bold text-white/65 peer-checked:bg-sky-brand peer-checked:text-ink transition-colors"
+            >
+              Particulier
+            </span>
+          </label>
+          <label class="relative cursor-pointer">
+            <input type="radio" name="type" value="professionnel" class="peer sr-only" />
+            <span
+              class="block text-center py-2 rounded-pill text-sm font-bold text-white/65 peer-checked:bg-sky-brand peer-checked:text-ink transition-colors"
+            >
+              Professionnel
+            </span>
+          </label>
+        </fieldset>
+
+        <!-- Civilité -->
+        <label class="block">
+          <span class="block text-xs font-bold text-white/70 mb-1.5">
+            Civilité <span class="text-sun">*</span>
+          </span>
+          <select
+            name="civilite"
+            required
+            class="w-full bg-ink/80 border border-white/15 rounded-md px-4 py-2.5 text-white text-sm focus:outline-none focus:border-sky-brand transition-colors"
+          >
+            <option value="M.">M.</option>
+            <option value="Mme">Mme</option>
+          </select>
+        </label>
+
+        <!-- Nom + Prénom -->
+        <div class="grid grid-cols-2 gap-3">
+          <label class="block">
+            <span class="block text-xs font-bold text-white/70 mb-1.5">
+              Nom <span class="text-sun">*</span>
+            </span>
+            <input
+              type="text"
+              name="lastname"
+              required
+              placeholder="Nom de famille"
+              class="w-full bg-ink/80 border border-white/15 rounded-md px-4 py-2.5 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+            />
+          </label>
+          <label class="block">
+            <span class="block text-xs font-bold text-white/70 mb-1.5">
+              Prénom <span class="text-sun">*</span>
+            </span>
+            <input
+              type="text"
+              name="firstname"
+              required
+              placeholder="Prénom"
+              class="w-full bg-ink/80 border border-white/15 rounded-md px-4 py-2.5 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+            />
+          </label>
+        </div>
+
+        <!-- Email -->
+        <label class="block">
+          <span class="block text-xs font-bold text-white/70 mb-1.5">
+            Adresse de messagerie <span class="text-sun">*</span>
+          </span>
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="votre@email.fr"
+            class="w-full bg-ink/80 border border-white/15 rounded-md px-4 py-2.5 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+          />
+        </label>
+
+        <!-- Téléphone + Code postal -->
+        <div class="grid grid-cols-[1.4fr_1fr] gap-3">
+          <label class="block">
+            <span class="block text-xs font-bold text-white/70 mb-1.5">
+              Téléphone <span class="text-sun">*</span>
+            </span>
+            <input
+              type="tel"
+              name="phone"
+              required
+              placeholder="06 XX XX XX XX"
+              class="w-full bg-ink/80 border border-white/15 rounded-md px-4 py-2.5 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+            />
+          </label>
+          <label class="block">
+            <span class="block text-xs font-bold text-white/70 mb-1.5">
+              Code postal <span class="text-sun">*</span>
+            </span>
+            <input
+              type="text"
+              name="zip"
+              required
+              pattern="[0-9]{5}"
+              placeholder="54000"
+              class="w-full bg-ink/80 border border-white/15 rounded-md px-4 py-2.5 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+            />
+          </label>
+        </div>
+
+        <!-- Notes -->
+        <label class="block">
+          <span class="block text-xs font-bold text-white/70 mb-1.5">Notes complémentaires</span>
+          <textarea
+            name="notes"
+            rows="3"
+            placeholder="Décrivez votre projet en quelques mots…"
+            class="w-full bg-ink/80 border border-white/15 rounded-md px-4 py-2.5 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors resize-y"
+          ></textarea>
+        </label>
+
+        <button
+          type="submit"
+          class="mt-1 inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.02] transition-transform duration-200 w-full sm:w-fit"
+        >
+          Envoyer
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <p class="text-[11px] text-white/45 leading-relaxed">
+          En soumettant ce formulaire, vous acceptez d'être recontacté par Sun Est. Vos données ne
+          sont jamais partagées.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    // Ken Burns subtil sur la photo
+    const photo = document.querySelector<HTMLElement>('[data-hero-photo]');
+    if (photo) {
+      gsap.to(photo, {
+        scale: 1.08,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '[data-hero-particulier]',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      });
+    }
+
+    // Reveal du texte (kicker, h1, sub) en stagger au load
+    gsap.fromTo(
+      '[data-hero-text] > *',
+      { opacity: 0, y: 24 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.1,
+        delay: 0.1,
+      }
+    );
+
+    // Reveal du form depuis la droite
+    const form = document.querySelector<HTMLElement>('[data-hero-form]');
+    if (form) {
+      gsap.fromTo(
+        form,
+        { opacity: 0, x: 32 },
+        { opacity: 1, x: 0, duration: 1, ease: 'power3.out', delay: 0.3 }
+      );
+    }
+
+    // Compteurs : count-up de 0 → target
+    document.querySelectorAll<HTMLElement>('[data-hero-counter]').forEach((counter) => {
+      const target = parseInt(counter.dataset.target || '0', 10);
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 1.6,
+        ease: 'power2.out',
+        delay: 0.7,
+        onUpdate: () => {
+          counter.textContent = Math.round(obj.val).toString();
+        },
+      });
+    });
+  } else {
+    document.querySelectorAll<HTMLElement>('[data-hero-counter]').forEach((c) => {
+      c.textContent = c.dataset.target || '0';
+    });
+  }
+</script>

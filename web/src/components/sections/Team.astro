@@ -1,0 +1,110 @@
+---
+const team = [
+  '/images/team/1DSC07086-scaled.webp',
+  '/images/team/DSC07059-scaled.webp',
+  '/images/team/DSC07118-scaled.webp',
+  '/images/team/DSC07137-scaled.webp',
+  '/images/team/DSC07168-scaled.webp',
+  '/images/team/DSC07203-scaled.webp',
+];
+---
+
+<section
+  id="team"
+  class="relative w-full"
+  style="height: 280vh;"
+  data-team-section
+>
+  <div class="sticky top-0 h-screen w-full overflow-hidden">
+    <!-- Piste photos qui translate horizontalement au scroll vertical -->
+    <div class="absolute inset-y-0 left-0 flex items-center">
+      <div
+        class="flex gap-5 lg:gap-7 pl-[42vw] lg:pl-[44vw] pr-[14vw] will-change-transform"
+        data-team-track
+      >
+        {
+          team.map((src, i) => (
+            <figure
+              class="shrink-0 w-[280px] sm:w-[320px] lg:w-[380px] aspect-[3/4] rounded-md overflow-hidden bg-white/5 group"
+              data-team-card
+              style={`--i:${i}`}
+            >
+              <img
+                src={src}
+                alt={`Équipe Sun Est — membre ${i + 1}`}
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-ink/55 via-ink/0 to-ink/0 pointer-events-none"
+                aria-hidden="true"
+              />
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Voile dégradé sur la moitié gauche pour faire reposer le texte -->
+    <div
+      class="absolute inset-y-0 left-0 w-full lg:w-3/5 z-10 bg-gradient-to-r from-ink via-ink/85 to-transparent pointer-events-none"
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- Texte sticky à gauche -->
+    <div
+      class="relative z-20 h-full max-w-7xl mx-auto px-6 lg:px-10 flex items-center pointer-events-none"
+    >
+      <div class="max-w-md pointer-events-auto">
+        <p class="text-sun font-bold uppercase tracking-[0.2em] text-xs mb-4">L'équipe Sun Est</p>
+        <h2
+          class="font-display font-black text-4xl lg:text-6xl leading-[0.95] tracking-tight"
+          data-split-words
+        >
+          Une super équipe
+          <br />
+          <span class="text-white/50">à votre service.</span>
+        </h2>
+        <p class="mt-6 text-white/70 text-lg leading-relaxed">
+          Charpentiers, couvreurs, électriciens — tous nos techniciens sont nos salariés.
+          <span class="text-sun font-bold">0 % sous-traitance</span>, du devis à la mise en service.
+        </p>
+        <p class="mt-8 text-white/35 text-xs uppercase tracking-[0.2em]">
+          Scroll → photos
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const track = document.querySelector<HTMLElement>('[data-team-track]');
+  const section = document.querySelector<HTMLElement>('[data-team-section]');
+
+  if (track && section && !prefersReducedMotion) {
+    gsap.to(track, {
+      x: () => {
+        // Distance à parcourir pour que la dernière photo arrive en vue
+        const trackWidth = track.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        return -(trackWidth - viewportWidth);
+      },
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+  }
+</script>

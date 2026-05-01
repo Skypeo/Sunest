@@ -1,0 +1,209 @@
+---
+const services = [
+  {
+    tag: 'Particulier',
+    title: 'Bilan solaire à domicile',
+    desc: 'Un conseiller local, un audit gratuit, une installation sur mesure pour votre maison.',
+    photo: '/images/nosServices/280870534_3298462433743441_4908521278026233064_n-768x1024.webp',
+  },
+  {
+    tag: 'Professionnel',
+    title: 'Photovoltaïque pro',
+    desc: "Maîtrisez vos charges énergétiques et l'empreinte carbone de votre activité.",
+    photo: '/images/nosServices/WhatsApp-Image-2024-08-29-at-15.19.43-e1725914072259-1024x336.jpeg',
+  },
+  {
+    tag: 'Mobilité',
+    title: 'Borne de recharge',
+    desc: 'Particuliers comme pros : équipez-vous de votre borne pour votre véhicule électrique.',
+    photo: '/images/nosServices/ernest-ojeh-UrCV-U9hhCo-unsplash-1024x683.webp',
+  },
+  {
+    tag: 'SAV',
+    title: 'Maintenance & suivi',
+    desc: 'Notre équipe maintient vos panneaux, suit leur performance et assure le SAV.',
+    photo: '/images/nosServices/Nettoyage-panneaux-solairezs.webp',
+  },
+];
+---
+
+<section
+  id="services"
+  class="relative w-full"
+  style="height: 400vh;"
+  data-services-section
+>
+  <div class="sticky top-0 h-screen w-full overflow-hidden">
+    <div
+      class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] items-center gap-8 lg:gap-12"
+    >
+      <!-- Colonne gauche : kicker + titre principal + stage actif + dots -->
+      <div class="relative">
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-4">Nos services</p>
+        <h2
+          class="font-display font-black text-4xl lg:text-6xl leading-[1.0] tracking-tight mb-10 lg:mb-14"
+          data-split-words
+        >
+          Du toit familial au parc industriel,
+          <br />
+          <span class="text-white/50">une expertise unique.</span>
+        </h2>
+
+        <!-- Stages services (crossfade au scroll) -->
+        <div class="relative min-h-[260px] lg:min-h-[280px]">
+          {
+            services.map((s, i) => (
+              <div
+                data-service-stage={i}
+                class="absolute inset-0"
+                style={`opacity: ${i === 0 ? 1 : 0};`}
+              >
+                <p class="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-sky-brand/15 text-sky-brand font-bold uppercase tracking-[0.18em] text-[11px] mb-5">
+                  {s.tag}
+                </p>
+                <h3 class="font-display font-bold text-2xl lg:text-4xl leading-tight mb-4">
+                  {s.title}
+                </h3>
+                <p class="text-white/70 text-base lg:text-lg leading-relaxed max-w-md">{s.desc}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- Indicateurs : 4 lignes qui s'éclairent à tour de rôle -->
+        <div class="mt-10 lg:mt-12 flex gap-2.5">
+          {
+            services.map((_, i) => (
+              <div
+                data-service-dot={i}
+                class="h-[3px] w-10 lg:w-14 rounded-full bg-white/15 transition-all duration-700 ease-out"
+              />
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Colonne droite : photo (changeante) + numéro qui déborde -->
+      <div class="relative h-full hidden lg:flex items-center justify-end">
+        <div class="relative w-[78%] max-w-[520px]">
+          <!-- Frame photo -->
+          <div class="relative aspect-[4/5] rounded-md overflow-hidden bg-white/5">
+            {
+              services.map((s, i) => (
+                <img
+                  data-service-photo={i}
+                  src={s.photo}
+                  alt={s.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 w-full h-full object-cover"
+                  style={`opacity: ${i === 0 ? 1 : 0};`}
+                />
+              ))
+            }
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-ink/35 via-ink/0 to-ink/0 pointer-events-none"
+              aria-hidden="true"
+            >
+            </div>
+          </div>
+
+          <!-- Numéro qui déborde la photo en bas-droite -->
+          {
+            services.map((_, i) => (
+              <span
+                data-service-numero={i}
+                class="absolute -bottom-[12%] -right-[3%] font-display font-black leading-[0.85] tracking-tighter text-transparent select-none pointer-events-none"
+                style={`font-size: clamp(220px, 26vw, 360px); -webkit-text-stroke: 1.5px rgba(255,255,255,0.55); opacity: ${i === 0 ? 1 : 0};`}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Mobile : numéro géant en arrière-plan derrière le contenu -->
+      <div
+        class="absolute inset-0 lg:hidden flex items-center justify-end pr-6 -z-10 pointer-events-none"
+      >
+        {
+          services.map((_, i) => (
+            <span
+              data-service-numero-mobile={i}
+              class="absolute font-display font-black leading-none tracking-tighter text-transparent select-none"
+              style={`font-size: clamp(180px, 60vw, 300px); -webkit-text-stroke: 1px rgba(255,255,255,0.08); opacity: ${i === 0 ? 1 : 0};`}
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-services-section]');
+  const stages = document.querySelectorAll<HTMLElement>('[data-service-stage]');
+  const dots = document.querySelectorAll<HTMLElement>('[data-service-dot]');
+  const numeros = document.querySelectorAll<HTMLElement>('[data-service-numero]');
+  const numerosM = document.querySelectorAll<HTMLElement>('[data-service-numero-mobile]');
+  const photos = document.querySelectorAll<HTMLElement>('[data-service-photo]');
+
+  if (section && stages.length && !prefersReducedMotion) {
+    const N = stages.length;
+    const HALF_STAGE = 0.5 / N;
+    const TRANSITION = HALF_STAGE * 0.45;
+
+    function computeOpacity(p: number, idx: number): number {
+      const center = (idx + 0.5) / N;
+      const dist = Math.abs(p - center);
+      const cutoff = HALF_STAGE - TRANSITION;
+      if (dist <= cutoff) return 1;
+      if (dist >= HALF_STAGE) return 0;
+      return (HALF_STAGE - dist) / TRANSITION;
+    }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const p = self.progress;
+        const stageIdx = Math.min(N - 1, Math.floor(p * N));
+
+        for (let i = 0; i < N; i++) {
+          const op = computeOpacity(p, i);
+          if (stages[i]) {
+            stages[i].style.opacity = String(op);
+            stages[i].style.transform = `translateY(${(1 - op) * 24}px)`;
+          }
+          if (numeros[i]) numeros[i].style.opacity = String(op);
+          if (numerosM[i]) numerosM[i].style.opacity = String(op * 0.6);
+          if (photos[i]) {
+            photos[i].style.opacity = String(op);
+            // Léger zoom sur la photo active pour donner du dynamisme
+            const scale = 1 + (1 - op) * 0.04;
+            photos[i].style.transform = `scale(${scale})`;
+          }
+          if (dots[i]) {
+            const isActive = i === stageIdx;
+            dots[i].style.background = isActive
+              ? 'rgb(32, 184, 241)'
+              : 'rgba(255,255,255,0.15)';
+            dots[i].style.transform = isActive ? 'scaleX(1.4)' : 'scaleX(1)';
+            dots[i].style.transformOrigin = 'left';
+          }
+        }
+      },
+    });
+  }
+</script>

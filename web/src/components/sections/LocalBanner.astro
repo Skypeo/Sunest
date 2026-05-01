@@ -1,0 +1,57 @@
+---
+---
+
+<section class="relative py-12">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div
+      class="relative overflow-hidden rounded-md bg-sun text-ink p-10 lg:p-16 reveal-up"
+      data-banner
+    >
+      <div
+        class="absolute -top-1/2 -right-1/4 w-[600px] h-[600px] rounded-full bg-white/20 blur-3xl will-change-transform"
+        aria-hidden="true"
+        data-parallax="0.6"
+      >
+      </div>
+      <div class="relative grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+        <div>
+          <p class="font-bold uppercase tracking-[0.2em] text-xs mb-4">100 % local · Grand Est</p>
+          <h2
+            class="font-display font-black text-3xl lg:text-5xl tracking-tight leading-[1.05]"
+            data-split-words
+          >
+            Sun Est, c'est l'énergie solaire
+            <br />
+            <span class="text-ink/60">par des gens d'ici, pour vous.</span>
+          </h2>
+          <p class="mt-5 text-ink/80 text-base lg:text-lg max-w-xl">
+            Notre équipe vit, travaille et installe dans le Grand Est. Pas de sous-traitance, pas
+            d'intermédiaire — juste un service de proximité avec des techniciens à 30 minutes de
+            chez vous.
+          </p>
+        </div>
+        <a
+          href="#about"
+          class="inline-flex items-center gap-2 px-6 py-3.5 rounded-pill bg-ink text-white font-bold hover:scale-[1.03] transition-transform duration-200"
+        >
+          Notre histoire →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from('[data-banner]', {
+    scrollTrigger: { trigger: '[data-banner]', start: 'top 85%' },
+    opacity: 0,
+    y: 40,
+    duration: 1,
+    ease: 'power3.out',
+  });
+</script>

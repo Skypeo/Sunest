@@ -1,0 +1,439 @@
+---
+// Section "Votre solution solaire clé en main en 4 étapes"
+// Layout signature : timeline verticale (spine + dots) à gauche, panneau hero à droite
+// avec numéro filigrane géant, icône thématique, titre & texte contrastés.
+const steps = [
+  {
+    id: 'analyse',
+    title: 'Analyse et conception',
+    icon: 'search',
+    body: "Nous débutons par une analyse approfondie de vos besoins énergétiques et du potentiel solaire de votre emplacement. En tenant compte de la configuration, de vos objectifs et de votre mode de vie, nous établissons un profil de consommation énergétique pour dimensionner précisément votre future installation de panneaux solaires photovoltaïques.",
+  },
+  {
+    id: 'admin',
+    title: 'Prise en charge administrative',
+    icon: 'paper',
+    body: "Après une visite technique pour valider votre projet, nous prenons en main l'ensemble des démarches administratives : déclaration de travaux en mairie, demande de raccordement auprès d'Enedis, et validation de l'installation par le CONSUEL. Vous n'avez rien à gérer, nous nous occupons de tout pour vous simplifier la vie !",
+  },
+  {
+    id: 'install',
+    title: 'Installation par des experts',
+    icon: 'tools',
+    body: "Une fois les démarches administratives finalisées, notre équipe de techniciens spécialisés — charpentiers, couvreurs et électriciens — procède à l'installation de vos panneaux photovoltaïques. L'intervention se déroule en plusieurs phases : sécurisation du site, installation, mise en service, explications détaillées, nettoyage complet du chantier, et gestion des déchets. Tout est réalisé par nos équipes internes. Aucune sous-traitance, c'est notre promesse. Vous êtes prêt à briller !",
+  },
+  {
+    id: 'suivi',
+    title: 'Suivi et optimisation',
+    icon: 'pulse',
+    body: "Vos panneaux solaires sont en place ! Nous restons à votre disposition pour répondre à toutes vos questions sur l'autoconsommation solaire. Que ce soit pour le suivi des performances, une question technique, ou un service après-vente, notre équipe intervient chez vous sous 72 heures.",
+  },
+];
+---
+
+<section
+  id="etapes-particulier"
+  class="relative w-full py-20 lg:py-28 bg-ink overflow-hidden border-t border-white/5"
+  data-etapes-section
+>
+  <!-- Halo signature -->
+  <div
+    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] rounded-full bg-sky-brand/[0.06] blur-[180px] pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
+    <!-- Titre centré -->
+    <h2
+      class="text-center font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-[2.75rem] leading-[1.15] tracking-tight max-w-4xl mx-auto"
+      data-split-words
+    >
+      Votre solution solaire clé en main en
+      <span class="text-sun">4 étapes.</span>
+    </h2>
+
+    <!-- Grid : timeline gauche / panneau hero droite -->
+    <div
+      class="mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-8 lg:gap-12 items-stretch"
+    >
+      <!-- ─── COLONNE GAUCHE : timeline verticale ─── -->
+      <div class="relative" role="tablist" aria-label="Étapes de votre projet solaire">
+        <!-- Spine verticale (background) — bornée dynamiquement entre 1er et dernier dot -->
+        <span
+          class="absolute left-[18px] w-px bg-white/15 pointer-events-none"
+          aria-hidden="true"
+          data-etape-spine-bg
+          style="top: 0; height: 0;"
+        >
+        </span>
+        <!-- Spine sky-brand qui se remplit jusqu'à l'étape active -->
+        <span
+          class="absolute left-[18px] w-px bg-sky-brand pointer-events-none transition-[height] duration-500 ease-out"
+          aria-hidden="true"
+          data-etape-spine
+          style="top: 0; height: 0;"
+        >
+        </span>
+
+        <ul class="flex flex-col gap-3 lg:gap-4">
+          {
+            steps.map((s, i) => (
+              <li>
+                <button
+                  type="button"
+                  class={`etape-tab ${i === 0 ? 'is-active' : ''} relative w-full text-left pl-12 pr-5 py-4 lg:py-5 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-md transition-all duration-300 group focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-brand`}
+                  role="tab"
+                  id={`tab-${s.id}`}
+                  aria-controls={`panel-${s.id}`}
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  data-tab-target={s.id}
+                  data-tab-index={i}
+                >
+                  {/* Dot sur la timeline */}
+                  <span
+                    class="etape-dot absolute left-[10px] top-1/2 -translate-y-1/2 w-[18px] h-[18px] rounded-full bg-ink border-2 border-white/30 z-10 transition-all duration-300 flex items-center justify-center"
+                    aria-hidden="true"
+                  >
+                    <span class="etape-dot-inner w-2 h-2 rounded-full bg-transparent transition-colors duration-300" />
+                  </span>
+
+                  <span class="flex items-center gap-3">
+                    <span class="etape-num font-display font-bold text-sm lg:text-base text-white/40 transition-colors duration-300 tabular-nums shrink-0">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span class="etape-label font-display font-bold text-sm lg:text-base text-white/70 transition-colors duration-300 leading-tight">
+                      {s.title}
+                    </span>
+                    <span
+                      class="etape-arrow ml-auto text-white/30 transition-all duration-300 group-hover:translate-x-1"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </span>
+                </button>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- ─── COLONNE DROITE : panneau hero (numéro filigrane + icône + texte) ─── -->
+      <div class="relative" data-etapes-panels>
+        {
+          steps.map((s, i) => (
+            <div
+              class={`etape-panel ${i === 0 ? 'is-active relative' : 'absolute inset-0'} overflow-hidden p-7 lg:p-10 rounded-md bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/12 backdrop-blur-md`}
+              role="tabpanel"
+              id={`panel-${s.id}`}
+              aria-labelledby={`tab-${s.id}`}
+              aria-hidden={i === 0 ? 'false' : 'true'}
+              data-panel={s.id}
+            >
+              {/* Numéro géant filigrane en arrière-plan (outline) */}
+              <span
+                class="absolute -top-6 -right-2 lg:-top-10 lg:-right-4 font-display font-black text-[8rem] lg:text-[12rem] leading-none tabular-nums pointer-events-none select-none"
+                style="color: transparent; -webkit-text-stroke: 2px rgba(32, 184, 241, 0.18);"
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+
+              {/* Header : icône + badge "étape X / 4" */}
+              <div class="relative z-10 flex items-start justify-between gap-4 mb-5 lg:mb-7">
+                <div class="w-14 h-14 lg:w-16 lg:h-16 rounded-md bg-sky-brand/10 border border-sky-brand/30 text-sky-brand flex items-center justify-center shrink-0">
+                  {s.icon === 'search' && (
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-7 h-7 lg:w-8 lg:h-8"
+                      aria-hidden="true"
+                    >
+                      <circle cx="11" cy="11" r="7" />
+                      <line x1="21" y1="21" x2="16.5" y2="16.5" />
+                      <path d="M8 11h6M11 8v6" />
+                    </svg>
+                  )}
+                  {s.icon === 'paper' && (
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-7 h-7 lg:w-8 lg:h-8"
+                      aria-hidden="true"
+                    >
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <line x1="8" y1="13" x2="16" y2="13" />
+                      <line x1="8" y1="17" x2="13" y2="17" />
+                    </svg>
+                  )}
+                  {s.icon === 'tools' && (
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-7 h-7 lg:w-8 lg:h-8"
+                      aria-hidden="true"
+                    >
+                      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                    </svg>
+                  )}
+                  {s.icon === 'pulse' && (
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-7 h-7 lg:w-8 lg:h-8"
+                      aria-hidden="true"
+                    >
+                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                  )}
+                </div>
+
+                <span class="px-3 py-1.5 rounded-pill bg-white/[0.06] border border-white/10 text-white/60 text-[10px] lg:text-xs uppercase tracking-[0.18em] font-bold whitespace-nowrap shrink-0">
+                  Étape {i + 1} / {steps.length}
+                </span>
+              </div>
+
+              <h3 class="relative z-10 font-display font-bold text-2xl lg:text-3xl text-white leading-tight mb-4 lg:mb-5">
+                {s.title}
+              </h3>
+              <p class="relative z-10 text-white/90 text-sm lg:text-base leading-relaxed">
+                {s.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* État ACTIF du bouton onglet */
+  .etape-tab.is-active {
+    background-color: rgba(32, 184, 241, 0.1);
+    border-color: rgba(32, 184, 241, 0.45);
+    box-shadow:
+      0 15px 40px -15px rgba(32, 184, 241, 0.5),
+      0 6px 18px -8px rgba(0, 0, 0, 0.5);
+  }
+  .etape-tab.is-active .etape-dot {
+    border-color: var(--color-sky-brand);
+    box-shadow: 0 0 0 4px rgba(32, 184, 241, 0.15);
+  }
+  .etape-tab.is-active .etape-dot-inner {
+    background-color: var(--color-sky-brand);
+  }
+  .etape-tab.is-active .etape-num {
+    color: var(--color-sun);
+  }
+  .etape-tab.is-active .etape-label {
+    color: #ffffff;
+  }
+  .etape-tab.is-active .etape-arrow {
+    color: var(--color-sky-brand);
+  }
+
+  /* HOVER inactif */
+  .etape-tab:not(.is-active):hover {
+    background-color: rgba(255, 255, 255, 0.07);
+    border-color: rgba(32, 184, 241, 0.25);
+  }
+  .etape-tab:not(.is-active):hover .etape-label {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .etape-tab:not(.is-active):hover .etape-num {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .etape-tab:not(.is-active):hover .etape-dot {
+    border-color: rgba(32, 184, 241, 0.45);
+  }
+
+  /* Étape déjà visitée (validée) — dot rempli sky-brand atténué */
+  .etape-tab.is-completed .etape-dot {
+    border-color: var(--color-sky-brand);
+  }
+  .etape-tab.is-completed .etape-dot-inner {
+    background-color: rgba(32, 184, 241, 0.55);
+  }
+
+  /* Crossfade des panneaux : visibility hidden coupe complètement le rendu
+     (backdrop-blur + bordures + ombres) → pas de halo cumulé. */
+  .etape-panel {
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease,
+      visibility 0s linear 0.4s;
+  }
+  .etape-panel:not(.is-active) {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    pointer-events: none;
+  }
+  .etape-panel.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease,
+      visibility 0s linear 0s;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.etape-tab'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('.etape-panel'));
+  const spine = document.querySelector<HTMLElement>('[data-etape-spine]');
+  const spineBg = document.querySelector<HTMLElement>('[data-etape-spine-bg]');
+  const section = document.querySelector<HTMLElement>('[data-etapes-section]');
+
+  // Position et hauteur de la spine de fond : du 1er dot au dernier dot
+  const positionSpineBg = () => {
+    if (!spineBg || tabs.length < 2) return;
+    const list = tabs[0].closest('ul');
+    if (!list) return;
+    const listRect = list.getBoundingClientRect();
+    const firstDot = tabs[0].querySelector<HTMLElement>('.etape-dot');
+    const lastDot = tabs[tabs.length - 1].querySelector<HTMLElement>('.etape-dot');
+    if (!firstDot || !lastDot) return;
+    const firstRect = firstDot.getBoundingClientRect();
+    const lastRect = lastDot.getBoundingClientRect();
+    const top = firstRect.top + firstRect.height / 2 - listRect.top;
+    const bottom = lastRect.top + lastRect.height / 2 - listRect.top;
+    spineBg.style.top = `${top}px`;
+    spineBg.style.height = `${Math.max(0, bottom - top)}px`;
+    // La spine sky-brand active part du même top
+    if (spine) spine.style.top = `${top}px`;
+  };
+
+  // Met à jour la spine sky-brand selon l'index actif
+  const updateSpine = (activeIndex: number) => {
+    if (!spine || tabs.length === 0) return;
+    if (activeIndex <= 0) {
+      spine.style.height = '0';
+      return;
+    }
+    const list = tabs[0].closest('ul');
+    if (!list) return;
+    const listRect = list.getBoundingClientRect();
+    const firstDot = tabs[0].querySelector<HTMLElement>('.etape-dot');
+    const activeTab = tabs[activeIndex];
+    const activeDot = activeTab.querySelector<HTMLElement>('.etape-dot');
+    if (!firstDot || !activeDot) return;
+    const firstRect = firstDot.getBoundingClientRect();
+    const activeRect = activeDot.getBoundingClientRect();
+    const top = firstRect.top + firstRect.height / 2 - listRect.top;
+    const targetY = activeRect.top + activeRect.height / 2 - listRect.top;
+    spine.style.height = `${Math.max(0, targetY - top)}px`;
+  };
+
+  // Activate un onglet
+  const activate = (target: string) => {
+    let activeIdx = 0;
+    tabs.forEach((t, i) => {
+      const isMatch = t.dataset.tabTarget === target;
+      t.classList.toggle('is-active', isMatch);
+      t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      if (isMatch) activeIdx = i;
+    });
+    // Marque les onglets précédents comme "completed"
+    tabs.forEach((t, i) => {
+      t.classList.toggle('is-completed', i < activeIdx);
+    });
+    panels.forEach((p) => {
+      const isMatch = p.dataset.panel === target;
+      p.classList.toggle('is-active', isMatch);
+      p.setAttribute('aria-hidden', isMatch ? 'false' : 'true');
+      if (isMatch) {
+        p.classList.remove('absolute', 'inset-0');
+        p.classList.add('relative');
+      } else {
+        p.classList.remove('relative');
+        p.classList.add('absolute', 'inset-0');
+      }
+    });
+    updateSpine(activeIdx);
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tabTarget;
+      if (target) activate(target);
+    });
+  });
+
+  // État initial : étape 1 active, positionne la spine de fond
+  requestAnimationFrame(() => {
+    positionSpineBg();
+    updateSpine(0);
+  });
+  window.addEventListener('resize', () => {
+    positionSpineBg();
+    const activeIdx = tabs.findIndex((t) => t.classList.contains('is-active'));
+    updateSpine(Math.max(0, activeIdx));
+  });
+
+  // Reveal au scroll
+  if (section && !prefersReducedMotion) {
+    gsap.fromTo(
+      tabs,
+      { opacity: 0, x: -28 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 90%',
+          once: true,
+        },
+      }
+    );
+
+    const activePanel = panels.find((p) => p.classList.contains('is-active'));
+    if (activePanel) {
+      gsap.fromTo(
+        activePanel,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          delay: 0.15,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 90%',
+            once: true,
+          },
+        }
+      );
+    }
+  }
+</script>

@@ -1,0 +1,176 @@
+---
+// Liste ordonnée par numéro de département (cohérent avec la capture)
+const zones = [
+  { id: '08', name: 'Ardennes', cities: 'Charleville-Mézières, Sedan, Rethel…' },
+  { id: '10', name: 'Aube', cities: 'Troyes, Bar-sur-Aube, Romilly-sur-Seine…' },
+  { id: '51', name: 'Marne', cities: 'Reims, Épernay, Châlons-en-Champagne…' },
+  { id: '52', name: 'Haute-Marne', cities: 'Chaumont, Saint-Dizier, Langres…' },
+  { id: '54', name: 'Meurthe-et-Moselle', cities: 'Nancy, Lunéville, Toul…' },
+  { id: '55', name: 'Meuse', cities: 'Verdun, Bar-le-Duc, Commercy…' },
+  { id: '57', name: 'Moselle', cities: 'Metz, Thionville, Sarreguemines…' },
+  { id: '67', name: 'Bas-Rhin', cities: 'Strasbourg, Haguenau, Sélestat…' },
+  { id: '68', name: 'Haut-Rhin', cities: 'Mulhouse, Colmar, Saint-Louis…' },
+  { id: '88', name: 'Vosges', cities: 'Épinal, Saint-Dié-des-Vosges, Gérardmer…' },
+];
+---
+
+<section
+  id="zones"
+  class="relative w-full lg:h-[220vh]"
+  data-zones-section
+>
+  <div class="relative w-full lg:sticky lg:top-0 lg:h-screen overflow-hidden py-20 lg:py-0">
+    <div
+      class="relative z-10 lg:h-full max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 items-center"
+    >
+      <!-- Colonne gauche : titre + liste qui se construit (passe en order-2 sur mobile) -->
+      <div class="relative flex flex-col order-2 lg:order-1">
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-4">
+          Nos zones d'intervention
+        </p>
+        <h2
+          class="font-display font-black text-3xl lg:text-5xl leading-[1.0] tracking-tight mb-8 lg:mb-10"
+          data-split-words
+        >
+          Dans tout le <span class="text-sun">Grand-Est.</span>
+        </h2>
+
+        <ul class="space-y-2 lg:space-y-2.5 text-sm lg:text-[15px]">
+          {
+            zones.map((z, i) => (
+              <li
+                data-zone-row
+                data-zone-id={z.id}
+                style="opacity: 0; transform: translateY(12px);"
+                class="flex items-baseline gap-3 lg:gap-4 py-1.5 px-2 -mx-2 rounded-md transition-colors duration-200 hover:bg-sky-brand/10 cursor-default"
+              >
+                <span class="font-display font-bold text-sun w-9 shrink-0 tabular-nums">
+                  {z.id}
+                </span>
+                <span class="font-display font-bold text-white shrink-0 w-[148px] lg:w-[170px]">
+                  {z.name}
+                </span>
+                <span class="text-white/55 leading-snug">{z.cities}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <a
+          href="/contact"
+          class="mt-8 lg:mt-10 inline-flex items-center gap-2 px-6 py-3.5 rounded-pill bg-sky-brand text-ink font-bold w-fit hover:scale-[1.02] transition-transform duration-200"
+        >
+          Demander un bilan 100 % gratuit
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <!-- Colonne droite : carte officielle Grand-Est avec reveal scroll-scrubbé -->
+      <div class="relative flex items-center justify-center order-1 lg:order-2" data-zone-map-wrap>
+        <div class="relative w-full max-w-[280px] sm:max-w-[380px] lg:max-w-[520px] aspect-square">
+          <!-- Halo bleu derrière la carte -->
+          <div
+            class="absolute inset-0 rounded-full bg-sky-brand/15 blur-3xl scale-90"
+            aria-hidden="true"
+          >
+          </div>
+
+          <!-- Carte révélée au scroll (clip-path qui s'ouvre du haut vers le bas) -->
+          <img
+            src="/images/carte_Grand_Est.png"
+            alt="Carte du Grand-Est avec ses 10 départements : Ardennes, Marne, Aube, Haute-Marne, Meuse, Meurthe-et-Moselle, Moselle, Bas-Rhin, Haut-Rhin, Vosges"
+            class="relative w-full h-full object-contain drop-shadow-[0_8px_40px_rgba(32,184,241,0.35)]"
+            data-zone-map
+            style="clip-path: inset(0 0 100% 0);"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-zones-section]');
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-zone-row]'));
+  const map = document.querySelector<HTMLImageElement>('[data-zone-map]');
+  const mapWrap = document.querySelector<HTMLElement>('[data-zone-map-wrap]');
+  const list = rows[0]?.parentElement;
+
+  if (section && rows.length && !prefersReducedMotion) {
+    const mm = gsap.matchMedia();
+
+    // ─── DESKTOP (≥ lg : 1024px) — section pinnée 220vh, scrub sur la section ───
+    mm.add('(min-width: 1024px)', () => {
+      gsap.to(rows, {
+        opacity: 1,
+        y: 0,
+        ease: 'none',
+        stagger: { amount: 0.85, from: 'start' },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.5,
+        },
+      });
+
+      if (map) {
+        gsap.to(map, {
+          clipPath: 'inset(0 0 0% 0)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.5,
+          },
+        });
+      }
+    });
+
+    // ─── MOBILE / TABLETTE (< lg) — pas de pin, scrub sur l'élément lui-même ───
+    mm.add('(max-width: 1023.98px)', () => {
+      // Carte : se révèle quand son wrapper entre dans le viewport
+      if (map && mapWrap) {
+        gsap.to(map, {
+          clipPath: 'inset(0 0 0% 0)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: mapWrap,
+            start: 'top 85%',
+            end: 'bottom 35%',
+            scrub: 0.5,
+          },
+        });
+      }
+
+      // Liste : stagger sur l'entrée de la liste dans le viewport
+      if (list) {
+        gsap.to(rows, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          stagger: 0.06,
+          scrollTrigger: {
+            trigger: list,
+            start: 'top 85%',
+            once: true,
+          },
+        });
+      }
+    });
+  } else if (prefersReducedMotion) {
+    rows.forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    if (map) map.style.clipPath = 'inset(0 0 0% 0)';
+  }
+</script>

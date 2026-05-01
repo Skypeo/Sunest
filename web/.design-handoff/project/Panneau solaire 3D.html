@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Panneau solaire — Modèle 3D</title>
+<style>
+  :root {
+    --bg-a: #d8d8d8;
+    --bg-b: #ededed;
+    --ink: #1a1a1a;
+    --ink-soft: #6b6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background:
+      linear-gradient(45deg, var(--bg-a) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--bg-a) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--bg-a) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--bg-a) 75%);
+    background-size: 28px 28px;
+    background-position: 0 0, 0 14px, 14px -14px, -14px 0;
+    background-color: var(--bg-b);
+  }
+  #stage {
+    position: fixed;
+    inset: 0;
+  }
+  #stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .topbar {
+    position: fixed;
+    top: 18px;
+    left: 20px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px 10px 12px;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 14px;
+    box-shadow: 0 6px 20px -8px rgba(0,0,0,0.18);
+  }
+  .topbar .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: oklch(0.72 0.16 145);
+    box-shadow: 0 0 0 4px oklch(0.72 0.16 145 / 0.2);
+  }
+  .topbar h1 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+  .topbar small {
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .hint {
+    position: fixed;
+    bottom: 22px;
+    left: 22px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    user-select: none;
+    pointer-events: none;
+  }
+  .hint .row {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hint .key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px; height: 18px;
+    padding: 0 5px;
+    background: rgba(255,255,255,0.85);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 10px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .badge {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 5;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 10px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    pointer-events: none;
+  }
+  .badge b { color: var(--ink); font-weight: 600; }
+  /* Hide tweaks default chrome harmony */
+  .tweaks-toggle-hidden { display: none !important; }
+</style>
+
+<!-- Three.js via importmap -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<!-- React + Babel for the Tweaks panel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="dot"></span>
+  <div>
+    <h1>Panneau solaire — Modèle 3D</h1>
+    <small>Glisser pour orbiter · molette pour zoomer · clic droit pour déplacer</small>
+  </div>
+</div>
+
+<div class="hint">
+  <div class="row"><span class="key">Drag</span><span>orbiter</span></div>
+  <div class="row"><span class="key">Wheel</span><span>zoom</span></div>
+  <div class="row"><span class="key">R-Click</span><span>pan</span></div>
+</div>
+
+<div class="badge" id="fpsBadge">
+  <b id="fpsVal">60</b> fps · <b id="triVal">—</b> tris
+</div>
+
+<div id="stage"></div>
+
+<!-- Three.js scene -->
+<script type="module" src="scene.js?v=2"></script>
+
+<!-- Tweaks panel -->
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-app.jsx"></script>
+
+</body>
+</html>

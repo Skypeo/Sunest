@@ -1,0 +1,246 @@
+---
+// Hero "Nos réalisations" — pattern signature oryzo : la photo zoom du fond
+// Inspiré de Pourquoi.astro, mais avec :
+//   - Texte final en BAS de l'écran (pas à gauche → différent de Pourquoi)
+//   - Acte 1 : kicker centré + flèche scroll
+//   - Acte 2 : photo fullbleed + titre + sub par-dessus avec voile bottom
+---
+
+<section
+  id="hero-realisations"
+  class="relative w-full"
+  style="height: 280vh;"
+  data-hero-section
+>
+  <div class="sticky top-0 h-screen w-full overflow-hidden bg-ink">
+    <!-- Photo : démarre petite/centrée, grandit jusqu'à full bleed -->
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md overflow-hidden bg-white/5 ring-1 ring-white/15 will-change-transform"
+      data-hero-frame
+    >
+      <img
+        src="/images/hero_realisation.webp"
+        alt="Réalisation Sun Est en Grand-Est"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover will-change-transform"
+        data-hero-img
+      />
+    </div>
+
+    <!-- Voile bottom : apparaît quand la photo grandit pour rendre le titre lisible -->
+    <div
+      class="absolute inset-0 z-10 bg-gradient-to-t from-ink via-ink/45 to-transparent pointer-events-none opacity-0"
+      data-hero-overlay
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- ACTE 1 : kicker centré + mouse scroll dynamique (visible début, fade out tôt) -->
+    <div
+      class="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 text-center gap-6 lg:gap-8"
+      data-hero-intro
+    >
+      <p
+        class="text-sky-brand font-bold uppercase tracking-[0.22em] text-sm lg:text-base"
+      >
+        Nos réalisations
+      </p>
+      <p
+        class="text-white/80 font-display font-bold text-xl sm:text-2xl lg:text-3xl uppercase tracking-[0.18em] leading-tight"
+      >
+        Découvrez nos chantiers
+      </p>
+
+      <!-- Mouse scroll indicator (signature) : souris + dot qui descend en boucle -->
+      <div class="flex flex-col items-center gap-2.5 mt-2">
+        <span
+          class="w-7 h-11 lg:w-8 lg:h-12 rounded-full border-2 border-white/40 flex items-start justify-center pt-2"
+          aria-hidden="true"
+        >
+          <span
+            class="block w-1.5 h-3 bg-sky-brand rounded-full"
+            style="animation: hero-scroll-dot 1.8s ease-in-out infinite;"
+          ></span>
+        </span>
+        <span class="text-white/45 text-[10px] lg:text-xs uppercase tracking-[0.3em]">
+          Scroll
+        </span>
+      </div>
+    </div>
+
+    <!-- ACTE 2 : titre + sub en bas, par-dessus la photo full bleed -->
+    <div
+      class="absolute inset-x-0 bottom-0 z-30 px-6 lg:px-12 pb-12 lg:pb-20 pointer-events-none opacity-0 will-change-[opacity,transform]"
+      data-hero-final
+    >
+      <div class="max-w-4xl mx-auto text-center pointer-events-auto">
+        <p
+          class="text-sky-brand font-bold uppercase tracking-[0.22em] text-[10px] lg:text-xs mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+        >
+          + de 1500 chantiers
+        </p>
+        <h1
+          class="font-display font-black text-3xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight drop-shadow-[0_4px_28px_rgba(0,0,0,0.85)]"
+          data-split-words
+        >
+          Ils ont fait <span class="text-sun">confiance</span> à Sun Est pour leur installation.
+        </h1>
+        <p
+          class="mt-5 lg:mt-7 text-white/85 text-sm lg:text-base leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_15px_rgba(0,0,0,0.9)]"
+        >
+          Particuliers, professionnels, collectivités — découvrez les chantiers qui ont marqué
+          notre savoir-faire à travers le Grand-Est.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes hero-scroll-dot {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    60% {
+      transform: translateY(10px);
+      opacity: 0.2;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero-intro] [style*='hero-scroll-dot'] {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-hero-section]');
+  const frame = document.querySelector<HTMLElement>('[data-hero-frame]');
+  const img = document.querySelector<HTMLElement>('[data-hero-img]');
+  const overlay = document.querySelector<HTMLElement>('[data-hero-overlay]');
+  const intro = document.querySelector<HTMLElement>('[data-hero-intro]');
+  const final = document.querySelector<HTMLElement>('[data-hero-final]');
+
+  // Dimensions (recalculées au resize)
+  let vw = window.innerWidth;
+  let vh = window.innerHeight;
+  let startW = 0;
+  let startH = 0;
+  let endW = 0;
+  let endH = 0;
+
+  function recompute() {
+    vw = window.innerWidth;
+    vh = window.innerHeight;
+    // Petit format de départ (centré, paysage 16/10)
+    startW = Math.min(vw * 0.45, 620);
+    startH = startW * (10 / 16);
+    // Final : couvre tout le viewport
+    endW = vw;
+    endH = vh;
+  }
+  recompute();
+  window.addEventListener('resize', () => {
+    recompute();
+    ScrollTrigger.refresh();
+  });
+
+  // État initial
+  if (frame) {
+    frame.style.width = `${startW}px`;
+    frame.style.height = `${startH}px`;
+    frame.style.borderRadius = '8px';
+  }
+
+  if (section && frame && !prefersReducedMotion) {
+    function lerp(a: number, b: number, t: number): number {
+      return a + (b - a) * t;
+    }
+    function smoothstep(t: number): number {
+      const c = Math.max(0, Math.min(1, t));
+      return c * c * (3 - 2 * c);
+    }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const p = self.progress;
+
+        // Photo grossit du centre vers full bleed (0 → 70 % du scroll)
+        const growT = smoothstep(p / 0.7);
+        const w = lerp(startW, endW, growT);
+        const h = lerp(startH, endH, growT);
+        const radius = lerp(8, 0, growT);
+        if (frame) {
+          frame.style.width = `${w}px`;
+          frame.style.height = `${h}px`;
+          frame.style.borderRadius = `${radius}px`;
+        }
+
+        // Image : "venue du fond" (focus + blur fade) sur 0-25 %
+        if (img) {
+          const focus = smoothstep(p / 0.25);
+          img.style.opacity = String(0.55 + focus * 0.45);
+          img.style.filter = `blur(${(1 - focus) * 8}px)`;
+        }
+
+        // Voile bottom : 0 → 1 entre 45-75 %
+        if (overlay) {
+          const overT = smoothstep((p - 0.45) / 0.3);
+          overlay.style.opacity = String(overT);
+        }
+
+        // Intro centrée : visible 0-25 %, fade out + scale down
+        if (intro) {
+          const introOp = Math.max(0, 1 - p / 0.25);
+          intro.style.opacity = String(introOp);
+          intro.style.transform = `scale(${1 - (1 - introOp) * 0.08})`;
+        }
+
+        // Acte final : apparaît 60-85 %, slide-up + fade
+        if (final) {
+          const finalT = smoothstep((p - 0.6) / 0.2);
+          final.style.opacity = String(finalT);
+          final.style.transform = `translateY(${(1 - finalT) * 24}px)`;
+        }
+      },
+    });
+  } else if (prefersReducedMotion) {
+    // Reduced motion : photo full bleed direct, texte visible
+    if (frame) {
+      frame.style.width = '100%';
+      frame.style.height = '100%';
+      frame.style.borderRadius = '0';
+      frame.style.top = '0';
+      frame.style.left = '0';
+      frame.style.transform = 'none';
+    }
+    if (img) {
+      img.style.opacity = '1';
+      img.style.filter = 'none';
+    }
+    if (overlay) overlay.style.opacity = '1';
+    if (intro) intro.style.opacity = '0';
+    if (final) {
+      final.style.opacity = '1';
+      final.style.transform = 'none';
+    }
+  }
+</script>

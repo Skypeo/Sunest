@@ -1,0 +1,175 @@
+---
+---
+
+<section
+  id="contact"
+  class="relative w-full border-t border-white/5"
+  style="height: 220vh;"
+  data-contact-section
+>
+  <div class="sticky top-0 h-screen w-full overflow-hidden bg-ink">
+    <!-- Grille panneau photovoltaïque (16×12 = 192 cellules) full bleed -->
+    <div
+      class="absolute inset-0 z-0 grid gap-[3px] pointer-events-none"
+      style="grid-template-columns: repeat(16, 1fr); grid-template-rows: repeat(12, 1fr);"
+      data-cells-grid
+      aria-hidden="true"
+    >
+      {
+        Array.from({ length: 192 }).map((_, i) => (
+          <div
+            data-cell={i}
+            class="bg-sky-brand/[0.05] border border-sky-brand/[0.16] rounded-[2px]"
+            style="opacity: 0; transform: scale(0.3);"
+          />
+        ))
+      }
+    </div>
+
+    <!-- Blob unique pour donner un peu de profondeur (subtil) -->
+    <div
+      class="absolute inset-0 z-[1] pointer-events-none"
+      aria-hidden="true"
+    >
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-sky-brand/[0.10] blur-[180px] will-change-transform"
+        data-blob="1"
+      >
+      </div>
+      <div
+        class="absolute -bottom-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-sun/[0.08] blur-[140px] will-change-transform"
+        data-blob="2"
+      >
+      </div>
+    </div>
+
+    <!-- Contenu centré, par-dessus la grille -->
+    <div
+      class="relative z-10 h-full max-w-6xl mx-auto px-6 lg:px-10 text-center flex flex-col items-center justify-center"
+      data-contact-content
+    >
+      <p
+        class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-6"
+        data-contact-line
+      >
+        Réalisez un bilan solaire gratuit
+      </p>
+
+      <h2
+        class="font-display font-black text-3xl sm:text-4xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight"
+        data-contact-line
+      >
+        <span class="block">Vous avez des questions</span>
+        <span class="block">sur votre projet <span class="text-sun">photovoltaïque ?</span></span>
+      </h2>
+
+      <p
+        class="mt-8 text-white/70 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto"
+        data-contact-line
+      >
+        Réalisez un bilan gratuit et personnalisé à domicile avec un conseiller solaire de votre
+        région.<br />Nos conseillers sont à vos côtés du lundi au vendredi, de 9 h à 19 h, et le
+        samedi de 9 h à 13 h, pour planifier votre rendez-vous (service & appel gratuits).
+      </p>
+
+      <div
+        class="mt-10 lg:mt-12 flex flex-wrap items-center justify-center gap-4"
+        data-contact-line
+      >
+        <a
+          href="#devis"
+          class="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-sun text-ink font-bold hover:scale-[1.03] transition-transform duration-200"
+        >
+          Demander une étude 100 % gratuite
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="tel:+33372611735"
+          class="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 font-bold transition-colors duration-200"
+        >
+          Contactez-nous
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    // Blobs qui flottent en boucle infinie
+    gsap.to('[data-blob="1"]', {
+      x: 60,
+      y: -30,
+      scale: 1.1,
+      duration: 14,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut',
+    });
+    gsap.to('[data-blob="2"]', {
+      x: -50,
+      y: 40,
+      scale: 1.15,
+      duration: 16,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut',
+      delay: -4,
+    });
+
+    // Grille panneau : assemblage scrubbé sur le scroll de la section
+    // Démarre avant le pin (start: 'top 60%') pour que la grille soit déjà à ~40 %
+    // formée au moment où le pin se déclenche → pas de section vide à l'arrivée.
+    // Termine avant la fin du pin pour que tout soit posé pendant la lecture.
+    gsap.to('[data-cell]', {
+      opacity: 1,
+      scale: 1,
+      ease: 'none',
+      stagger: {
+        amount: 1,
+        from: 'start',
+        grid: [12, 16],
+      },
+      scrollTrigger: {
+        trigger: '[data-contact-section]',
+        start: 'top 60%',
+        end: 'bottom 80%',
+        scrub: 0.5,
+      },
+    });
+
+    // Contenu (texte + CTAs) qui apparaît AVEC les cellules, en sync sur le scroll
+    gsap.set('[data-contact-line]', { opacity: 0, y: 28 });
+    gsap.to('[data-contact-line]', {
+      opacity: 1,
+      y: 0,
+      ease: 'none',
+      stagger: {
+        amount: 0.6,
+        from: 'start',
+      },
+      scrollTrigger: {
+        trigger: '[data-contact-section]',
+        start: 'top 60%',
+        end: 'bottom 80%',
+        scrub: 0.5,
+      },
+    });
+  } else {
+    document.querySelectorAll<HTMLElement>('[data-cell]').forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'scale(1)';
+    });
+    document.querySelectorAll<HTMLElement>('[data-contact-line]').forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+  }
+</script>
