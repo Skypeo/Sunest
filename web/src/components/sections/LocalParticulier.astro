@@ -1,0 +1,165 @@
+---
+// Section "Installateur photovoltaïque du Grand-Est"
+// Layout : H2 en haut + grid 2 cols (TEXTE gauche + PHOTO droite, même hauteur).
+// Animation : la photo démarre floutée + décalée vers le haut, descend tout droit
+// pour se placer à côté du texte. Le texte gauche apparaît en cascade.
+const imgSrc = '/images/pourquoiSunEst/DSC06837-1024x683.webp';
+---
+
+<section
+  id="local-particulier"
+  class="relative w-full bg-ink lg:h-[220vh] py-20 lg:py-0"
+  data-local-section
+>
+  <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden lg:flex lg:items-center">
+    <div class="mx-auto max-w-7xl w-full px-6 lg:px-10 lg:py-[4vh]">
+      <!-- Titre H2 en haut -->
+      <div class="max-w-4xl mb-8 lg:mb-10">
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs lg:text-sm mb-3">
+          Acteur 100 % local
+        </p>
+        <h2
+          class="font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-[2.75rem] leading-[1.15] tracking-tight"
+        >
+          Installateur photovoltaïque <span class="text-sun">du Grand-Est</span>
+        </h2>
+      </div>
+
+      <!-- Grid : 1 col mobile (photo dessus / texte dessous), 2 cols desktop (texte gauche / photo droite) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+        <!-- Colonne gauche (desktop) : contenu texte / Order 2 sur mobile -->
+        <div class="flex flex-col justify-center min-w-0 order-2 lg:order-1">
+          <p
+            class="text-white/75 text-base lg:text-lg leading-relaxed"
+            data-local-item={0}
+          >
+            Sun Est est un installateur de panneaux solaires qui intervient exclusivement dans la région
+            Grand Est, couvrant l'ensemble des villes principales et leurs environs :
+          </p>
+
+          <h3
+            class="mt-5 font-display font-bold text-xl lg:text-2xl text-white leading-tight"
+            data-local-item={1}
+          >
+            En région Grand Est
+          </h3>
+
+          <p
+            class="mt-3 text-white/85 text-base leading-relaxed"
+            data-local-item={2}
+          >
+            Que vous soyez à Strasbourg, Nancy, Metz, Reims, Mulhouse, Besançon, Troyes, Colmar, Belfort,
+            Thionville, Montbéliard, Dijon, Chalon-sur-Saône ou Charleville-Mézières, <strong class="font-semibold text-white">Sun Est</strong>,
+            spécialiste des systèmes photovoltaïques, est votre partenaire de confiance pour l'installation
+            de panneaux solaires. Nous sommes la référence pour vos projets d'autoconsommation électrique,
+            avec ou sans revente de surplus.
+          </p>
+
+          <!-- CTA primaire -->
+          <div class="mt-6" data-local-item={3}>
+            <a
+              href="/contact"
+              class="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
+            >
+              Demander une étude 100 % gratuite
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Colonne droite (desktop) : photo / Order 1 sur mobile (au-dessus du texte) -->
+        <div
+          class="relative rounded-md overflow-hidden bg-white/5 min-h-[55vw] sm:min-h-[50vw] lg:min-h-0 will-change-transform order-1 lg:order-2"
+          data-local-frame
+        >
+          <img
+            src={imgSrc}
+            alt="L'équipe Sun Est devant des panneaux photovoltaïques"
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 w-full h-full object-cover"
+            data-local-img
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+  const section = document.querySelector<HTMLElement>('[data-local-section]');
+  const frame = document.querySelector<HTMLElement>('[data-local-frame]');
+  const img = document.querySelector<HTMLElement>('[data-local-img]');
+  const items = document.querySelectorAll<HTMLElement>('[data-local-item]');
+
+  function smoothstep(t: number): number {
+    const c = Math.max(0, Math.min(1, t));
+    return c * c * (3 - 2 * c);
+  }
+
+  // Mobile/tablette : tout visible direct, pas de pin
+  if (!isDesktop || prefersReducedMotion) {
+    if (frame) {
+      frame.style.opacity = '1';
+      frame.style.transform = 'translateY(0)';
+    }
+    if (img) img.style.filter = 'blur(0)';
+    items.forEach((el) => (el.style.opacity = '1'));
+  } else if (section) {
+    // Desktop : état initial caché + scroll-pin
+    if (frame) {
+      frame.style.transform = 'translateY(-25%)';
+      frame.style.opacity = '0.55';
+    }
+    if (img) {
+      img.style.filter = 'blur(18px)';
+    }
+    items.forEach((el) => {
+      el.style.opacity = '0';
+    });
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const p = self.progress;
+
+        // Photo : descend tout droit (translateY) entre 0-45 %
+        const fallT = smoothstep(p / 0.45);
+        if (frame) {
+          const ty = -25 * (1 - fallT);
+          frame.style.transform = `translateY(${ty}%)`;
+          frame.style.opacity = String(0.55 + fallT * 0.45);
+        }
+        if (img) {
+          img.style.filter = `blur(${(1 - fallT) * 18}px)`;
+        }
+
+        // Items texte gauche : reveal cumulatif 35-95 %
+        const N = items.length;
+        const itemStart = 0.35;
+        const itemEnd = 0.95;
+        const span = (itemEnd - itemStart) / N;
+        for (let i = 0; i < N; i++) {
+          const startP = itemStart + i * span;
+          const localT = (p - startP) / (span * 1.3);
+          const op = Math.max(0, Math.min(1, localT));
+          const el = items[i];
+          if (el) {
+            el.style.opacity = String(op);
+            el.style.transform = `translateY(${(1 - op) * 14}px)`;
+          }
+        }
+      },
+    });
+  }
+</script>

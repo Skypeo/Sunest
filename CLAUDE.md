@@ -7,16 +7,17 @@ Travail réalisé par **Skypeo** (l'utilisateur, monke). Le client a validé l'a
 
 **Référence visuelle** : [oryzo.ai](https://oryzo.ai/) — Astro + Three.js, scroll-pinned narrative, photo qui zoom du fond, photos qui défilent horizontalement au scroll.
 
-## État au 30/04/2026
+## État au 03/05/2026
 
 ### Pages livrées
 | Page | Path | État |
 |---|---|---|
 | Accueil | `/` | ✅ Complet (12 sections scroll-pinnées) |
 | Contact | `/contact` | ✅ Complet (Hero + form + zones + FAQ + CTA + Footer) |
+| Particulier | `/services/particulier` | 🚧 En cours (Hero + Stats + Raisons + TrustClients + Étapes + Bifaces + Local) |
 
 ### Pages à faire (prochaines sessions)
-- `/services/particulier`
+- `/services/particulier` — terminer (sections suivantes encore à venir)
 - `/services/professionnel`
 - `/services/borne-de-recharge`
 - `/services/maintenance`
@@ -172,6 +173,20 @@ L'utilisateur procède **section par section** en envoyant une capture du site a
 - 10 sections initiales avec contenu fictif (la plupart depuis abandonnées)
 - Hero 3D R3F : panneau procédural 192 cellules avec assembly animation
 - Bundle HeroScene : 853 KB / 230 KB gzipped (`client:visible`)
+
+### Session 2026-05-03 (page particulier — sections Bifaces et Local)
+1. **BifacesParticulier** créé (`web/src/components/sections/BifacesParticulier.astro`)
+   - Layout : H2 en haut + grid 2 cols (photo gauche / texte droite, même hauteur)
+   - Animation : la photo démarre **floutée + décalée vers le haut** (translateY -25 %, opacity 0.55, blur 18px) et **descend tout droit** dans sa colonne au scroll, puis défloute
+   - Texte droite : H3 "15 % supérieur" + paragraphes + 2 puces + bloc encadré "véhicule électrique" + CTA, reveal cumulatif en cascade
+   - Photo : `/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp`
+   - **Plusieurs itérations douloureuses** sur la position/taille de la photo finale (pin-grow-glide → photo bord-à-bord → photo pleine hauteur etc.) avant d'aboutir au layout grid simple avec mouvement vertical pur
+2. **LocalParticulier** créé (`web/src/components/sections/LocalParticulier.astro`)
+   - Même pattern que Bifaces mais **inversé** (texte gauche / photo droite)
+   - Photo : `/images/pourquoiSunEst/DSC06837-1024x683.webp`
+   - Textes exacts copiés-collés par le client (kicker "Acteur 100 % local", titre "Installateur photovoltaïque du Grand-Est", paragraphe villes Strasbourg/Nancy/Metz/...)
+3. **Responsive** : sur mobile/tablette (< 1024 px), pas de scroll-pin, layout vertical (photo en haut / texte en bas via `order-1`/`order-2`), animation désactivée. Tout visible direct.
+4. **Tailles harmonisées** avec le reste du site (H2 `text-2xl→4xl→[2.75rem]`, H3 `text-xl→2xl`, paragraphes `text-base`, CTA `px-7 py-4`)
 
 ### Session 2026-04-30 (la longue)
 1. **Refonte Hero** en scroll-pin 320vh avec 3 actes texte + caméra dolly
