@@ -32,7 +32,7 @@ const stats = [
     <div class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10">
       <!-- Acte 1 — Pitch (capture 1 : Sun Est hero) -->
       <div
-        class="absolute inset-x-6 lg:inset-x-10 bottom-56 sm:bottom-48 lg:bottom-52 max-w-5xl"
+        class="absolute inset-x-6 lg:inset-x-10 bottom-12 sm:bottom-16 lg:bottom-52 max-w-5xl"
         data-act="0"
       >
         <p class="text-sun font-bold uppercase tracking-[0.2em] text-xs mb-4">
@@ -68,9 +68,10 @@ const stats = [
       </div>
     </div>
 
-    <!-- Barre stats : visible tout le long du pin Hero, fade en fin de pin -->
+    <!-- Barre stats DESKTOP : visible tout le long du pin Hero, fade en fin de pin
+         (sur mobile, les stats sont une section dédiée hors du Hero — voir HeroStatsMobile.astro) -->
     <div
-      class="absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-ink/40 backdrop-blur-sm"
+      class="hidden lg:block absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-ink/40 backdrop-blur-sm"
       data-hero-stats
     >
       <div class="max-w-7xl mx-auto px-6 lg:px-10 py-3 lg:py-6">

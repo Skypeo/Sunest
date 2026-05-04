@@ -1,0 +1,73 @@
+---
+// Section stats mobile : remplace la stats bar absolute du Hero (qui n'est visible que lg+)
+// → s'affiche comme une section indépendante après le Hero sur mobile/tablette
+//   pour éviter l'overlap avec le contenu du Hero sur petits viewports
+const stats = [
+  { prefix: '+', target: 1500, suffix: '', label: 'Installations' },
+  { target: 10, suffix: ' ans', label: "D'expertise" },
+  { target: 0, suffix: ' %', label: 'Sous-traitance' },
+  { target: 4.8, suffix: '/5', label: 'Avis Google · 50+ avis', decimal: true },
+];
+---
+
+<section
+  class="lg:hidden relative w-full bg-ink border-y border-white/10"
+  data-hero-stats-mobile
+>
+  <div class="max-w-7xl mx-auto px-6 py-6 sm:py-8">
+    <div class="grid grid-cols-2 gap-y-5 gap-x-4">
+      {
+        stats.map((s) => (
+          <div class="relative">
+            <div class="font-display font-black text-xl sm:text-2xl flex items-baseline gap-1 leading-none">
+              {s.prefix && <span class="text-sun">{s.prefix}</span>}
+              <span
+                data-stat-value-mobile
+                data-target={s.target}
+                data-decimal={s.decimal ? 'true' : 'false'}
+              >
+                0
+              </span>
+              {s.suffix && <span class="text-sun">{s.suffix}</span>}
+            </div>
+            <p class="mt-1.5 text-white/55 text-[10px] sm:text-xs leading-tight">{s.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  // Counter animation (déclenché quand la section entre dans le viewport)
+  const counters = document.querySelectorAll<HTMLElement>('[data-stat-value-mobile]');
+  if (counters.length) {
+    const animate = (el: HTMLElement) => {
+      const target = parseFloat(el.dataset.target ?? '0');
+      const decimal = el.dataset.decimal === 'true';
+      const duration = 1400;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const value = target * eased;
+        el.textContent = decimal ? value.toFixed(1).replace('.', ',') : Math.round(value).toString();
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            animate(entry.target as HTMLElement);
+            obs.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.4 }
+    );
+    counters.forEach((c) => obs.observe(c));
+  }
+</script>

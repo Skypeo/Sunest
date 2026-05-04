@@ -123,6 +123,25 @@ const services = [
         </div>
       </div>
 
+      <!-- Mobile/tablette : photo compacte en haut + numéro géant arrière-plan -->
+      <div
+        class="lg:hidden absolute top-6 right-6 w-32 sm:w-44 aspect-[4/5] rounded-md overflow-hidden bg-white/5 ring-1 ring-white/10 z-20"
+      >
+        {
+          services.map((s, i) => (
+            <img
+              data-service-photo-mobile={i}
+              src={s.photo}
+              alt={s.title}
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+              style={`opacity: ${i === 0 ? 1 : 0};`}
+            />
+          ))
+        }
+      </div>
+
       <!-- Mobile : numéro géant en arrière-plan derrière le contenu -->
       <div
         class="absolute inset-0 lg:hidden flex items-center justify-end pr-6 -z-10 pointer-events-none"
@@ -156,6 +175,7 @@ const services = [
   const numeros = document.querySelectorAll<HTMLElement>('[data-service-numero]');
   const numerosM = document.querySelectorAll<HTMLElement>('[data-service-numero-mobile]');
   const photos = document.querySelectorAll<HTMLElement>('[data-service-photo]');
+  const photosM = document.querySelectorAll<HTMLElement>('[data-service-photo-mobile]');
 
   if (section && stages.length && !prefersReducedMotion) {
     const N = stages.length;
@@ -188,6 +208,7 @@ const services = [
           }
           if (numeros[i]) numeros[i].style.opacity = String(op);
           if (numerosM[i]) numerosM[i].style.opacity = String(op * 0.6);
+          if (photosM[i]) photosM[i].style.opacity = String(op);
           if (photos[i]) {
             photos[i].style.opacity = String(op);
             // Léger zoom sur la photo active pour donner du dynamisme

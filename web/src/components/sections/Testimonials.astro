@@ -38,15 +38,25 @@ const testimonials = [
 
 <section
   id="testimonials"
-  class="relative w-full"
-  style="height: 280vh;"
+  class="relative w-full lg:h-[280vh] py-16 lg:py-0"
   data-testimonials-section
 >
-  <div class="sticky top-0 h-screen w-full overflow-hidden">
-    <!-- Piste avis qui défilent (sens inverse : gauche → droite au scroll bas) -->
-    <div class="absolute inset-y-0 left-0 flex items-center">
+  {/* MOBILE/TABLET : titre en haut + horizontal scroll touch (visible jusqu'à lg-) */}
+  <div class="lg:hidden max-w-7xl mx-auto px-6 mb-8">
+    <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-3">
+      Ils nous recommandent
+    </p>
+    <h2 class="font-display font-black text-2xl sm:text-3xl leading-[1.1] tracking-tight">
+      L'avis de nos clients,
+      <span class="text-white/50">en toute transparence.</span>
+    </h2>
+  </div>
+
+  <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden">
+    <!-- Piste avis : pin/scroll desktop / overflow-x mobile-touch -->
+    <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:flex lg:items-center overflow-x-auto lg:overflow-x-visible testimonials-scroll">
       <div
-        class="flex gap-5 lg:gap-7 pl-[10vw] sm:pl-[14vw] pr-[18vw] sm:pr-[28vw] md:pr-[35vw] lg:pr-[44vw] will-change-transform"
+        class="flex gap-5 lg:gap-7 pl-6 sm:pl-8 lg:pl-[14vw] pr-6 sm:pr-8 lg:pr-[44vw] will-change-transform"
         data-testimonials-track
       >
         {
@@ -125,23 +135,23 @@ const testimonials = [
       </div>
     </div>
 
-    <!-- Voile dégradé sur la moitié gauche pour faire reposer le texte -->
+    {/* Voile dégradé + bloc texte : DESKTOP UNIQUEMENT (mobile a son titre en haut) */}
     <div
-      class="absolute inset-y-0 left-0 w-full lg:w-3/5 z-10 bg-gradient-to-r from-ink via-ink/85 to-transparent pointer-events-none"
+      class="hidden lg:block absolute inset-y-0 left-0 w-3/5 z-10 bg-gradient-to-r from-ink via-ink/85 to-transparent pointer-events-none"
       aria-hidden="true"
     >
     </div>
 
-    <!-- Bloc texte sticky à gauche -->
+    <!-- Bloc texte sticky à gauche (desktop only) -->
     <div
-      class="relative z-20 h-full max-w-7xl mx-auto px-6 lg:px-10 flex items-center pointer-events-none"
+      class="hidden lg:flex relative z-20 h-full max-w-7xl mx-auto px-6 lg:px-10 items-center pointer-events-none"
     >
       <div class="max-w-md pointer-events-auto">
-        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-4">
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-[10px] sm:text-xs mb-2 sm:mb-4">
           Ils nous recommandent
         </p>
         <h2
-          class="font-display font-black text-4xl lg:text-5xl leading-[1.0] tracking-tight"
+          class="font-display font-black text-xl sm:text-2xl lg:text-5xl leading-[1.05] tracking-tight"
           data-split-words
         >
           L'avis de nos clients,
@@ -209,6 +219,17 @@ const testimonials = [
   </div>
 </section>
 
+<style>
+  /* Cache la scrollbar visuellement (mais le scroll horizontal touch reste actif) */
+  .testimonials-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .testimonials-scroll::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -216,10 +237,13 @@ const testimonials = [
   gsap.registerPlugin(ScrollTrigger);
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
   const track = document.querySelector<HTMLElement>('[data-testimonials-track]');
   const section = document.querySelector<HTMLElement>('[data-testimonials-section]');
 
-  if (track && section && !prefersReducedMotion) {
+  // Animation pinned + scroll-driven : desktop uniquement
+  // Sur mobile/tablette, le parent est overflow-x-auto → l'utilisateur swipe à la main
+  if (track && section && isDesktop && !prefersReducedMotion) {
     gsap.fromTo(
       track,
       {
