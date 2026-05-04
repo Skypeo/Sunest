@@ -1,0 +1,31 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import SiteHeader from '~/components/SiteHeader.astro';
+import HeroMaintenance from '~/components/sections/HeroMaintenance.astro';
+import PourquoiMaintenance from '~/components/sections/PourquoiMaintenance.astro';
+import ServicesMaintenance from '~/components/sections/ServicesMaintenance.astro';
+import ChoisirSunEstMaintenance from '~/components/sections/ChoisirSunEstMaintenance.astro';
+import FAQ from '~/components/sections/FAQ.astro';
+import ContactCta from '~/components/sections/Contact.astro';
+import Footer from '~/components/sections/Footer.astro';
+---
+
+<Layout
+  title="Maintenance — Sun Est | Maintenance photovoltaïque Grand-Est"
+  description="Maintenance et entretien de votre installation photovoltaïque dans le Grand-Est. Sun Est intervient pour assurer la sécurité et la performance de vos panneaux solaires."
+>
+  <SiteHeader />
+
+  <main>
+    <HeroMaintenance />
+    <PourquoiMaintenance />
+    <ServicesMaintenance />
+    <ChoisirSunEstMaintenance />
+
+    {/* Sections partagées */}
+    <FAQ />
+    <ContactCta />
+  </main>
+
+  <Footer />
+</Layout>

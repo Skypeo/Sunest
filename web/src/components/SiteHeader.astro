@@ -44,21 +44,18 @@ const inServicesSection = pathname.startsWith('/services');
   data-site-header
 >
   <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between gap-6">
-    <a href="/" class="flex items-center" aria-label="Sun Est — accueil">
+    <a href="/" class="flex items-center relative z-[60]" aria-label="Sun Est — accueil">
       <img
-        src="/images/SunEst_-_le_logo_definitif-2-png-300x195.webp"
+        src="/images/logo_sun_est_blanc.png"
         alt="Sun Est"
         class="h-10 lg:h-11 w-auto"
-        width="300"
-        height="195"
       />
     </a>
 
-    <ul class="hidden md:flex items-center gap-8 text-sm text-white/70">
+    <ul class="hidden lg:flex items-center gap-8 text-sm text-white/70">
       {
         links.map((l) => {
           const active = l.match && pathname === l.match;
-          // Item parent actif si on est dans une de ses pages enfants (cas Services)
           const branchActive =
             l.children && (active || (l.label === 'Services' && inServicesSection));
 
@@ -83,7 +80,6 @@ const inServicesSection = pathname.startsWith('/services');
                   </span>
                 </a>
 
-                {/* wrapper avec pt-3 transparent pour couvrir le gap au survol */}
                 <div
                   class="absolute top-full left-0 pt-3 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-200"
                   role="menu"
@@ -132,7 +128,7 @@ const inServicesSection = pathname.startsWith('/services');
       }
     </ul>
 
-    <div class="flex items-center gap-2 lg:gap-3">
+    <div class="flex items-center gap-2 lg:gap-3 relative z-[60]">
       <a
         href="tel:+33372611735"
         class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-pill text-xs lg:text-sm text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-colors duration-200"
@@ -143,17 +139,178 @@ const inServicesSection = pathname.startsWith('/services');
       </a>
       <a
         href="/contact"
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-sky-brand text-ink text-xs lg:text-sm font-bold hover:scale-105 transition-transform duration-200"
+        class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-sky-brand text-ink text-xs lg:text-sm font-bold hover:scale-105 transition-transform duration-200"
+      >
+        <span class="hidden md:inline">Simuler mon installation</span>
+        <span class="md:hidden">Devis</span>
+        <span aria-hidden="true">→</span>
+      </a>
+
+      {/* Hamburger — visible jusqu'à lg */}
+      <button
+        type="button"
+        class="lg:hidden relative inline-flex flex-col items-center justify-center w-10 h-10 -mr-2 group"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <span
+          class="block w-6 h-px bg-white/85 transition-transform duration-300 ease-out origin-center [.is-open_&]:translate-y-[7px] [.is-open_&]:rotate-45"
+          aria-hidden="true"></span>
+        <span
+          class="block w-6 h-px bg-white/85 mt-[6px] transition-all duration-300 ease-out [.is-open_&]:opacity-0 [.is-open_&]:scale-x-0"
+          aria-hidden="true"></span>
+        <span
+          class="block w-6 h-px bg-white/85 mt-[6px] transition-transform duration-300 ease-out origin-center [.is-open_&]:-translate-y-[7px] [.is-open_&]:-rotate-45"
+          aria-hidden="true"></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+{/* Overlay menu mobile/tablette */}
+<div
+  id="mobile-menu"
+  class="fixed inset-x-0 top-16 bottom-0 z-40 lg:hidden bg-ink/95 backdrop-blur-xl opacity-0 invisible translate-y-2 transition-[opacity,transform,visibility] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] [.is-open_&]:opacity-100 [.is-open_&]:visible [.is-open_&]:translate-y-0"
+  data-mobile-menu
+  aria-hidden="true"
+>
+  {/* Halo radial discret en haut */}
+  <div
+    class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-brand/40 to-transparent"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="h-full overflow-y-auto overscroll-contain" data-lenis-prevent>
+   <div class="min-h-full px-6 sm:px-10 py-8 pb-12 flex flex-col">
+    <nav class="flex-1" aria-label="Menu principal">
+      <ul class="flex flex-col gap-2" data-mobile-stagger>
+        {
+          links.map((l) => {
+            const active = l.match && pathname === l.match;
+
+            if (l.children) {
+              const branchActive = active || (l.label === 'Services' && inServicesSection);
+              return (
+                <li>
+                  <button
+                    type="button"
+                    class="peer group w-full flex items-center justify-between gap-3 py-3 text-left"
+                    aria-expanded="false"
+                    aria-controls="mobile-services-panel"
+                    data-services-toggle
+                  >
+                    <span
+                      class:list={[
+                        'font-display tracking-tight text-3xl sm:text-4xl transition-colors duration-200',
+                        branchActive ? 'text-sky-brand' : 'text-white',
+                      ]}
+                    >
+                      {l.label}
+                    </span>
+                    <span
+                      class="grid place-items-center w-9 h-9 shrink-0 rounded-full border border-white/20 text-white/70 transition-[transform,background-color,border-color,color] duration-300 ease-out group-aria-expanded:rotate-45 group-aria-expanded:bg-sky-brand/15 group-aria-expanded:border-sky-brand/60 group-aria-expanded:text-sky-brand"
+                      aria-hidden="true"
+                    >
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none">
+                        <path
+                          d="M6 1v10M1 6h10"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+
+                  <div
+                    id="mobile-services-panel"
+                    class="grid grid-rows-[0fr] peer-aria-expanded:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  >
+                    <div class="overflow-hidden">
+                      <ul class="flex flex-col gap-1 pt-2 pb-3 pl-1">
+                        {l.children.map((c) => {
+                          const cActive = pathname === c.match;
+                          return (
+                            <li>
+                              <a
+                                href={c.href}
+                                class:list={[
+                                  'group block py-2 font-display tracking-tight text-xl sm:text-2xl transition-colors duration-200',
+                                  cActive ? 'text-sky-brand' : 'text-white/75 hover:text-white',
+                                ]}
+                              >
+                                <span class="inline-flex items-center gap-3">
+                                  {c.label}
+                                  <span
+                                    class="text-base opacity-0 -translate-x-2 group-hover:opacity-60 group-hover:translate-x-0 transition-all duration-300 text-sky-brand"
+                                    aria-hidden="true"
+                                  >
+                                    →
+                                  </span>
+                                </span>
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              );
+            }
+
+            return (
+              <li>
+                <a
+                  href={l.href}
+                  class:list={[
+                    'group block py-3 font-display tracking-tight text-3xl sm:text-4xl transition-colors duration-200',
+                    active ? 'text-sky-brand' : 'text-white hover:text-white/85',
+                  ]}
+                >
+                  <span class="inline-flex items-center gap-3">
+                    {l.label}
+                    <span
+                      class="text-lg opacity-0 -translate-x-2 group-hover:opacity-60 group-hover:translate-x-0 transition-all duration-300 text-sky-brand"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    {/* CTAs bas du panneau */}
+    <div class="mt-8 pt-6 border-t border-white/10 flex flex-col gap-3">
+      <a
+        href="tel:+33372611735"
+        class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-pill text-sm text-white/85 border border-white/15 hover:border-white/30 hover:text-white transition-colors duration-200"
+      >
+        <span aria-hidden="true">📞</span>
+        03 72 61 17 35
+      </a>
+      <a
+        href="/contact"
+        class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-pill bg-sky-brand text-ink text-sm font-bold transition-transform duration-200 active:scale-[0.98]"
       >
         Simuler mon installation
         <span aria-hidden="true">→</span>
       </a>
     </div>
-  </nav>
-</header>
+   </div>
+  </div>
+</div>
 
 <script>
-  // Hide-on-scroll-down, show-on-scroll-up
+  // ---- Hide-on-scroll-down, show-on-scroll-up -------------------------------
   const header = document.querySelector<HTMLElement>('[data-site-header]');
   if (header) {
     let lastY = window.scrollY;
@@ -162,6 +319,9 @@ const inServicesSection = pathname.startsWith('/services');
     window.addEventListener(
       'scroll',
       () => {
+        // Si le menu mobile est ouvert, on ne touche pas au header
+        if (document.documentElement.classList.contains('is-open')) return;
+
         const y = window.scrollY;
         const dy = y - lastY;
         if (y < 24) {
@@ -184,4 +344,94 @@ const inServicesSection = pathname.startsWith('/services');
       { passive: true }
     );
   }
+
+  // ---- Mobile menu toggle ---------------------------------------------------
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-mobile-menu]');
+  const servicesToggle = document.querySelector<HTMLButtonElement>('[data-services-toggle]');
+  const root = document.documentElement;
+
+  type LenisLike = { stop: () => void; start: () => void };
+  const getLenis = (): LenisLike | undefined =>
+    (window as unknown as { lenis?: LenisLike }).lenis;
+
+  function openMenu() {
+    root.classList.add('is-open');
+    toggle?.setAttribute('aria-expanded', 'true');
+    toggle?.setAttribute('aria-label', 'Fermer le menu');
+    panel?.setAttribute('aria-hidden', 'false');
+    getLenis()?.stop();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    root.classList.remove('is-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Ouvrir le menu');
+    panel?.setAttribute('aria-hidden', 'true');
+    // Reset le sous-menu Services en même temps
+    servicesToggle?.setAttribute('aria-expanded', 'false');
+    getLenis()?.start();
+    document.body.style.overflow = '';
+  }
+
+  // Toggle du sous-menu Services dans l'overlay
+  servicesToggle?.addEventListener('click', () => {
+    const expanded = servicesToggle.getAttribute('aria-expanded') === 'true';
+    servicesToggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  });
+
+  toggle?.addEventListener('click', () => {
+    if (root.classList.contains('is-open')) closeMenu();
+    else openMenu();
+  });
+
+  // Fermer sur clic d'un lien interne
+  panel?.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((a) => {
+    a.addEventListener('click', () => {
+      // petit délai pour laisser la nav démarrer avant de fermer (UX plus douce)
+      setTimeout(closeMenu, 50);
+    });
+  });
+
+  // Fermer sur ESC
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && root.classList.contains('is-open')) closeMenu();
+  });
+
+  // Fermer si on repasse en >= lg (resize)
+  const mq = window.matchMedia('(min-width: 1024px)');
+  mq.addEventListener('change', (e) => {
+    if (e.matches && root.classList.contains('is-open')) closeMenu();
+  });
 </script>
+
+<style>
+  /* Stagger reveal sur les items du menu mobile à l'ouverture */
+  [data-mobile-stagger] > li {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  :global(html.is-open) [data-mobile-stagger] > li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  :global(html.is-open) [data-mobile-stagger] > li:nth-child(1) {
+    transition-delay: 0.12s;
+  }
+  :global(html.is-open) [data-mobile-stagger] > li:nth-child(2) {
+    transition-delay: 0.18s;
+  }
+  :global(html.is-open) [data-mobile-stagger] > li:nth-child(3) {
+    transition-delay: 0.24s;
+  }
+  :global(html.is-open) [data-mobile-stagger] > li:nth-child(4) {
+    transition-delay: 0.30s;
+  }
+  :global(html.is-open) [data-mobile-stagger] > li:nth-child(5) {
+    transition-delay: 0.36s;
+  }
+</style>

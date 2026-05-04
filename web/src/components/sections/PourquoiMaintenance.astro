@@ -1,0 +1,152 @@
+---
+// Section "Pourquoi la Maintenance Photovoltaïque est Essentielle ?" — page Maintenance
+//   Même pattern que PourquoiBorne mais miroir : texte à GAUCHE, photos à DROITE.
+//   • Colonne photos (droite) : 2 photos qui crossfadent au scroll (seules à bouger)
+//   • Colonne texte (gauche)  : titre + 3 items numérotés + 2 CTAs
+
+const reasons = [
+  {
+    title: 'Maximisation des Performances',
+    desc:
+      'Une maintenance régulière assure que vos panneaux solaires fonctionnent à leur plein potentiel, garantissant un rendement énergétique optimal.',
+  },
+  {
+    title: 'Prévention des Pannes',
+    desc:
+      'Anticipez les problèmes techniques avant qu’ils ne deviennent coûteux et perturbateurs. Nous effectuons des contrôles de performance, des diagnostics précis et des interventions rapides.',
+  },
+  {
+    title: 'Sécurité et Conformité',
+    desc:
+      'Assurez-vous que vos installations respectent les normes en vigueur et fonctionnent en toute sécurité. Nous veillons à la conformité de votre système avec les dernières réglementations.',
+  },
+];
+
+const photos = ['/images/pourquoi_maintenance1.webp', '/images/pourquoi_maintenance2.webp'];
+---
+
+<section
+  id="pourquoi-maintenance"
+  class="relative w-full"
+  style="height: 220vh;"
+  data-pourquoimaint-section
+>
+  <div class="sticky top-0 h-screen w-full overflow-hidden">
+    <div
+      class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] items-center gap-8 lg:gap-12"
+    >
+      <!-- Colonne gauche : titre + 3 items + CTAs -->
+      <div class="relative order-2 lg:order-1">
+        <h2
+          class="font-display font-black text-3xl md:text-4xl xl:text-4xl leading-[1.1] tracking-tight mb-8 lg:mb-10"
+          data-split-words
+        >
+          Pourquoi la <span class="text-sky-brand">Maintenance Photovoltaïque</span>
+          est Essentielle&nbsp;?
+        </h2>
+
+        <ol class="flex flex-col gap-6 lg:gap-7">
+          {
+            reasons.map((r, i) => (
+              <li class="flex gap-3 lg:gap-4">
+                <span class="font-display font-black text-sky-brand text-lg lg:text-xl shrink-0 leading-snug">
+                  {i + 1}.
+                </span>
+                <div class="min-w-0">
+                  <p class="font-display font-bold text-lg lg:text-xl text-white mb-1.5 lg:mb-2">
+                    {r.title}
+                  </p>
+                  <p class="text-white/80 text-sm lg:text-[15px] leading-relaxed max-w-xl">
+                    {r.desc}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="mt-8 lg:mt-10 flex flex-col sm:flex-row sm:items-center gap-4">
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
+          >
+            Demander un bilan 100&nbsp;% gratuit
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-white/[0.06] hover:bg-white/[0.16] border border-white/15 hover:border-white/30 font-bold transition-colors duration-200 backdrop-blur-md"
+          >
+            Contactez-nous
+          </a>
+        </div>
+      </div>
+
+      <!-- Colonne droite : 2 photos qui crossfadent -->
+      <div class="relative h-full hidden lg:flex items-center justify-end order-1 lg:order-2">
+        <div class="relative w-[78%] max-w-[520px]">
+          <div
+            class="relative aspect-[4/5] rounded-md overflow-hidden bg-white/5"
+            style="aspect-ratio: 4 / 5;"
+          >
+            {
+              photos.map((src, i) => (
+                <img
+                  data-pourquoimaint-photo={i}
+                  src={src}
+                  alt={`Maintenance photovoltaïque — visuel ${i + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 w-full h-full object-cover"
+                  style={`opacity: ${i === 0 ? 1 : 0};`}
+                />
+              ))
+            }
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-ink/35 via-ink/0 to-ink/0 pointer-events-none"
+              aria-hidden="true"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-pourquoimaint-section]');
+  const photoEls = section?.querySelectorAll<HTMLElement>('[data-pourquoimaint-photo]');
+
+  if (section && photoEls && photoEls.length === 2 && !prefersReducedMotion) {
+    function smoothstep(t: number): number {
+      const c = Math.max(0, Math.min(1, t));
+      return c * c * (3 - 2 * c);
+    }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const p = self.progress;
+        const t = smoothstep((p - 0.4) / 0.2);
+        if (photoEls[0]) {
+          photoEls[0].style.opacity = String(1 - t);
+          photoEls[0].style.transform = `scale(${1 + t * 0.04})`;
+        }
+        if (photoEls[1]) {
+          photoEls[1].style.opacity = String(t);
+          photoEls[1].style.transform = `scale(${1 + (1 - t) * 0.04})`;
+        }
+      },
+    });
+  }
+</script>

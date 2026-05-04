@@ -32,13 +32,13 @@ const stats = [
     <div class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10">
       <!-- Acte 1 — Pitch (capture 1 : Sun Est hero) -->
       <div
-        class="absolute inset-x-6 lg:inset-x-10 bottom-40 lg:bottom-52 max-w-5xl"
+        class="absolute inset-x-6 lg:inset-x-10 bottom-56 sm:bottom-48 lg:bottom-52 max-w-5xl"
         data-act="0"
       >
         <p class="text-sun font-bold uppercase tracking-[0.2em] text-xs mb-4">
           Acteur 100 % local · Grand-Est
         </p>
-        <h1 class="font-display font-black text-display leading-[0.95] tracking-tight">
+        <h1 class="font-display font-black text-3xl sm:text-4xl md:text-5xl lg:text-display leading-[0.95] tracking-tight">
           Faites de votre toit
           <br />
           votre <span class="text-sun">centrale solaire.</span>
@@ -73,14 +73,14 @@ const stats = [
       class="absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-ink/40 backdrop-blur-sm"
       data-hero-stats
     >
-      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-5 lg:py-6">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-3 lg:py-6">
         <div class="grid grid-cols-2 lg:grid-cols-4">
           {
             stats.map((s, i) => (
               <div
-                class={`relative px-3 lg:px-8 ${i > 0 ? 'lg:border-l lg:border-white/10' : ''} ${i === 1 ? 'border-l border-white/10' : ''} ${i === 2 ? 'pt-5 mt-5 lg:pt-0 lg:mt-0 border-t border-white/10 lg:border-t-0 col-span-1' : ''}`}
+                class={`relative px-3 lg:px-8 ${i > 0 ? 'lg:border-l lg:border-white/10' : ''} ${i === 1 ? 'border-l border-white/10' : ''} ${i === 2 ? 'pt-3 mt-3 lg:pt-0 lg:mt-0 border-t border-white/10 lg:border-t-0 col-span-1' : ''}`}
               >
-                <div class="font-display font-black text-2xl lg:text-4xl flex items-baseline gap-1 leading-none">
+                <div class="font-display font-black text-lg sm:text-xl lg:text-4xl flex items-baseline gap-1 leading-none">
                   {s.prefix && <span class="text-sun">{s.prefix}</span>}
                   <span
                     data-stat-value
@@ -91,7 +91,7 @@ const stats = [
                   </span>
                   {s.suffix && <span class="text-sun">{s.suffix}</span>}
                 </div>
-                <p class="mt-1.5 lg:mt-2 text-white/55 text-xs lg:text-sm">{s.label}</p>
+                <p class="mt-1 lg:mt-2 text-white/55 text-[10px] sm:text-xs lg:text-sm leading-tight">{s.label}</p>
               </div>
             ))
           }
@@ -196,5 +196,15 @@ const stats = [
         if (cue) cue.style.opacity = String(Math.max(0, 1 - p * 4));
       },
     });
+
+    // Refresh ScrollTrigger après load complet (HeroScene R3F est lazy, ScrollTrigger
+    // a besoin de recalculer les positions de pin une fois que le DOM est stable)
+    if (document.readyState === 'complete') {
+      setTimeout(() => ScrollTrigger.refresh(), 100);
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(() => ScrollTrigger.refresh(), 100);
+      });
+    }
   }
 </script>

@@ -1,0 +1,535 @@
+---
+// Section "Secteurs d'activité" — page Pro
+//   5 cards en mode "spotlight" oryzo (style portrait, photo fullbleed, contenu bottom overlay)
+//   - Section 320vh sticky h-screen
+//   - Cards défilent horizontalement (translateX scrub vertical)
+//   - Effet spotlight : la card centrée est full size + nette, les voisines sont scale ~0.55 + faded
+//   - 3D tilt subtil sur les cards éloignées du centre
+
+const cards = [
+  {
+    image: '/images/cards_pro/carport.webp',
+    title: 'Carport',
+    bullets: [
+      'Solution adaptée pour la Grande Distribution ou bâtiments industriels',
+      'Compatible avec la règlementation Climat et Résilience',
+      "Adaptable aux complexes d'étanchéité",
+    ],
+  },
+  {
+    image: '/images/cards_pro/hangar_photovoltaique_autofinance.webp',
+    title: 'Hangar photovoltaïque autofinancé',
+    bullets: [
+      'La solution idéale pour équiper un bâtiment déjà existant',
+      'Vos surfaces inexploitées sont valorisées',
+      'Fixation sans percement pour une étanchéité préservée',
+    ],
+  },
+  {
+    image: '/images/cards_pro/central_photo_sol.webp',
+    title: 'Centrale photovoltaïque au sol',
+    bullets: [
+      'La solution pour vos terrains inexploités',
+      'Pose et entretien facilités',
+      'Rentabilité optimisée grâce à une inclinaison idéale',
+    ],
+  },
+  {
+    image: '/images/cards_pro/installation_solaire.webp',
+    title: 'Installation solaire sur toit incliné',
+    bullets: [
+      'La solution idéale pour équiper un bâtiment déjà existant',
+      'Vos surfaces inexploitées sont valorisées',
+      'Fixation sans percement pour une étanchéité préservée',
+    ],
+  },
+  {
+    image: '/images/cards_pro/ombriere_solaire.webp',
+    title: 'Ombrière solaire de parking',
+    bullets: [
+      "Valorisez vos aires de parking jusqu'à présent inutilisées",
+      "Profitez de nouveaux atouts : production d'énergie, confort des usagers et vecteur de communication",
+    ],
+  },
+];
+---
+
+<section
+  id="secteurs-pro"
+  class="relative w-full bg-ink"
+  style="height: 600vh;"
+  data-secteurs-pro
+>
+  <div class="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
+    <!-- En-tête (pb augmenté pour remplacer le pt du stage que je viens de virer) -->
+    <div
+      class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 pt-12 lg:pt-16 pb-12 lg:pb-16 text-center"
+    >
+      <p
+        class="text-sky-brand font-bold uppercase tracking-[0.22em] text-xs lg:text-sm mb-2"
+      >
+        Secteurs d'activité
+      </p>
+      <h2
+        class="font-display font-black text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5rem] leading-[1.05] tracking-tight"
+      >
+        Une <span class="text-sun">solution photovoltaïque</span> pour chaque bâtiment
+      </h2>
+    </div>
+
+    <!-- Voile dégradé latéral pour atténuer les cards latérales -->
+    <div
+      class="absolute inset-y-0 left-0 w-[22vw] z-20 bg-gradient-to-r from-ink to-transparent pointer-events-none"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="absolute inset-y-0 right-0 w-[22vw] z-20 bg-gradient-to-l from-ink to-transparent pointer-events-none"
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- Stage 3D : contient le cadre dashed ET les cards (même centrage)
+         IMPORTANT : pas de padding ici sinon le frame (absolute inset-0) et le track (flex items-center)
+         se retrouvent décalés verticalement (frame respecte la padding-box, track la content-box) -->
+    <div
+      class="relative z-0 flex-1 flex items-center min-h-0"
+      style="perspective: 2400px; perspective-origin: center center;"
+      data-secteurs-stage
+    >
+      {/* Cadre dashed central — overlay du stage pour partager le même centre vertical que les cards */}
+      <div
+        class="absolute inset-0 z-30 pointer-events-none flex items-center justify-center"
+        aria-hidden="true"
+      >
+        <div
+          class="sect-frame relative border border-dashed border-white/25"
+          style="box-shadow: 0 0 0 1px rgba(255,255,255,0.04);"
+        >
+          {/* SVG progress border : se remplit autour du cadre quand la card est lockée */}
+          <svg
+            class="absolute inset-0 pointer-events-none"
+            width="100%"
+            height="100%"
+            style="overflow: visible;"
+            data-secteurs-progress-svg
+          >
+            <rect
+              fill="none"
+              stroke="var(--color-sky-brand)"
+              stroke-width="3"
+              stroke-linecap="round"
+              data-secteurs-progress-rect
+            ></rect>
+          </svg>
+        </div>
+      </div>
+      <div
+        class="flex gap-8 lg:gap-10 will-change-transform"
+        data-secteurs-track
+        style="transform-style: preserve-3d;"
+      >
+        {
+          cards.map((card, i) => (
+            <article
+              class="sect-card relative shrink-0 rounded-[28px] overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] will-change-transform"
+              style="transform-style: preserve-3d; backface-visibility: hidden;"
+              data-secteurs-card
+              data-index={i}
+            >
+              {/* Photo fullbleed avec filtre de base pour assombrir et faire ressortir le texte */}
+              <img
+                src={card.image}
+                alt={card.title}
+                loading="eager"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover"
+                style="filter: brightness(0.72) saturate(1.08) contrast(1.05);"
+              />
+
+              {/* Voile bottom : gradient permanent de base + overlay renforcé quand la card est centrée */}
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/30 to-transparent pointer-events-none"
+                aria-hidden="true"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/0 pointer-events-none opacity-0 will-change-[opacity]"
+                aria-hidden="true"
+                data-secteurs-veil
+              />
+
+              {/* Contenu en bas (style oryzo overlay) — visible uniquement quand la card est dans le cadre central */}
+              <div
+                class="absolute inset-x-0 bottom-0 p-5 lg:p-6 z-10 opacity-0 pointer-events-none will-change-[opacity,transform]"
+                data-secteurs-content
+              >
+                <h3
+                  class="font-display font-black text-white text-lg lg:text-xl xl:text-2xl leading-tight mb-3"
+                  style="text-shadow: 0 2px 12px rgba(0,0,0,0.85), 0 0 24px rgba(0,0,0,0.5);"
+                >
+                  {card.title}
+                </h3>
+
+                <ul class="flex flex-col gap-1.5 mb-5">
+                  {card.bullets.map((b) => (
+                    <li
+                      class="flex items-start gap-2 text-white text-[12px] lg:text-[13px] leading-snug"
+                      style="text-shadow: 0 2px 10px rgba(0,0,0,0.85);"
+                    >
+                      <span
+                        class="mt-1.5 inline-block w-1 h-1 rounded-full bg-sun shrink-0"
+                        aria-hidden="true"
+                      />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="#"
+                  class="inline-flex items-center gap-2 px-5 py-2.5 lg:px-6 lg:py-3 rounded-pill bg-sun text-ink text-sm font-bold cursor-pointer hover:scale-[1.05] hover:bg-sun/90 transition-all duration-200 pointer-events-auto"
+                  data-secteurs-cta
+                >
+                  En savoir plus
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+
+              {/* Index (style oryzo "01/05") — gros format prominent, accent sun, text-shadow renforcé */}
+              <div
+                class="sect-index absolute z-10 font-display font-black text-xl lg:text-2xl leading-none tracking-tight opacity-0"
+                style="top: 22px; right: 22px; text-shadow: 0 2px 12px rgba(0,0,0,0.95), 0 0 28px rgba(0,0,0,0.7);"
+                data-secteurs-index
+              >
+                <span class="text-sun">{String(i + 1).padStart(2, '0')}</span><span
+                  class="text-white/45 mx-0.5">/</span
+                ><span class="text-white/85">{String(cards.length).padStart(2, '0')}</span>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Indicateur de progression -->
+    <div
+      class="relative z-20 px-6 lg:px-10 pb-10 lg:pb-12 pt-4 pointer-events-none"
+    >
+      <div class="max-w-md mx-auto">
+        <div class="h-px bg-white/10 relative overflow-hidden">
+          <div
+            class="absolute inset-y-0 left-0 bg-sky-brand will-change-transform"
+            style="width: 100%; transform: scaleX(0); transform-origin: left;"
+            data-secteurs-progress
+          />
+        </div>
+        <p
+          class="mt-2 text-center text-white/45 text-[10px] lg:text-xs uppercase tracking-[0.25em]"
+        >
+          Faites défiler
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Dimensions + border-radius forcés en CSS natif (Tailwind 4 a un souci avec mes valeurs arbitraires) */
+  /* IMPORTANT : .sect-card et .sect-frame partagent EXACTEMENT la même box pour que la card lockée
+     s'emboîte pile-poil dans le rectangle dashed.
+     Avec content-box (défaut) :
+     - Frame : 260px content + 1px border outside = 262px visual
+     - Card  : 260px content + 1px box-shadow ring outside = 262px visual ✓ */
+  .sect-card,
+  .sect-frame {
+    width: 290px;
+    height: 346px;
+    border-radius: 24px;
+  }
+  .sect-card {
+    /* overflow:hidden indispensable pour que la photo respecte l'arrondi */
+    overflow: hidden;
+    transition: box-shadow 0.4s ease-out;
+  }
+  @media (min-width: 640px) {
+    .sect-card,
+    .sect-frame {
+      width: 320px;
+      height: 373px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .sect-card,
+    .sect-frame {
+      width: 380px;
+      height: 453px;
+    }
+  }
+
+  /* Effet "card lockée" : glow sky-brand (sans ring extérieur — il déborderait du cadre) */
+  .sect-card.is-locked {
+    box-shadow:
+      0 0 0 1px var(--color-sky-brand),
+      0 0 40px rgba(32, 184, 241, 0.5),
+      0 30px 80px -20px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Frame qui s'allume aussi quand la card est lockée dedans */
+  .sect-frame {
+    transition: border-color 0.35s ease-out, box-shadow 0.35s ease-out;
+  }
+  .sect-frame.is-locked {
+    border-color: rgba(32, 184, 241, 0.55);
+    box-shadow:
+      0 0 0 1px rgba(32, 184, 241, 0.15),
+      0 0 30px rgba(32, 184, 241, 0.18);
+  }
+
+  /* Numérotation : offset coin top-right + plus d'air sur grand écran */
+  @media (min-width: 1024px) {
+    .sect-index {
+      top: 32px !important;
+      right: 32px !important;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-secteurs-pro]');
+  const track = document.querySelector<HTMLElement>('[data-secteurs-track]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-secteurs-card]');
+  const progress = document.querySelector<HTMLElement>('[data-secteurs-progress]');
+
+  if (section && track && cards.length > 0 && !prefersReducedMotion) {
+    function clamp(v: number, min: number, max: number): number {
+      return Math.max(min, Math.min(max, v));
+    }
+
+    let maxScroll = 0;
+    function recompute() {
+      const firstCard = cards[0] as HTMLElement;
+      if (!firstCard || !track) return;
+      const cardWidth = firstCard.offsetWidth;
+      // Padding centré pur : la 1re card démarre PILE dans le cadre, la dernière s'y ancre à la fin
+      // → garantit que la position "lock" du dwell correspond exactement au centre du cadre
+      const padding = (window.innerWidth - cardWidth) / 2;
+      track.style.paddingLeft = `${padding}px`;
+      track.style.paddingRight = `${padding}px`;
+      maxScroll = Math.max(0, track.scrollWidth - window.innerWidth);
+    }
+    recompute();
+    window.addEventListener('resize', () => {
+      recompute();
+      ScrollTrigger.refresh();
+    });
+
+    // Modèle "zones" : N locks (un par card) + N-1 transitions, durée égale par zone
+    // → chaque card a la MÊME durée de lock (y compris la 1re et la dernière)
+    // LOCK_SHARE = part du scroll total dédiée aux locks (vs transitions)
+    const LOCK_SHARE = 0.72;
+    const N_CARDS = cards.length;
+    const LOCK_WIDTH = LOCK_SHARE / N_CARDS; // largeur d'un lock en p-space
+    const TRANS_WIDTH = (1 - LOCK_SHARE) / Math.max(1, N_CARDS - 1); // largeur d'une transition
+
+    // Pour un p donné, retourne { cardIdx, localP, isLock }
+    function getZone(p: number): { cardIdx: number; localP: number; isLock: boolean } {
+      let zonePos = 0;
+      for (let i = 0; i < N_CARDS; i++) {
+        // Zone de lock pour la card i
+        if (p < zonePos + LOCK_WIDTH) {
+          return { cardIdx: i, localP: (p - zonePos) / LOCK_WIDTH, isLock: true };
+        }
+        zonePos += LOCK_WIDTH;
+        // Zone de transition i → i+1 (si pas la dernière)
+        if (i < N_CARDS - 1) {
+          if (p < zonePos + TRANS_WIDTH) {
+            return { cardIdx: i, localP: (p - zonePos) / TRANS_WIDTH, isLock: false };
+          }
+          zonePos += TRANS_WIDTH;
+        }
+      }
+      // p >= 1 → dernière card lockée
+      return { cardIdx: N_CARDS - 1, localP: 1, isLock: true };
+    }
+
+    // Easing : retourne la position normalisée du track (0 → 1, où i/(N-1) = card i centrée)
+    function dwellEasing(p: number): number {
+      const segments = N_CARDS - 1;
+      if (segments <= 0) return 0;
+      const z = getZone(p);
+      if (z.isLock) {
+        return z.cardIdx / segments;
+      }
+      // Transition : smoothstep entre cardIdx et cardIdx+1
+      const t = z.localP;
+      const eased = t * t * (3 - 2 * t);
+      return (z.cardIdx + eased) / segments;
+    }
+
+    // Lock progress (0-1) pendant un lock, ou -1 si on est en transition
+    function getLockProgress(p: number): number {
+      const z = getZone(p);
+      return z.isLock ? z.localP : -1;
+    }
+
+    // Initialise le SVG progress rect avec les bonnes dimensions et le perimeter
+    let perimeter = 0;
+    function setupProgressRect() {
+      // Queries scopées à la section pour éviter tout conflit avec d'autres composants
+      const frame = section!.querySelector<HTMLElement>('.sect-frame');
+      const rect = section!.querySelector<SVGRectElement>('[data-secteurs-progress-rect]');
+      if (!frame || !rect) return;
+      const w = frame.offsetWidth;
+      const h = frame.offsetHeight;
+      const r = 28;
+      const sw = 3;
+      rect.setAttribute('x', String(sw / 2));
+      rect.setAttribute('y', String(sw / 2));
+      rect.setAttribute('width', String(w - sw));
+      rect.setAttribute('height', String(h - sw));
+      rect.setAttribute('rx', String(r));
+      rect.setAttribute('ry', String(r));
+      // Perimeter d'un rectangle arrondi
+      perimeter = 2 * (w - sw - 2 * r) + 2 * (h - sw - 2 * r) + 2 * Math.PI * r;
+      rect.setAttribute('stroke-dasharray', String(perimeter));
+      rect.setAttribute('stroke-dashoffset', String(perimeter)); // caché par défaut
+    }
+    setupProgressRect();
+    window.addEventListener('resize', setupProgressRect);
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.5,
+      onUpdate: (self) => {
+        const rawP = self.progress;
+        const p = dwellEasing(rawP);
+        const lockP = getLockProgress(rawP); // -1 si pas en lock, sinon 0→1
+
+        // Translation horizontale du track (avec dwell)
+        const x = -p * maxScroll;
+        track.style.transform = `translate3d(${x}px, 0, 0)`;
+
+        // Barre de progression : utilise le raw progress (linéaire) pour rester fluide
+        if (progress) {
+          progress.style.transform = `scaleX(${rawP})`;
+        }
+
+        // Liseré qui se remplit autour du cadre quand on est dans le hold zone
+        const progressRect = section!.querySelector<SVGRectElement>('[data-secteurs-progress-rect]');
+        if (progressRect && perimeter > 0) {
+          if (lockP >= 0) {
+            // En lock : remplit le périmètre proportionnellement à lockP
+            progressRect.setAttribute('stroke-dashoffset', String(perimeter * (1 - lockP)));
+          } else {
+            // En transition : caché
+            progressRect.setAttribute('stroke-dashoffset', String(perimeter));
+          }
+        }
+
+        // Spotlight 3D : la card centrée est nette + texte visible, les voisines reculent + photo seule
+        const viewportCenter = window.innerWidth / 2;
+        const focusRange = window.innerWidth * 0.4;
+
+        let maxContentT = 0;
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.left + rect.width / 2;
+          const distance = cardCenter - viewportCenter;
+          const ratio = clamp(distance / focusRange, -1.6, 1.6);
+          const absR = Math.min(1, Math.abs(ratio));
+
+          // contentT : la card est-elle dans le cadre ? 1 = centrée pile, 0 = bien dehors
+          const contentT = clamp((0.28 - absR) / 0.16, 0, 1);
+          if (contentT > maxContentT) maxContentT = contentT;
+
+          // Quand on est dans la lock zone (lockP >= 0) → la card est PILE au centre du cadre.
+          // On efface complètement le transform inline : pas de scale, pas de translate3d, pas de rotation
+          // → la card occupe exactement sa box CSS (sans nouveau stacking context dû au transform)
+          //   ce qui garantit un pixel-perfect alignment avec le frame (qui n'a aucun transform non plus).
+          // En transition (lockP < 0) → scale spotlight dramatique basé sur absR.
+          if (lockP >= 0) {
+            // En lock : ancrage parfait sur le rectangle, pas de transform inline
+            card.style.transform = '';
+            card.style.opacity = '1';
+            card.style.filter = 'none';
+            card.style.zIndex = '100';
+          } else {
+            // En transition : effet 3D coverflow
+            const baseScale = 1 - absR * 0.45; // 1 → 0.55
+            const rotateY = ratio * -28;
+            const translateZ = -absR * 280;
+            const opacity = 1 - absR * 0.55;
+            const blur = absR * 3.5;
+            card.style.transform = `translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${baseScale})`;
+            card.style.opacity = String(opacity);
+            card.style.filter = `blur(${blur}px)`;
+            card.style.zIndex = String(Math.round(100 - absR * 100));
+          }
+
+          // Effet "card lockée" : déclenché uniquement dans le hold zone (détection précise)
+          // → la card est pile-poil dans le cadre (pas juste "proche")
+          if (lockP >= 0 && contentT > 0.85) {
+            card.classList.add('is-locked');
+          } else {
+            card.classList.remove('is-locked');
+          }
+
+          const content = card.querySelector<HTMLElement>('[data-secteurs-content]');
+          const veil = card.querySelector<HTMLElement>('[data-secteurs-veil]');
+          const indexEl = card.querySelector<HTMLElement>('[data-secteurs-index]');
+          if (content) {
+            content.style.opacity = String(contentT);
+            content.style.transform = `translateY(${(1 - contentT) * 16}px)`;
+            content.style.pointerEvents = contentT > 0.5 ? 'auto' : 'none';
+          }
+          const cta = card.querySelector<HTMLElement>('[data-secteurs-cta]');
+          if (cta) {
+            cta.style.pointerEvents = contentT > 0.5 ? 'auto' : 'none';
+            cta.style.cursor = contentT > 0.5 ? 'pointer' : 'default';
+          }
+          if (veil) {
+            veil.style.opacity = String(contentT);
+          }
+          if (indexEl) {
+            indexEl.style.opacity = String(contentT);
+          }
+        });
+
+        // Frame : passe en mode "lockée" quand on est dans le hold zone (vraie détection précise)
+        const frame = section!.querySelector<HTMLElement>('.sect-frame');
+        if (frame) {
+          if (lockP >= 0) frame.classList.add('is-locked');
+          else frame.classList.remove('is-locked');
+        }
+      },
+    });
+
+    // Refresh ScrollTrigger après que toute la page soit chargée (incluant les images des sections suivantes)
+    // → garantit que les positions de pin sont correctes même si des sections sont ajoutées plus tard dans le DOM
+    if (document.readyState === 'complete') {
+      setTimeout(() => ScrollTrigger.refresh(), 50);
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(() => ScrollTrigger.refresh(), 50);
+      });
+    }
+  } else if (prefersReducedMotion) {
+    if (track) {
+      track.style.overflowX = 'auto';
+      track.style.transform = 'none';
+    }
+    cards.forEach((card) => {
+      card.style.transform = 'none';
+      card.style.opacity = '1';
+      card.style.filter = 'none';
+    });
+  }
+</script>

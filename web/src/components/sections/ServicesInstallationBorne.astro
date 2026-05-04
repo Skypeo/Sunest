@@ -1,0 +1,99 @@
+---
+// Section "Nos Services d'Installation" — page Borne de recharge
+//   Layout 2 colonnes : photo à GAUCHE, texte (titre + 3 items numérotés + CTAs) à DROITE
+//   Reveal simple au scroll, pas de scroll-pin (pas de stages à crossfader)
+
+const services = [
+  {
+    title: 'Particuliers',
+    desc:
+      "Accompagnement personnalisé par des conseillers locaux, disponibles pour vous assister dans votre projet.",
+  },
+  {
+    title: 'Solutions Personnalisées',
+    desc:
+      "Chaque installation est unique et adaptée à votre environnement spécifique.",
+  },
+  {
+    title: 'Garantie de Qualité',
+    desc:
+      "Nos installations respectent les normes les plus strictes, avec une priorité donnée à votre satisfaction.",
+  },
+];
+---
+
+<section
+  id="services-installation-borne"
+  class="relative w-full py-20 lg:py-28"
+>
+  <div
+    class="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] items-center gap-10 lg:gap-14"
+  >
+    <!-- Colonne gauche : photo -->
+    <div class="relative order-2 lg:order-1">
+      <div
+        class="relative aspect-[4/5] rounded-md overflow-hidden bg-white/5 ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]"
+        style="aspect-ratio: 4 / 5;"
+      >
+        <img
+          src="/images/services_installation.webp"
+          alt="Installation d'une borne de recharge par Sun Est"
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-ink/35 via-ink/0 to-ink/0 pointer-events-none"
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne droite : titre + 3 items + CTAs -->
+    <div class="relative order-1 lg:order-2">
+      <h2
+        class="font-display font-black text-3xl md:text-4xl xl:text-4xl leading-[1.1] tracking-tight mb-8 lg:mb-10"
+        data-split-words
+      >
+        Nos Services <span class="text-sun">d'Installation</span>
+      </h2>
+
+      <ol class="flex flex-col gap-6 lg:gap-7">
+        {
+          services.map((s, i) => (
+            <li class="flex gap-3 lg:gap-4">
+              <span class="font-display font-black text-sky-brand text-lg lg:text-xl shrink-0 leading-snug">
+                {i + 1}.
+              </span>
+              <div class="min-w-0">
+                <p class="font-display font-bold text-lg lg:text-xl text-white mb-1.5 lg:mb-2">
+                  {s.title}
+                </p>
+                <p class="text-white/80 text-sm lg:text-[15px] leading-relaxed max-w-xl">
+                  {s.desc}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="mt-8 lg:mt-10 flex flex-col sm:flex-row sm:items-center gap-4">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
+        >
+          Demander un bilan 100&nbsp;% gratuit
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-white/[0.06] hover:bg-white/[0.16] border border-white/15 hover:border-white/30 font-bold transition-colors duration-200 backdrop-blur-md"
+        >
+          Contactez-nous
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

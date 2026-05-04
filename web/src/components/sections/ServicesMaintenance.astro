@@ -1,0 +1,152 @@
+---
+// Section "Nos Services de Maintenance" — page Maintenance
+//   • Colonne photo à GAUCHE : 1 photo statique (ratio 4/5, scale doux au scroll)
+//   • Colonne texte à DROITE : titre + 5 items numérotés + 2 CTAs
+
+const services = [
+  {
+    title: 'Contrôle et Nettoyage',
+    desc:
+      'Inspection régulière des panneaux pour détecter tout dysfonctionnement, nettoyage des surfaces pour maximiser l’absorption solaire.',
+  },
+  {
+    title: 'Diagnostic et Réparation',
+    desc:
+      'Identification et réparation rapide des défauts, avec des solutions adaptées à chaque problème.',
+  },
+  {
+    title: 'Surveillance à Distance',
+    desc:
+      'Suivi en temps réel de la performance de vos installations avec des rapports détaillés et des alertes instantanées en cas d’anomalie.',
+  },
+  {
+    title: 'Mise à Niveau et Optimisation',
+    desc:
+      'Mise à jour des systèmes pour intégrer les dernières technologies, améliorer l’efficacité et prolonger la durée de vie de votre installation.',
+  },
+  {
+    title: 'Maintenance préventive',
+    desc:
+      'Maintenance régulièrement programmée afin d’éviter des défaillances inattendues à l’avenir.',
+  },
+  {
+    title: 'Maintenance curative',
+    desc:
+      'Maintenance visant à réparer les pannes et les défaillances des équipements photovoltaïques dès leur apparition.',
+  },
+];
+---
+
+<section
+  id="services-maintenance"
+  class="relative w-full"
+  style="height: 220vh;"
+  data-servicesmaint-section
+>
+  <div class="sticky top-0 h-screen w-full overflow-hidden">
+    <div
+      class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] items-center gap-8 lg:gap-12"
+    >
+      <!-- Colonne gauche : photo -->
+      <div class="relative h-full hidden lg:flex items-center justify-start order-2 lg:order-1">
+        <div class="relative w-[78%] max-w-[520px]">
+          <div
+            class="relative aspect-[4/5] rounded-md overflow-hidden bg-white/5"
+            style="aspect-ratio: 4 / 5;"
+          >
+            <img
+              data-servicesmaint-photo
+              src="/images/nos_services_maintenance.webp"
+              alt="Sun Est — services de maintenance photovoltaïque"
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 w-full h-full object-cover will-change-transform"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-ink/35 via-ink/0 to-ink/0 pointer-events-none"
+              aria-hidden="true"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonne droite : titre + 6 items en 2 cols + CTAs -->
+      <div class="relative order-1 lg:order-2">
+        <h2
+          class="font-display font-black text-3xl md:text-4xl xl:text-4xl leading-[1.1] tracking-tight mb-5 lg:mb-7"
+          data-split-words
+        >
+          Nos Services de <span class="text-sky-brand">Maintenance</span>
+        </h2>
+
+        <ol class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-4 lg:gap-y-4">
+          {
+            services.map((s, i) => (
+              <li class="flex gap-2.5 lg:gap-3">
+                <span class="font-display font-black text-sky-brand text-sm lg:text-base shrink-0 leading-snug">
+                  {i + 1}.
+                </span>
+                <div class="min-w-0">
+                  <p class="font-display font-bold text-[15px] lg:text-base text-white mb-1 leading-snug">
+                    {s.title}
+                  </p>
+                  <p class="text-white/75 text-[13px] lg:text-[13.5px] leading-snug">
+                    {s.desc}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="mt-6 lg:mt-7 flex flex-col sm:flex-row sm:items-center gap-4">
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
+          >
+            Demander un bilan 100&nbsp;% gratuit
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-white/[0.06] hover:bg-white/[0.16] border border-white/15 hover:border-white/30 font-bold transition-colors duration-200 backdrop-blur-md"
+          >
+            Contactez-nous
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-servicesmaint-section]');
+  const photo = section?.querySelector<HTMLElement>('[data-servicesmaint-photo]');
+
+  if (section && photo && !prefersReducedMotion) {
+    function smoothstep(t: number): number {
+      const c = Math.max(0, Math.min(1, t));
+      return c * c * (3 - 2 * c);
+    }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const p = self.progress;
+        // Léger effet ken burns : scale 1 → 1.06 sur toute la course
+        const t = smoothstep(p);
+        photo.style.transform = `scale(${1 + t * 0.06})`;
+      },
+    });
+  }
+</script>

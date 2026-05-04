@@ -1,0 +1,347 @@
+---
+// Hero "Services > Borne de recharge" — même pattern que HeroPro
+//   Photo "photo qui zoom du fond" + composition finale (texte gauche / badges droite)
+---
+
+<section
+  id="hero-borne"
+  class="relative w-full mt-16 bg-ink"
+  style="height: 220vh;"
+  data-hero-borne
+>
+  <div
+    class="sticky top-0 h-screen w-full overflow-hidden"
+    data-hero-pin
+  >
+    <!-- Photo (frame) : démarre petite/centrée, grandit jusqu'à fullbleed -->
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md overflow-hidden bg-white/5 ring-1 ring-white/15 will-change-transform"
+      data-hero-frame
+    >
+      <img
+        src="/images/borne_de_recharge.webp"
+        alt="Borne de recharge pour véhicule électrique installée par Sun Est dans le Grand-Est"
+        class="absolute inset-0 w-full h-full object-cover object-center will-change-transform"
+        style="filter: brightness(0.78) saturate(1.05) blur(8px); opacity: 0.55;"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        data-hero-img
+      />
+    </div>
+
+    <!-- Voile gradient principal (gauche dense → droite tamisée) -->
+    <div
+      class="absolute inset-0 z-10 bg-gradient-to-r from-ink via-ink/80 to-ink/45 pointer-events-none opacity-0"
+      data-hero-veil
+      aria-hidden="true"
+    >
+    </div>
+    <!-- Voile vertical doux -->
+    <div
+      class="absolute inset-0 z-10 bg-gradient-to-b from-ink/40 via-transparent to-ink/40 pointer-events-none opacity-0"
+      data-hero-veil-v
+      aria-hidden="true"
+    >
+    </div>
+    <!-- Voile bottom -->
+    <div
+      class="absolute inset-x-0 bottom-0 h-44 z-10 bg-gradient-to-t from-ink/95 to-transparent pointer-events-none opacity-0"
+      data-hero-veil-b
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- ACTE 1 : kicker centré + scroll cue -->
+    <div
+      class="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 text-center gap-5 lg:gap-7"
+      data-hero-intro
+    >
+      <p
+        class="text-sky-brand font-bold uppercase tracking-[0.22em] text-sm lg:text-base"
+      >
+        Borne de recharge
+      </p>
+      <p
+        class="text-white/85 font-display font-bold text-xl sm:text-2xl lg:text-3xl uppercase tracking-[0.16em] leading-tight"
+      >
+        Mobilité électrique
+      </p>
+      <div class="flex flex-col items-center gap-2.5 mt-2">
+        <span
+          class="w-7 h-11 lg:w-8 lg:h-12 rounded-full border-2 border-white/40 flex items-start justify-center pt-2"
+          aria-hidden="true"
+        >
+          <span
+            class="block w-1.5 h-3 bg-sky-brand rounded-full"
+            style="animation: hero-borne-scroll-dot 1.8s ease-in-out infinite;"
+          ></span>
+        </span>
+        <span class="text-white/45 text-[10px] lg:text-xs uppercase tracking-[0.3em]">
+          Scroll
+        </span>
+      </div>
+    </div>
+
+    <!-- ACTE 2 : composition finale (texte gauche / badges droite) -->
+    <div
+      class="absolute inset-0 z-30 flex items-center pointer-events-none opacity-0 will-change-[opacity,transform]"
+      data-hero-final
+    >
+      <div
+        class="w-full max-w-7xl mx-auto px-6 lg:px-10 pt-16 sm:pt-20 md:pt-24 pb-36 sm:pb-28 lg:pb-32"
+      >
+        <div
+          class="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 sm:gap-6 md:gap-8 lg:gap-12"
+        >
+          <!-- ── GAUCHE : titre uniquement ── -->
+          <div class="sm:flex-1 sm:min-w-0 pointer-events-auto">
+            <h1
+              class="font-display font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[3.25rem] leading-[1.1] sm:leading-[1.05] tracking-tight text-white drop-shadow-[0_6px_24px_rgba(0,0,0,1)]"
+              style="text-shadow: 0 2px 10px rgba(0,0,0,0.85), 0 0 30px rgba(0,0,0,0.6);"
+            >
+              Installation de <span class="text-sun">Bornes de Recharge</span> pour
+              Véhicules Électriques dans le Grand-Est
+            </h1>
+          </div>
+
+          <!-- ── DROITE : Avis Google ── -->
+          <div
+            class="flex flex-row items-center justify-start sm:justify-end shrink-0 pointer-events-auto"
+          >
+            <div
+              class="flex items-center gap-2 lg:gap-2.5 px-3 py-2.5 lg:px-3.5 lg:py-3 rounded-md bg-white shadow-[0_14px_38px_rgba(0,0,0,0.85)] ring-2 ring-white/30"
+              aria-label="Avis Google 4,8 sur 5, plus de 1000 installations"
+            >
+              <svg
+                class="w-7 h-7 lg:w-8 lg:h-8 shrink-0"
+                viewBox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  fill="#4285F4"
+                  d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+                />
+              </svg>
+              <div class="min-w-0 flex flex-col leading-tight">
+                <span
+                  class="text-graphite text-[9px] lg:text-[10px] uppercase tracking-[0.12em] font-bold"
+                  >Avis Google</span
+                >
+                <div class="flex items-baseline gap-1.5 mt-0.5">
+                  <span class="font-display font-black text-ink text-sm lg:text-base">4,8</span>
+                  <span
+                    class="text-[#fbbc04] text-[10px] lg:text-xs leading-none"
+                    aria-hidden="true">★★★★★</span
+                  >
+                </div>
+                <span class="text-graphite text-[9px] lg:text-[10px] mt-0.5 whitespace-nowrap"
+                  >+ de 1 000 installations</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bandeau sun bottom -->
+    <div
+      class="absolute inset-x-0 bottom-0 text-ink shadow-[0_-15px_40px_rgba(0,0,0,0.35)] will-change-transform"
+      style="background-color: #ffb700; z-index: 50; opacity: 1;"
+      data-hero-banner
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 lg:px-10 py-3.5 lg:py-4 flex items-center justify-center gap-3 lg:gap-4 text-center"
+        style="background-color: #ffb700;"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="w-5 h-5 lg:w-6 lg:h-6 shrink-0"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />
+        </svg>
+        <p
+          class="font-display font-black text-sm sm:text-base lg:text-lg uppercase tracking-[0.05em] leading-tight"
+        >
+          Installateur certifié IRVE — particuliers, entreprises et flottes
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes hero-borne-scroll-dot {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    60% {
+      transform: translateY(10px);
+      opacity: 0.2;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero-intro] [style*='hero-borne-scroll-dot'] {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-hero-borne]');
+  const frame = document.querySelector<HTMLElement>('[data-hero-borne] [data-hero-frame]');
+  const img = document.querySelector<HTMLElement>('[data-hero-borne] [data-hero-img]');
+  const veil = document.querySelector<HTMLElement>('[data-hero-borne] [data-hero-veil]');
+  const veilV = document.querySelector<HTMLElement>('[data-hero-borne] [data-hero-veil-v]');
+  const veilB = document.querySelector<HTMLElement>('[data-hero-borne] [data-hero-veil-b]');
+  const intro = document.querySelector<HTMLElement>('[data-hero-borne] [data-hero-intro]');
+  const final = document.querySelector<HTMLElement>('[data-hero-borne] [data-hero-final]');
+  const banner = document.querySelector<HTMLElement>('[data-hero-borne] [data-hero-banner]');
+
+  let vw = window.innerWidth;
+  let vh = window.innerHeight;
+  let startW = 0;
+  let startH = 0;
+  let endW = 0;
+  let endH = 0;
+
+  function recompute() {
+    vw = window.innerWidth;
+    vh = window.innerHeight;
+    startW = Math.min(vw * 0.4, 480);
+    startH = startW * (9 / 16);
+    endW = Math.min(vw * 0.94, 1500);
+    endH = Math.min(vh * 0.78, 820);
+  }
+  recompute();
+  window.addEventListener('resize', () => {
+    recompute();
+    ScrollTrigger.refresh();
+  });
+
+  if (frame) {
+    frame.style.width = `${startW}px`;
+    frame.style.height = `${startH}px`;
+    frame.style.borderRadius = '8px';
+  }
+  if (banner && !prefersReducedMotion) {
+    banner.style.transform = 'translateY(100%)';
+  }
+
+  if (section && frame && !prefersReducedMotion) {
+    function lerp(a: number, b: number, t: number): number {
+      return a + (b - a) * t;
+    }
+    function smoothstep(t: number): number {
+      const c = Math.max(0, Math.min(1, t));
+      return c * c * (3 - 2 * c);
+    }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const p = self.progress;
+
+        const growT = smoothstep(p / 0.65);
+        const w = lerp(startW, endW, growT);
+        const h = lerp(startH, endH, growT);
+        const radius = lerp(8, 14, growT);
+        if (frame) {
+          frame.style.width = `${w}px`;
+          frame.style.height = `${h}px`;
+          frame.style.borderRadius = `${radius}px`;
+        }
+
+        if (img) {
+          const focus = smoothstep(p / 0.25);
+          const opacity = 0.55 + focus * 0.45;
+          const blur = (1 - focus) * 8;
+          img.style.opacity = String(opacity);
+          img.style.filter = `brightness(0.78) saturate(1.05) blur(${blur}px)`;
+        }
+
+        if (veil) {
+          const t = smoothstep((p - 0.45) / 0.3);
+          veil.style.opacity = String(t);
+        }
+        if (veilV) {
+          const t = smoothstep((p - 0.5) / 0.3);
+          veilV.style.opacity = String(t);
+        }
+        if (veilB) {
+          const t = smoothstep((p - 0.55) / 0.3);
+          veilB.style.opacity = String(t);
+        }
+
+        if (intro) {
+          const op = Math.max(0, 1 - p / 0.25);
+          intro.style.opacity = String(op);
+          intro.style.transform = `scale(${1 - (1 - op) * 0.08})`;
+        }
+
+        if (final) {
+          const t = smoothstep((p - 0.55) / 0.3);
+          final.style.opacity = String(t);
+          final.style.transform = `translateY(${(1 - t) * 28}px)`;
+        }
+
+        if (banner) {
+          const t = smoothstep((p - 0.7) / 0.2);
+          banner.style.transform = `translateY(${(1 - t) * 100}%)`;
+        }
+      },
+    });
+  } else if (prefersReducedMotion) {
+    if (frame) {
+      frame.style.width = `${endW}px`;
+      frame.style.height = `${endH}px`;
+      frame.style.borderRadius = '14px';
+    }
+    if (img) {
+      img.style.opacity = '1';
+      img.style.filter = 'brightness(0.78) saturate(1.05)';
+    }
+    if (veil) veil.style.opacity = '1';
+    if (veilV) veilV.style.opacity = '1';
+    if (veilB) veilB.style.opacity = '1';
+    if (intro) intro.style.opacity = '0';
+    if (final) {
+      final.style.opacity = '1';
+      final.style.transform = 'none';
+    }
+    if (banner) {
+      banner.style.transform = 'translateY(0)';
+    }
+  }
+</script>

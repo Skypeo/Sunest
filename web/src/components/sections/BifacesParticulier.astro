@@ -13,13 +13,13 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
 >
   <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden lg:flex lg:items-center">
     <div class="mx-auto max-w-7xl w-full px-6 lg:px-10 lg:py-[4vh]">
-      <!-- Titre H2 en haut -->
-      <div class="max-w-4xl mb-8 lg:mb-10">
-        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs lg:text-sm mb-3">
+      <!-- Titre H2 en haut (taille réduite pour tenir dans le viewport) -->
+      <div class="max-w-4xl mb-6 lg:mb-8">
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs lg:text-sm mb-2">
           Matériel premium
         </p>
         <h2
-          class="font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-[2.75rem] leading-[1.15] tracking-tight"
+          class="font-display font-bold text-xl sm:text-2xl lg:text-3xl xl:text-4xl leading-[1.15] tracking-tight"
         >
           Nous équipons nos clients <span class="text-sun">des meilleurs produits</span> et technologies du marché
         </h2>
@@ -35,6 +35,8 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
           <img
             src={imgSrc}
             alt="Panneaux solaires bi-faces installés sur toiture"
+            width="768"
+            height="1024"
             loading="lazy"
             decoding="async"
             class="absolute inset-0 w-full h-full object-cover"
@@ -45,44 +47,44 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
         <!-- Colonne droite : contenu texte -->
         <div class="flex flex-col justify-center min-w-0">
           <h3
-            class="font-display font-bold text-xl lg:text-2xl text-white leading-tight"
+            class="font-display font-bold text-lg lg:text-xl text-white leading-tight"
             data-bifaces-item={0}
           >
             Un rendement au-moins <span class="text-sun">15 % supérieur</span> grâce aux panneaux bi-faces
           </h3>
 
           <p
-            class="mt-4 text-white/75 text-base leading-relaxed"
+            class="mt-3 text-white/75 text-sm lg:text-[14px] leading-relaxed"
             data-bifaces-item={1}
           >
             Nos panneaux bi-faces peuvent recevoir la lumière solaire des deux côtés. La lumière supplémentaire
             captée par la face du dessous permet un rendement global jusqu'à 15 % supérieur à des panneaux classiques.
           </p>
 
-          <ul class="mt-4 space-y-2.5">
+          <ul class="mt-3 space-y-2">
             <li
-              class="flex items-start gap-3 text-white/85 text-base leading-snug"
+              class="flex items-start gap-2.5 text-white/85 text-sm lg:text-[14px] leading-snug"
               data-bifaces-item={2}
             >
               <span
-                class="flex-shrink-0 mt-[5px] w-5 h-5 rounded-full bg-sky-brand/15 border border-sky-brand/40 text-sky-brand flex items-center justify-center"
+                class="flex-shrink-0 mt-[3px] w-4 h-4 rounded-full bg-sky-brand/15 border border-sky-brand/40 text-sky-brand flex items-center justify-center"
                 aria-hidden="true"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-2.5 h-2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </span>
               Le dessus du panneau capte les rayons directs du soleil
             </li>
             <li
-              class="flex items-start gap-3 text-white/85 text-base leading-snug"
+              class="flex items-start gap-2.5 text-white/85 text-sm lg:text-[14px] leading-snug"
               data-bifaces-item={3}
             >
               <span
-                class="flex-shrink-0 mt-[5px] w-5 h-5 rounded-full bg-sky-brand/15 border border-sky-brand/40 text-sky-brand flex items-center justify-center"
+                class="flex-shrink-0 mt-[3px] w-4 h-4 rounded-full bg-sky-brand/15 border border-sky-brand/40 text-sky-brand flex items-center justify-center"
                 aria-hidden="true"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-2.5 h-2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </span>
@@ -91,7 +93,7 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
           </ul>
 
           <p
-            class="mt-4 text-white/70 text-base leading-relaxed"
+            class="mt-3 text-white/70 text-sm lg:text-[14px] leading-relaxed"
             data-bifaces-item={4}
           >
             Nous travaillons avec des fabricants réputés afin de vous fournir des panneaux solaires, micro-onduleurs
@@ -99,7 +101,7 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
           </p>
 
           <p
-            class="mt-2 italic text-white/55 text-sm leading-relaxed"
+            class="mt-1.5 italic text-white/55 text-xs lg:text-sm leading-relaxed"
             data-bifaces-item={5}
           >
             La durabilité et l'efficacité de votre solaire sont nos priorités.
@@ -107,15 +109,15 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
 
           <!-- Bloc encadré véhicule électrique -->
           <div
-            class="mt-5 p-4 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-md transition-all duration-300 hover:border-sky-brand/35"
+            class="mt-3 p-3 lg:p-3.5 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-md transition-all duration-300 hover:border-sky-brand/35"
             data-bifaces-item={6}
           >
-            <div class="flex items-start gap-3">
+            <div class="flex items-start gap-2.5">
               <div
-                class="flex-shrink-0 w-10 h-10 rounded-md bg-sky-brand/10 border border-sky-brand/25 text-sky-brand flex items-center justify-center"
+                class="flex-shrink-0 w-8 h-8 rounded-md bg-sky-brand/10 border border-sky-brand/25 text-sky-brand flex items-center justify-center"
                 aria-hidden="true"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                   <rect x="3" y="3" width="11" height="18" rx="1.5" />
                   <line x1="6" y1="7" x2="11" y2="7" />
                   <line x1="6" y1="11" x2="11" y2="11" />
@@ -124,16 +126,16 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
               </div>
 
               <div class="flex-1 min-w-0">
-                <p class="font-display font-bold text-white text-base leading-snug">
+                <p class="font-display font-bold text-white text-sm leading-snug">
                   Vous possédez un véhicule électrique ?
                 </p>
-                <p class="mt-1 text-white/65 text-sm leading-snug">
+                <p class="mt-0.5 text-white/65 text-xs leading-snug">
                   Raccordez votre borne de recharge directement à vos panneaux solaires pour une recharge rapide
                   et écologique.
                 </p>
                 <a
                   href="/services/borne-de-recharge"
-                  class="mt-2 inline-flex items-center gap-1.5 text-sky-brand font-semibold text-sm hover:gap-2.5 transition-all duration-200"
+                  class="mt-1.5 inline-flex items-center gap-1.5 text-sky-brand font-semibold text-xs lg:text-sm hover:gap-2.5 transition-all duration-200"
                 >
                   Découvrez les bornes de recharge
                   <span aria-hidden="true">→</span>
@@ -143,10 +145,10 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
           </div>
 
           <!-- CTA primaire -->
-          <div class="mt-6" data-bifaces-item={7}>
+          <div class="mt-4" data-bifaces-item={7}>
             <a
               href="/contact"
-              class="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
+              class="inline-flex items-center gap-2 px-6 py-3.5 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
             >
               Demander une étude 100 % gratuite
               <span aria-hidden="true">→</span>

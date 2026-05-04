@@ -178,7 +178,8 @@ function SolarPanel() {
         const startPos = finalPos.clone().add(offset);
         // Stagger from top-left to bottom-right with slight randomness
         const distNorm = (y / CELLS_Y) * 0.6 + (x / CELLS_X) * 0.4;
-        const delay = 0.7 + distNorm * 1.4 + Math.random() * 0.25;
+        // Délais raccourcis : démarre plus tôt + stagger plus court → assemblage en ~1.5s au lieu de ~3.5s
+        const delay = 0.25 + distNorm * 0.7 + Math.random() * 0.15;
         data.push({ finalPos, startPos, delay });
       }
     }
@@ -220,9 +221,9 @@ function SolarPanel() {
       frameMat.opacity = 1 - Math.pow(1 - fT, 2);
     }
 
-    // Cell assembly (per-cell delay + 1.4s travel, scale 0→1)
+    // Cell assembly (per-cell delay + 0.8s travel, scale 0→1) — plus rapide qu'avant (1.4s)
     cellData.forEach((cell, i) => {
-      const localT = THREE.MathUtils.clamp((elapsed - cell.delay) / 1.4, 0, 1);
+      const localT = THREE.MathUtils.clamp((elapsed - cell.delay) / 0.8, 0, 1);
       const ePos = 1 - Math.pow(1 - localT, 3); // easeOutCubic
       const eScale = THREE.MathUtils.clamp(localT * 1.6, 0, 1);
       dummy.position.lerpVectors(cell.startPos, cell.finalPos, ePos);
@@ -233,8 +234,9 @@ function SolarPanel() {
     });
     cellsRef.current.instanceMatrix.needsUpdate = true;
 
-    // Idle motion after assembly (~5s) — subtle yaw oscillation + parallaxe
-    const settled = THREE.MathUtils.clamp((elapsed - 4.5) / 1.5, 0, 1);
+    // Idle motion after assembly — subtle yaw oscillation + parallaxe
+    // Maintenant que l'assemblage est plus rapide, on settle plus tôt
+    const settled = THREE.MathUtils.clamp((elapsed - 2.0) / 1.0, 0, 1);
     const t = state.clock.elapsedTime;
     const progress = readScrollProgress();
 

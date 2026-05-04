@@ -1,0 +1,206 @@
+---
+// Section "Revente totale de la production" — page Pro
+// Clone strict de BifacesParticulier.astro (photo gauche / texte droite + photo descend en se défloutant)
+const imgSrc = '/images/revente.webp';
+---
+
+<section
+  id="revente-pro"
+  class="relative w-full bg-ink lg:h-[280vh] py-20 lg:py-0"
+  data-revente-section
+>
+  <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden lg:flex lg:items-center">
+    <div class="mx-auto max-w-7xl w-full px-6 lg:px-10 lg:py-[4vh]">
+      <!-- Titre H2 en haut -->
+      <div class="max-w-4xl mb-8 lg:mb-10">
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs lg:text-sm mb-3">
+          Pour les professionnels
+        </p>
+        <h2
+          class="font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-[2.75rem] leading-[1.15] tracking-tight"
+        >
+          Revente totale <span class="text-sun">de la production</span>
+        </h2>
+      </div>
+
+      <!-- Grid : 1 col mobile (photo dessus / texte dessous), 2 cols desktop (côte à côte) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+        <!-- Colonne gauche : photo (descend + se défloute au scroll sur desktop) -->
+        <div
+          class="relative rounded-md overflow-hidden bg-white/5 min-h-[55vw] sm:min-h-[50vw] lg:min-h-0 will-change-transform"
+          data-revente-frame
+        >
+          <img
+            src={imgSrc}
+            alt="Installation photovoltaïque pour la revente totale d'électricité"
+            width="480"
+            height="600"
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 w-full h-full object-cover"
+            data-revente-img
+          />
+        </div>
+
+        <!-- Colonne droite : contenu texte -->
+        <div class="flex flex-col justify-center min-w-0">
+          <p
+            class="text-white/80 text-sm lg:text-[15px] leading-relaxed"
+            data-revente-item={0}
+          >
+            La revente totale de la production d'électricité est particulièrement adaptée pour
+            les propriétaires de hangars ou de bâtiments de stockage. Elle est recommandée si
+            vos besoins énergétiques sont faibles ou inexistants. Le rachat de la production
+            est alors fait par <strong class="font-semibold text-white">EDF Obligation
+            d'Achat</strong>. Le tarif de rachat est fixé sur 20&nbsp;ans, ce qui vous assure
+            une certaine sérénité. Au 1<sup>er</sup>&nbsp;trimestre 2021, il s'élève à
+            <strong class="font-semibold text-white">0,0976&nbsp;€ par kWh</strong> vendu pour
+            une installation inférieure ou égale à 100&nbsp;kWc. Pour toutes puissances
+            supérieures ou égales à 100&nbsp;kWc le tarif fait l'objet d'un appel d'offres.
+            La revente totale de votre production vous permettra de diversifier vos revenus
+            d'exploitation sans avoir besoin de main-d'œuvre ni de travail
+            supplémentaire&nbsp;! Pour toutes installations de panneaux solaires
+            photovoltaïques, demandez à <strong class="font-semibold text-white">Sun Est</strong>&nbsp;!
+          </p>
+
+          <p
+            class="mt-4 text-white/75 text-sm lg:text-[15px] leading-relaxed"
+            data-revente-item={1}
+          >
+            Avec la hausse des prix de l'électricité et la baisse du prix des installations
+            photovoltaïques, c'est une solution rentable et bonne pour
+            l'environnement&nbsp;! En effet, l'énergie solaire est une énergie
+            renouvelable&nbsp;! Elle vous permettra aussi de valoriser vos surfaces
+            inexploitées. C'est un investissement à long terme mais qui vous apportera des
+            revenus garantis.
+          </p>
+
+          <p
+            class="mt-4 font-display font-bold text-white text-base lg:text-lg leading-snug"
+            data-revente-item={2}
+          >
+            Véritable engagement pour la planète, votre transition énergétique renforcera votre
+            image&nbsp;!
+          </p>
+
+          <p
+            class="mt-3 italic text-white/65 text-sm leading-relaxed"
+            data-revente-item={3}
+          >
+            Pour la pose de panneaux photovoltaïques à Pompey, faites appel à
+            <strong class="not-italic font-semibold text-white">Sun Est</strong>&nbsp;!
+          </p>
+
+          <!-- CTAs : apparaissent APRÈS que tout le texte est déroulé (timing dédié) -->
+          <div
+            class="mt-6 flex flex-col sm:flex-row sm:items-center gap-4"
+            data-revente-ctas
+          >
+            <a
+              href="/contact"
+              class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
+            >
+              Demander un bilan 100&nbsp;% gratuit
+              <span aria-hidden="true">→</span>
+            </a>
+            <a
+              href="/contact"
+              class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-pill bg-white/[0.06] hover:bg-white/[0.16] border border-white/15 hover:border-white/30 font-bold transition-colors duration-200 backdrop-blur-md"
+            >
+              Contactez-nous
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+  const section = document.querySelector<HTMLElement>('[data-revente-section]');
+  const frame = document.querySelector<HTMLElement>('[data-revente-frame]');
+  const img = document.querySelector<HTMLElement>('[data-revente-img]');
+  const items = document.querySelectorAll<HTMLElement>('[data-revente-item]');
+  const ctas = document.querySelector<HTMLElement>('[data-revente-ctas]');
+
+  function smoothstep(t: number): number {
+    const c = Math.max(0, Math.min(1, t));
+    return c * c * (3 - 2 * c);
+  }
+
+  // Sur mobile/tablette : tout visible direct, pas de scroll-pin (layout stacké)
+  if (!isDesktop || prefersReducedMotion) {
+    if (frame) {
+      frame.style.opacity = '1';
+      frame.style.transform = 'translateY(0)';
+    }
+    if (img) img.style.filter = 'blur(0)';
+    items.forEach((el) => (el.style.opacity = '1'));
+    if (ctas) ctas.style.opacity = '1';
+  } else if (section) {
+    // Desktop : état initial caché + scroll-pin
+    if (frame) {
+      frame.style.transform = 'translateY(-25%)';
+      frame.style.opacity = '0.55';
+    }
+    if (img) {
+      img.style.filter = 'blur(18px)';
+    }
+    items.forEach((el) => {
+      el.style.opacity = '0';
+    });
+    if (ctas) ctas.style.opacity = '0';
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1.2, // Plus de scrub = transition plus douce, moins brut
+      onUpdate: (self) => {
+        const p = self.progress;
+
+        // Photo : descend + se défloute progressivement sur 0-65 % (au lieu de 0-45 %)
+        // → transition beaucoup plus longue et douce entre flou et net
+        const fallT = smoothstep(p / 0.65);
+        if (frame) {
+          const ty = -25 * (1 - fallT);
+          frame.style.transform = `translateY(${ty}%)`;
+          frame.style.opacity = String(0.55 + fallT * 0.45);
+        }
+        if (img) {
+          img.style.filter = `blur(${(1 - fallT) * 18}px)`;
+        }
+
+        // Items texte droite : reveal cumulatif 20-78 % (s'arrête avant pour laisser place aux CTAs)
+        const N = items.length;
+        const itemStart = 0.20;
+        const itemEnd = 0.78;
+        const span = (itemEnd - itemStart) / N;
+        for (let i = 0; i < N; i++) {
+          const startP = itemStart + i * span;
+          const localT = (p - startP) / (span * 2.4);
+          const op = smoothstep(localT);
+          const el = items[i];
+          if (el) {
+            el.style.opacity = String(op);
+            el.style.transform = `translateY(${(1 - op) * 14}px)`;
+          }
+        }
+
+        // CTAs : apparaissent APRÈS le texte (82-95 %) avec couleur full strength
+        if (ctas) {
+          const ctaT = smoothstep((p - 0.82) / 0.13);
+          ctas.style.opacity = String(ctaT);
+          ctas.style.transform = `translateY(${(1 - ctaT) * 18}px)`;
+        }
+      },
+    });
+  }
+</script>

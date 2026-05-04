@@ -1,0 +1,34 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import SiteHeader from '~/components/SiteHeader.astro';
+import HeroBorne from '~/components/sections/HeroBorne.astro';
+import PourquoiBorne from '~/components/sections/PourquoiBorne.astro';
+import TemoignageBorne from '~/components/sections/TemoignageBorne.astro';
+import ServicesInstallationBorne from '~/components/sections/ServicesInstallationBorne.astro';
+import ProcessusBorne from '~/components/sections/ProcessusBorne.astro';
+import ChoisirSunEstBorne from '~/components/sections/ChoisirSunEstBorne.astro';
+import FAQ from '~/components/sections/FAQ.astro';
+import ContactCta from '~/components/sections/Contact.astro';
+import Footer from '~/components/sections/Footer.astro';
+---
+
+<Layout
+  title="Borne de recharge — Sun Est | Installation IRVE Grand-Est"
+>
+  <SiteHeader />
+
+  <main>
+    <HeroBorne />
+    <PourquoiBorne />
+    <TemoignageBorne />
+    <ServicesInstallationBorne />
+    <ProcessusBorne />
+    <ChoisirSunEstBorne />
+
+    <!-- Sections partagées : FAQ + CTA + Footer -->
+    <FAQ />
+    <ContactCta />
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,36 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import SiteHeader from '~/components/SiteHeader.astro';
+import HeroPro from '~/components/sections/HeroPro.astro';
+import StatsSunEst from '~/components/sections/StatsSunEst.astro';
+import SecteursPro from '~/components/sections/SecteursPro.astro';
+import AutoconsoPro from '~/components/sections/AutoconsoPro.astro';
+import ReventePro from '~/components/sections/ReventePro.astro';
+import PartenairePro from '~/components/sections/PartenairePro.astro';
+import EtapesParticulier from '~/components/sections/EtapesParticulier.astro';
+import FAQ from '~/components/sections/FAQ.astro';
+import ContactCta from '~/components/sections/Contact.astro';
+import Footer from '~/components/sections/Footer.astro';
+---
+
+<Layout
+  title="Professionnel — Sun Est | Photovoltaïque pour entreprises Grand-Est"
+>
+  <SiteHeader />
+
+  <main>
+    <HeroPro />
+    <StatsSunEst />
+    <SecteursPro />
+    <AutoconsoPro />
+    <ReventePro />
+    <PartenairePro />
+    <EtapesParticulier />
+
+    <!-- Sections partagées : FAQ + CTA + Footer -->
+    <FAQ />
+    <ContactCta />
+  </main>
+
+  <Footer />
+</Layout>

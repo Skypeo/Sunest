@@ -1,0 +1,89 @@
+---
+// Section "Témoignage — Borne de recharge" — page Borne de recharge
+//   Bloc centré : titre + sous-titre + vidéo YouTube en lite-embed
+//   La vidéo charge l'iframe uniquement au clic (perf : pas de bundle YouTube
+//   tant que l'utilisateur ne lance pas la lecture).
+
+const videoId = 'y9-MzXiV5q0';
+const thumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+---
+
+<section
+  id="temoignage-borne"
+  class="relative w-full py-20 lg:py-28"
+>
+  <div class="max-w-5xl mx-auto px-6 lg:px-10 text-center">
+    <h2
+      class="font-display font-black text-3xl md:text-4xl xl:text-5xl leading-[1.05] tracking-tight mb-4 lg:mb-5"
+      data-split-words
+    >
+      Témoignage
+      <br />
+      <span class="text-sun">Borne de recharge</span>
+    </h2>
+    <p class="text-white/75 text-sm lg:text-base max-w-2xl mx-auto mb-10 lg:mb-12">
+      Découvrez le témoignage de Quentin, qui a installé une borne solar edge pour
+      sa voiture électrique
+    </p>
+
+    <div
+      class="relative aspect-video rounded-md overflow-hidden ring-1 ring-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] bg-ink"
+      data-yt-wrapper
+      data-video-id={videoId}
+    >
+      <button
+        type="button"
+        class="group absolute inset-0 w-full h-full cursor-pointer"
+        aria-label="Lire la vidéo : témoignage de Quentin, client Sun Est"
+      >
+        <img
+          src={thumbnail}
+          alt="Témoignage de Quentin, client Sun Est"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          loading="lazy"
+          decoding="async"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-ink/10 pointer-events-none"
+          aria-hidden="true"
+        >
+        </div>
+        <div class="absolute inset-0 grid place-items-center">
+          <span
+            class="grid place-items-center w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-sky-brand text-ink shadow-[0_20px_50px_-10px_rgba(32,184,241,0.55)] ring-4 ring-white/20 group-hover:scale-110 transition-transform duration-300 ease-out"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              class="w-9 h-9 lg:w-10 lg:h-10 ml-1"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M8 5v14l11-7L8 5z" />
+            </svg>
+          </span>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-yt-wrapper]').forEach((wrapper) => {
+    const videoId = wrapper.dataset.videoId;
+    if (!videoId) return;
+    const button = wrapper.querySelector('button');
+    button?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+      iframe.title = 'Témoignage Sun Est — Borne de recharge';
+      iframe.setAttribute(
+        'allow',
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+      );
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.className = 'absolute inset-0 w-full h-full border-0';
+      wrapper.innerHTML = '';
+      wrapper.appendChild(iframe);
+    });
+  });
+</script>

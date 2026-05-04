@@ -1,0 +1,166 @@
+---
+// Section "Pourquoi Choisir Sun Est ?" — page Borne de recharge
+//   Clone de ChoisirSunEstMaintenance, textes adaptés au contexte borne de recharge
+//   Même pattern : photo full-bleed + 3 cards + bloc CTA centré (220vh scroll-pin)
+
+const cards = [
+  {
+    title: 'Expertise Locale',
+    desc:
+      "Accompagnement personnalisé par des conseillers locaux, disponibles pour vous assister dans votre projet.",
+  },
+  {
+    title: 'Solutions Personnalisées',
+    desc:
+      "Chaque installation est unique et adaptée à votre environnement spécifique.",
+  },
+  {
+    title: 'Garantie de Qualité',
+    desc:
+      "Nos installations respectent les normes les plus strictes, avec une priorité donnée à votre satisfaction.",
+  },
+];
+---
+
+<section
+  id="choisir-sunest-borne"
+  class="relative w-full lg:h-[220vh]"
+  data-choisirborne-section
+>
+  <div class="relative w-full lg:sticky lg:top-0 lg:h-screen overflow-hidden">
+    <!-- Photo de fond -->
+    <img
+      data-choisirborne-photo
+      src="/images/pourquoiSunEst.webp"
+      alt="Équipe Sun Est — installateur de bornes de recharge"
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 w-full h-full object-cover will-change-transform"
+    />
+    <!-- Scrim dense pour lisibilité -->
+    <div
+      class="absolute inset-0 bg-ink/75 pointer-events-none"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/55 to-ink/85 pointer-events-none"
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- Contenu -->
+    <div
+      class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-0 lg:h-full flex flex-col items-center lg:justify-center text-center"
+    >
+      <h2
+        class="font-display font-black text-3xl md:text-4xl xl:text-5xl leading-[1.1] tracking-tight text-white mb-8 lg:mb-12"
+        data-split-words
+      >
+        Pourquoi Choisir <span class="text-sky-brand">Sun Est</span>&nbsp;?
+      </h2>
+
+      <ul
+        class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 w-full max-w-5xl"
+        data-choisirborne-cards
+      >
+        {
+          cards.map((c) => (
+            <li class="group relative rounded-md p-5 lg:p-6 bg-white/[0.06] backdrop-blur-md border border-white/15 transition-colors duration-300 hover:bg-white/[0.1] hover:border-white/25 text-left">
+              <p class="font-display font-bold text-lg lg:text-xl text-white mb-2.5">
+                {c.title}
+              </p>
+              <p class="text-white/80 text-sm lg:text-[14.5px] leading-relaxed">
+                {c.desc}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Bloc CTA bas -->
+      <div
+        class="mt-10 lg:mt-14 flex flex-col items-center gap-5 max-w-2xl"
+        data-choisirborne-cta
+      >
+        <p class="text-white/80 text-sm lg:text-[15px] leading-relaxed">
+          Contactez-nous pour un bilan gratuit et découvrez comment nous pouvons
+          vous aider à réussir votre transition vers la mobilité électrique.
+        </p>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-pill bg-sky-brand text-ink font-bold hover:scale-[1.04] transition-transform duration-200"
+          >
+            Demander une étude 100&nbsp;% gratuite
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-pill bg-white/[0.06] hover:bg-white/[0.16] border border-white/15 hover:border-white/30 font-bold transition-colors duration-200 backdrop-blur-md"
+          >
+            Contactez-nous
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-choisirborne-section]');
+  const photo = section?.querySelector<HTMLElement>('[data-choisirborne-photo]');
+  const cards = section?.querySelector<HTMLElement>('[data-choisirborne-cards]');
+  const cta = section?.querySelector<HTMLElement>('[data-choisirborne-cta]');
+
+  const isLg = window.matchMedia('(min-width: 1024px)').matches;
+
+  if (section && isLg && !prefersReducedMotion) {
+    function smoothstep(t: number): number {
+      const c = Math.max(0, Math.min(1, t));
+      return c * c * (3 - 2 * c);
+    }
+
+    if (cards) {
+      cards.style.opacity = '0';
+      cards.style.transform = 'translateY(24px)';
+    }
+    if (cta) {
+      cta.style.opacity = '0';
+      cta.style.transform = 'translateY(24px)';
+    }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const p = self.progress;
+
+        if (photo) {
+          const t = smoothstep(p);
+          photo.style.transform = `scale(${1 + t * 0.08})`;
+        }
+
+        if (cards) {
+          const t = smoothstep((p - 0.1) / 0.3);
+          cards.style.opacity = String(t);
+          cards.style.transform = `translateY(${(1 - t) * 24}px)`;
+        }
+
+        if (cta) {
+          const t = smoothstep((p - 0.35) / 0.3);
+          cta.style.opacity = String(t);
+          cta.style.transform = `translateY(${(1 - t) * 24}px)`;
+        }
+      },
+    });
+  }
+</script>
