@@ -48,7 +48,7 @@ const testimonials = [
     </p>
     <h2 class="font-display font-black text-2xl sm:text-3xl leading-[1.1] tracking-tight">
       L'avis de nos clients,
-      <span class="text-white/50">en toute transparence.</span>
+      <span class="text-sun">en toute transparence.</span>
     </h2>
   </div>
 
@@ -61,7 +61,7 @@ const testimonials = [
       >
         {
           testimonials.map((t) => (
-            <article class="shrink-0 w-[300px] sm:w-[340px] lg:w-[380px] min-h-[280px] lg:min-h-[320px] p-6 lg:p-7 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-sm flex flex-col justify-between">
+            <article class="shrink-0 w-[300px] sm:w-[340px] lg:w-[380px] min-h-[280px] lg:min-h-[320px] p-6 lg:p-7 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-4">
                   <div class="text-sun text-base tracking-[0.15em]" aria-hidden="true">
@@ -91,17 +91,17 @@ const testimonials = [
                     />
                   </svg>
                 </div>
-                <blockquote class="text-white/85 text-base lg:text-lg leading-relaxed font-display">
+                <blockquote class="text-ink/85 text-base lg:text-lg leading-relaxed font-display">
                   «&nbsp;{t.quote}&nbsp;»
                 </blockquote>
               </div>
-              <figcaption class="mt-6 pt-5 border-t border-white/10 flex items-center gap-3">
-                <span class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold shrink-0">
+              <figcaption class="mt-6 pt-5 border-t border-ink/10 flex items-center gap-3">
+                <span class="w-9 h-9 rounded-full bg-ink/10 flex items-center justify-center text-xs font-bold shrink-0">
                   {t.initials}
                 </span>
                 <div class="min-w-0">
                   <div class="font-bold text-sm truncate">{t.name}</div>
-                  <div class="text-white/50 text-xs flex items-center gap-1.5">
+                  <div class="text-ink/50 text-xs flex items-center gap-1.5">
                     <svg
                       class="w-3 h-3 shrink-0"
                       viewBox="0 0 48 48"
@@ -137,7 +137,7 @@ const testimonials = [
 
     {/* Voile dégradé + bloc texte : DESKTOP UNIQUEMENT (mobile a son titre en haut) */}
     <div
-      class="hidden lg:block absolute inset-y-0 left-0 w-3/5 z-10 bg-gradient-to-r from-ink via-ink/85 to-transparent pointer-events-none"
+      class="hidden lg:block absolute inset-y-0 left-0 w-3/5 z-10 bg-gradient-to-r from-white via-white/85 to-transparent pointer-events-none"
       aria-hidden="true"
     >
     </div>
@@ -156,12 +156,12 @@ const testimonials = [
         >
           L'avis de nos clients,
           <br />
-          <span class="text-white/50">en toute transparence.</span>
+          <span class="text-sun">en toute transparence.</span>
         </h2>
 
         <!-- Card Google compacte -->
         <div
-          class="mt-7 p-5 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-sm"
+          class="mt-7 p-5 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm"
         >
           <div class="flex items-center justify-between gap-3 mb-3">
             <div class="flex items-center gap-2">
@@ -196,24 +196,24 @@ const testimonials = [
           </div>
           <div class="flex items-baseline gap-1.5">
             <span class="font-display font-black text-3xl lg:text-4xl">4,8</span>
-            <span class="text-white/50 text-sm">/ 5</span>
+            <span class="text-ink/50 text-sm">/ 5</span>
           </div>
           <div class="mt-1.5 text-sun text-sm tracking-[0.2em]" aria-hidden="true">★★★★★</div>
-          <p class="mt-3 text-white/55 text-xs leading-relaxed">
-            Basé sur <span class="text-white font-bold">+ de 50 avis</span> clients du Grand-Est
+          <p class="mt-3 text-ink/55 text-xs leading-relaxed">
+            Basé sur <span class="text-ink font-bold">+ de 50 avis</span> clients du Grand-Est
           </p>
           <a
             href="https://www.google.com/maps/place/?q=Sun+Est"
             target="_blank"
             rel="noopener"
-            class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-white/8 hover:bg-white/15 text-xs font-bold transition-colors duration-200"
+            class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-ink/8 hover:bg-ink/15 text-xs font-bold transition-colors duration-200"
           >
             Voir tous les avis sur Google
             <span aria-hidden="true">↗</span>
           </a>
         </div>
 
-        <p class="mt-6 text-white/35 text-xs uppercase tracking-[0.2em]">Scroll → avis</p>
+        <p class="mt-6 text-ink/35 text-xs uppercase tracking-[0.2em]">Scroll → avis</p>
       </div>
     </div>
   </div>

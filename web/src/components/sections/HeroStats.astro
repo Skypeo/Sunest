@@ -1,7 +1,6 @@
 ---
-// Section stats mobile : remplace la stats bar absolute du Hero (qui n'est visible que lg+)
-// → s'affiche comme une section indépendante après le Hero sur mobile/tablette
-//   pour éviter l'overlap avec le contenu du Hero sur petits viewports
+// Section stats (mobile + desktop) : juste sous le Hero
+// Affiche les 4 chiffres clés avec compteurs animés à l'entrée dans le viewport
 const stats = [
   { prefix: '+', target: 1500, suffix: '', label: 'Installations' },
   { target: 10, suffix: ' ans', label: "D'expertise" },
@@ -11,18 +10,20 @@ const stats = [
 ---
 
 <section
-  class="lg:hidden relative w-full bg-ink border-y border-white/10"
-  data-hero-stats-mobile
+  class="relative w-full bg-white border-y border-ink/10"
+  data-hero-stats-section
 >
-  <div class="max-w-7xl mx-auto px-6 py-6 sm:py-8">
-    <div class="grid grid-cols-2 gap-y-5 gap-x-4">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 sm:py-8 lg:py-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-5 lg:gap-y-0">
       {
-        stats.map((s) => (
-          <div class="relative">
-            <div class="font-display font-black text-xl sm:text-2xl flex items-baseline gap-1 leading-none">
+        stats.map((s, i) => (
+          <div
+            class={`relative px-2 lg:px-8 ${i > 0 ? 'lg:border-l lg:border-ink/10' : ''} ${i === 1 ? 'border-l border-ink/10 pl-4 lg:pl-8' : ''} ${i === 2 ? 'pt-5 mt-5 lg:pt-0 lg:mt-0 border-t border-ink/10 lg:border-t-0' : ''} ${i === 3 ? 'pt-5 mt-5 lg:pt-0 lg:mt-0 border-t border-ink/10 lg:border-t-0 border-l border-ink/10 pl-4 lg:pl-8' : ''}`}
+          >
+            <div class="font-display font-black text-xl sm:text-2xl lg:text-4xl flex items-baseline gap-1 leading-none">
               {s.prefix && <span class="text-sun">{s.prefix}</span>}
               <span
-                data-stat-value-mobile
+                data-hero-stat-value
                 data-target={s.target}
                 data-decimal={s.decimal ? 'true' : 'false'}
               >
@@ -30,7 +31,9 @@ const stats = [
               </span>
               {s.suffix && <span class="text-sun">{s.suffix}</span>}
             </div>
-            <p class="mt-1.5 text-white/55 text-[10px] sm:text-xs leading-tight">{s.label}</p>
+            <p class="mt-1.5 lg:mt-2 text-ink/55 text-[10px] sm:text-xs lg:text-sm leading-tight">
+              {s.label}
+            </p>
           </div>
         ))
       }
@@ -39,8 +42,8 @@ const stats = [
 </section>
 
 <script>
-  // Counter animation (déclenché quand la section entre dans le viewport)
-  const counters = document.querySelectorAll<HTMLElement>('[data-stat-value-mobile]');
+  // Counter animation déclenchée à l'entrée dans le viewport
+  const counters = document.querySelectorAll<HTMLElement>('[data-hero-stat-value]');
   if (counters.length) {
     const animate = (el: HTMLElement) => {
       const target = parseFloat(el.dataset.target ?? '0');

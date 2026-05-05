@@ -25,7 +25,7 @@ const team = [
         {
           team.map((src, i) => (
             <figure
-              class="shrink-0 w-[280px] sm:w-[320px] lg:w-[380px] aspect-[3/4] rounded-md overflow-hidden bg-white/5 group"
+              class="shrink-0 w-[280px] sm:w-[320px] lg:w-[380px] aspect-[3/4] rounded-md overflow-hidden bg-zinc-100 group"
               data-team-card
               style={`--i:${i}`}
             >
@@ -37,7 +37,7 @@ const team = [
                 class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
               />
               <div
-                class="absolute inset-0 bg-gradient-to-t from-ink/55 via-ink/0 to-ink/0 pointer-events-none"
+                class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-transparent pointer-events-none"
                 aria-hidden="true"
               />
             </figure>
@@ -48,7 +48,7 @@ const team = [
 
     <!-- Voile dégradé sur la moitié gauche pour faire reposer le texte -->
     <div
-      class="absolute inset-y-0 left-0 w-full lg:w-3/5 z-10 bg-gradient-to-r from-ink via-ink/85 to-transparent pointer-events-none"
+      class="absolute inset-y-0 left-0 w-full lg:w-3/5 z-10 bg-gradient-to-r from-white via-white/85 to-transparent pointer-events-none"
       aria-hidden="true"
     >
     </div>
@@ -65,13 +65,13 @@ const team = [
         >
           Une super équipe
           <br />
-          <span class="text-white/50">à votre service.</span>
+          <span class="text-sun">à votre service.</span>
         </h2>
-        <p class="mt-6 text-white/70 text-lg leading-relaxed">
+        <p class="mt-6 text-ink/70 text-lg leading-relaxed">
           Charpentiers, couvreurs, électriciens — tous nos techniciens sont nos salariés.
           <span class="text-sun font-bold">0 % sous-traitance</span>, du devis à la mise en service.
         </p>
-        <p class="mt-8 text-white/35 text-xs uppercase tracking-[0.2em]">
+        <p class="mt-8 text-ink/35 text-xs uppercase tracking-[0.2em]">
           Scroll → photos
         </p>
       </div>

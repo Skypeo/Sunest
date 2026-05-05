@@ -1,0 +1,190 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import SiteHeader from '~/components/SiteHeader.astro';
+import FAQ from '~/components/sections/FAQ.astro';
+import ContactCta from '~/components/sections/Contact.astro';
+import Footer from '~/components/sections/Footer.astro';
+
+const SOLTEO_URL =
+  'https://app.solteo.fr/lead-magnet?companyId=cb8be60a-0dc9-4d48-aeed-8c9959238664';
+---
+
+<Layout title="Mon bilan gratuit — Sun Est | Simulez votre potentiel solaire">
+  <SiteHeader />
+
+  <main>
+    <!-- Hero compact : titre central + kicker, fond ink, petit halo solaire -->
+    <section
+      class="relative w-full mt-16 overflow-hidden bg-white"
+      style="min-height: 56vh;"
+      data-bilan-hero
+    >
+      <!-- Halo solaire diffus en arrière-plan -->
+      <div
+        class="absolute inset-0 opacity-60 pointer-events-none"
+        style="background:
+          radial-gradient(60% 50% at 50% 0%, rgba(32,184,241,0.18), transparent 70%),
+          radial-gradient(40% 30% at 50% 100%, rgba(255,183,0,0.10), transparent 70%);"
+        aria-hidden="true"
+      >
+      </div>
+
+      <!-- Grille subtile décorative -->
+      <div
+        class="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style="background-image:
+          linear-gradient(to right, white 1px, transparent 1px),
+          linear-gradient(to bottom, white 1px, transparent 1px);
+          background-size: 80px 80px;"
+        aria-hidden="true"
+      >
+      </div>
+
+      <div
+        class="relative z-10 max-w-5xl mx-auto px-6 lg:px-10 pt-24 pb-16 lg:pt-32 lg:pb-20 flex flex-col items-center text-center"
+      >
+        <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-5">
+          Mon bilan gratuit
+        </p>
+        <h1
+          class="font-display font-black text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight"
+          data-split-words
+        >
+          Simulez votre potentiel <span class="text-sun">solaire</span> en direct.
+        </h1>
+        <p
+          class="mt-6 text-ink/70 text-base lg:text-lg max-w-2xl leading-relaxed"
+        >
+          En 3 minutes, obtenez une estimation détaillée de votre production, vos économies et la
+          puissance idéale pour votre toit. <span class="text-ink/90 font-semibold">100 %
+          gratuit, sans engagement.</span>
+        </p>
+
+        <!-- Trust mini-bandeau -->
+        <ul class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-ink/55 text-xs uppercase tracking-[0.18em]">
+          <li class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-brand" aria-hidden="true"></span>
+            Données satellite
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-sun" aria-hidden="true"></span>
+            Estimation en direct
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-brand" aria-hidden="true"></span>
+            Sans engagement
+          </li>
+        </ul>
+      </div>
+
+      <!-- Fade vers la section suivante -->
+      <div
+        class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white pointer-events-none"
+        aria-hidden="true"
+      >
+      </div>
+    </section>
+
+    <!-- Section simulateur Solteo : container qui encadre l'iframe -->
+    <section class="relative pb-24 lg:pb-32" data-bilan-frame-section>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10">
+        <!-- Wrapper avec fond clair pour bien isoler le widget Solteo (qui est sur fond blanc) -->
+        <div
+          class="relative rounded-md overflow-hidden border border-ink/10 bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.5)]"
+          data-bilan-frame
+        >
+          <!-- Loader pendant le chargement de l'iframe -->
+          <div
+            class="absolute inset-0 z-10 grid place-items-center bg-white pointer-events-none transition-opacity duration-500"
+            data-bilan-loader
+          >
+            <div class="flex flex-col items-center gap-4">
+              <div
+                class="w-10 h-10 rounded-full border-2 border-sky-brand/20 border-t-sky-brand animate-spin"
+                aria-hidden="true"
+              >
+              </div>
+              <p class="text-ink/60 text-sm font-semibold">Chargement du simulateur…</p>
+            </div>
+          </div>
+
+          <iframe
+            src={SOLTEO_URL}
+            title="Simulateur de bilan solaire Sun Est"
+            class="w-full block bg-white"
+            style="height: 1100px;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allow="geolocation"
+            data-bilan-iframe
+          >
+          </iframe>
+        </div>
+
+        <!-- Note de réassurance sous l'iframe -->
+        <p class="mt-6 text-center text-ink/50 text-sm">
+          Vos données restent confidentielles et ne sont utilisées que pour vous proposer une étude
+          personnalisée par notre équipe.
+        </p>
+      </div>
+    </section>
+
+    <!-- Sections partagées : FAQ + CTA + Footer -->
+    <FAQ />
+    <ContactCta />
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  // Reveal Hero + iframe + auto-resize si Solteo envoie sa hauteur via postMessage
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Fade-up du wrapper iframe à l'entrée dans le viewport
+  if (!prefersReducedMotion) {
+    const frame = document.querySelector<HTMLElement>('[data-bilan-frame]');
+    if (frame) {
+      gsap.from(frame, {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: frame, start: 'top 85%', once: true },
+      });
+    }
+  }
+
+  // ----- Loader : on cache dès que l'iframe a fini de charger -----
+  const iframe = document.querySelector<HTMLIFrameElement>('[data-bilan-iframe]');
+  const loader = document.querySelector<HTMLElement>('[data-bilan-loader]');
+
+  if (iframe && loader) {
+    const hideLoader = () => {
+      loader.style.opacity = '0';
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 500);
+    };
+    iframe.addEventListener('load', hideLoader);
+    // Fallback : on cache après 8s même si "load" ne se déclenche pas
+    setTimeout(hideLoader, 8000);
+  }
+
+  // ----- Auto-resize iframe si Solteo émet des messages avec la hauteur -----
+  // (Pattern classique : { type: 'resize' | 'height', height: number } depuis l'iframe)
+  // Si Solteo n'émet rien, la hauteur reste 1100px et c'est OK.
+  window.addEventListener('message', (event) => {
+    if (!event.origin.includes('solteo.fr')) return;
+    const data = event.data as { height?: number; type?: string } | undefined;
+    if (!data || typeof data.height !== 'number') return;
+    if (iframe) {
+      iframe.style.height = `${Math.max(800, data.height)}px`;
+    }
+  });
+</script>

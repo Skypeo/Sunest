@@ -12,7 +12,7 @@ const stats = [
 
 <section
   id="stats-sun-est"
-  class="relative w-full py-20 lg:py-28 bg-ink overflow-hidden border-t border-white/5"
+  class="relative w-full py-20 lg:py-28 bg-white overflow-hidden border-t border-ink/5"
   data-stats-section
 >
   <!-- Halo signature en fond -->
@@ -38,7 +38,7 @@ const stats = [
       {
         stats.map((s) => (
           <div class="text-center min-w-0" data-stat>
-            <p class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tabular-nums leading-none whitespace-nowrap">
+            <p class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-ink tabular-nums leading-none whitespace-nowrap">
               {s.prefix}
               <span data-stat-counter data-target={s.value}>
                 0
@@ -47,11 +47,11 @@ const stats = [
               {s.extra && (
                 <>
                   {' '}
-                  <span class="text-white">{s.extra}</span>
+                  <span class="text-ink">{s.extra}</span>
                 </>
               )}
             </p>
-            <p class="mt-3 lg:mt-4 text-white/65 text-sm lg:text-base leading-snug">
+            <p class="mt-3 lg:mt-4 text-ink/65 text-sm lg:text-base leading-snug">
               {s.label}
             </p>
           </div>

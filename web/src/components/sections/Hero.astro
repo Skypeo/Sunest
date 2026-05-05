@@ -1,211 +1,176 @@
 ---
 import HeroScene from '~/components/three/HeroScene.tsx';
-
-const stats = [
-  { prefix: '+', target: 1500, suffix: '', label: 'Installations' },
-  { target: 10, suffix: ' ans', label: "D'expertise" },
-  { target: 0, suffix: ' %', label: 'Sous-traitance' },
-  { target: 4.8, suffix: '/5', label: 'Avis Google · 50+ avis', decimal: true },
-];
 ---
 
+<!-- Hero auto-anim : 100vh fixe, animation jouée automatiquement au mount (pas scroll-driven) -->
 <section
   id="hero"
-  class="relative w-full"
-  style="height: 320vh;"
+  class="relative w-full h-screen overflow-hidden bg-white"
   data-hero
 >
+  <!-- Canvas Three.js -->
+  <div class="absolute inset-0 z-[1]">
+    <HeroScene client:load />
+  </div>
+
+  <!-- Intro overlay : logo officiel -->
   <div
-    class="sticky top-0 h-screen w-full overflow-hidden"
-    data-hero-pin
+    class="absolute inset-0 z-[4] grid place-items-center pointer-events-none will-change-[opacity,transform]"
+    data-hero-intro
   >
-    <div class="absolute inset-0">
-      <HeroScene client:visible />
-    </div>
+    <img
+      src="/images/SunEst_-_le_logo_definitif-2-png-300x195.webp"
+      alt="Sun Est"
+      class="w-auto"
+      style="width: clamp(100px, 19vw, 290px);
+             filter: drop-shadow(0 0 60px rgba(255,183,0,0.18));"
+    />
 
-    <div
-      class="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/0 via-ink/0 to-ink"
-      aria-hidden="true"
+    <p
+      class="absolute bottom-[8vh] uppercase text-ink/45"
+      style="font-family: ui-monospace, 'JetBrains Mono', monospace;
+             font-size: 11px;
+             letter-spacing: 0.3em;"
     >
-    </div>
+      Acteur 100&nbsp;% local · Grand-Est
+    </p>
+  </div>
 
-    <div class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10">
-      <!-- Acte 1 — Pitch (capture 1 : Sun Est hero) -->
-      <div
-        class="absolute inset-x-6 lg:inset-x-10 bottom-12 sm:bottom-16 lg:bottom-52 max-w-5xl"
-        data-act="0"
+  <!-- Hero content : kicker + H1 + sub + meta + CTAs (révélé en fin d'animation) -->
+  <div
+    class="absolute inset-0 z-[3] grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] items-center px-6 lg:px-20 pt-[110px] pb-[80px] pointer-events-none opacity-0 will-change-[opacity,transform]"
+    data-hero-content
+  >
+    <div class="max-w-[640px] pointer-events-auto bg-white/85 backdrop-blur-md rounded-2xl p-5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] lg:bg-transparent lg:backdrop-blur-none lg:rounded-none lg:p-0 lg:shadow-none">
+      <p
+        class="text-sun font-bold uppercase mb-5 flex items-center gap-3"
+        style="font-family: ui-monospace, 'JetBrains Mono', monospace;
+               font-size: 12px;
+               letter-spacing: 0.32em;"
       >
-        <p class="text-sun font-bold uppercase tracking-[0.2em] text-xs mb-4">
-          Acteur 100 % local · Grand-Est
-        </p>
-        <h1 class="font-display font-black text-3xl sm:text-4xl md:text-5xl lg:text-display leading-[0.95] tracking-tight">
-          Faites de votre toit
-          <br />
-          votre <span class="text-sun">centrale solaire.</span>
-        </h1>
-        <p class="mt-6 text-white/70 text-lg lg:text-xl max-w-2xl">
-          Sun Est équipe les particuliers et les pros du Grand-Est en panneaux photovoltaïques.
-        </p>
-        <p class="mt-3 text-white/55 text-sm tracking-wide">
-          +1500 installations · 0 % sous-traitance · Qualifelec RGE
-        </p>
-        <div class="mt-10 flex flex-wrap items-center gap-4 pointer-events-auto">
-          <a
-            href="tel:+33372611735"
-            class="inline-flex items-center gap-2 px-6 py-3.5 rounded-pill bg-sun text-ink font-bold hover:scale-[1.03] transition-transform duration-200"
-          >
-            <span aria-hidden="true">📞</span>
-            Appeler 03 72 61 17 35
-          </a>
-          <a
-            href="#devis"
-            class="inline-flex items-center gap-2 px-6 py-3.5 rounded-pill border border-white/20 hover:bg-white/5 text-sm transition-colors duration-200"
-          >
-            Bilan solaire gratuit
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
+        <span class="block w-7 h-px bg-sun/60" aria-hidden="true"></span>
+        Acteur 100&nbsp;% local · Grand-Est
+      </p>
+      <h1
+        class="font-display font-extrabold text-ink leading-[0.98] tracking-[-0.035em] mb-6"
+        style="font-size: clamp(40px, 5.2vw, 78px); text-wrap: balance;"
+      >
+        Faites de votre toit votre
+        <span class="text-sun italic">centrale solaire.</span>
+      </h1>
+      <p
+        class="text-[#44506a] leading-[1.55] max-w-[520px] mb-4"
+        style="font-size: 18px;"
+      >
+        Sun Est équipe les particuliers et les pros du Grand-Est en panneaux photovoltaïques.
+      </p>
+      <div
+        class="text-graphite mb-8 flex gap-5 flex-wrap"
+        style="font-family: ui-monospace, 'JetBrains Mono', monospace;
+               font-size: 12px;
+               letter-spacing: 0.06em;"
+      >
+        <span class="inline-flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-sun" aria-hidden="true"></span>
+          +1500 installations
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-sun" aria-hidden="true"></span>
+          0&nbsp;% sous-traitance
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-sun" aria-hidden="true"></span>
+          Qualifelec RGE
+        </span>
+      </div>
+      <div class="flex gap-3.5 flex-wrap">
+        <a
+          href="tel:+33372611735"
+          class="inline-flex items-center gap-2.5 px-7 py-4 rounded-pill bg-sun text-ink font-semibold transition-transform duration-200 hover:-translate-y-0.5"
+          style="box-shadow: 0 14px 30px -10px rgba(255,183,0,0.55); font-size: 15px;"
+        >
+          <span
+            class="w-[22px] h-[22px] rounded-full bg-ink text-sun grid place-items-center"
+            style="font-size: 11px;"
+            aria-hidden="true"
+          >📞</span>
+          Appeler 03 72 61 17 35
+        </a>
+        <a
+          href="/mon-bilan-gratuit"
+          class="inline-flex items-center gap-2.5 px-7 py-4 rounded-pill bg-white text-ink font-semibold border border-ink/10 hover:bg-[#f6f7fa] transition-colors duration-200"
+          style="font-size: 15px;"
+        >
+          Bilan solaire gratuit
+          <span aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
-
-    <!-- Barre stats DESKTOP : visible tout le long du pin Hero, fade en fin de pin
-         (sur mobile, les stats sont une section dédiée hors du Hero — voir HeroStatsMobile.astro) -->
-    <div
-      class="hidden lg:block absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-ink/40 backdrop-blur-sm"
-      data-hero-stats
-    >
-      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-3 lg:py-6">
-        <div class="grid grid-cols-2 lg:grid-cols-4">
-          {
-            stats.map((s, i) => (
-              <div
-                class={`relative px-3 lg:px-8 ${i > 0 ? 'lg:border-l lg:border-white/10' : ''} ${i === 1 ? 'border-l border-white/10' : ''} ${i === 2 ? 'pt-3 mt-3 lg:pt-0 lg:mt-0 border-t border-white/10 lg:border-t-0 col-span-1' : ''}`}
-              >
-                <div class="font-display font-black text-lg sm:text-xl lg:text-4xl flex items-baseline gap-1 leading-none">
-                  {s.prefix && <span class="text-sun">{s.prefix}</span>}
-                  <span
-                    data-stat-value
-                    data-target={s.target}
-                    data-decimal={s.decimal ? 'true' : 'false'}
-                  >
-                    0
-                  </span>
-                  {s.suffix && <span class="text-sun">{s.suffix}</span>}
-                </div>
-                <p class="mt-1 lg:mt-2 text-white/55 text-[10px] sm:text-xs lg:text-sm leading-tight">{s.label}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="absolute bottom-32 lg:bottom-36 left-1/2 -translate-x-1/2 text-white/40 text-xs tracking-[0.2em] uppercase"
-      data-scroll-cue
-    >
-      Scroll ↓
-    </div>
+    <div class="hidden lg:block" aria-hidden="true"><!-- panel sits there via 3D --></div>
   </div>
 </section>
 
 <script>
   import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
 
   type HeroBus = { progress: number };
-  (window as unknown as { __heroBus: HeroBus }).__heroBus = { progress: 0 };
+  const win = window as unknown as { __heroBus: HeroBus };
+  win.__heroBus = win.__heroBus ?? { progress: 0 };
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const act1 = document.querySelector<HTMLElement>('[data-act="0"]');
-  const cue = document.querySelector<HTMLElement>('[data-scroll-cue]');
-  const statsBar = document.querySelector<HTMLElement>('[data-hero-stats]');
-  const statValues = document.querySelectorAll<HTMLElement>('[data-stat-value]');
 
-  // Counter animation au mount (le hero est immédiatement visible)
-  function runCounters() {
-    statValues.forEach((el) => {
-      const target = parseFloat(el.dataset.target || '0');
-      const decimal = el.dataset.decimal === 'true';
-      const obj = { val: 0 };
-      gsap.to(obj, {
-        val: target,
-        duration: 1.8,
-        delay: 0.7,
-        ease: 'power2.out',
-        onUpdate: () => {
-          el.textContent = decimal
-            ? obj.val.toFixed(1).replace('.', ',')
-            : Math.round(obj.val).toString();
-        },
-      });
-    });
+  const intro = document.querySelector<HTMLElement>('[data-hero-intro]');
+  const content = document.querySelector<HTMLElement>('[data-hero-content]');
+
+  const smoothstep = (e0: number, e1: number, x: number) => {
+    const t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0)));
+    return t * t * (3 - 2 * t);
+  };
+
+  function applyProgress(p: number) {
+    win.__heroBus.progress = p;
+
+    // Intro fade out (0.05 → 0.22)
+    if (intro) {
+      const introOut = smoothstep(0.05, 0.22, p);
+      intro.style.opacity = String(1 - introOut);
+      intro.style.transform = `translateY(${-introOut * 30}px) scale(${1 - introOut * 0.05})`;
+    }
+
+    // Hero copy reveal (0.72 → 0.95)
+    if (content) {
+      const copyP = smoothstep(0.72, 0.95, p);
+      content.style.opacity = String(copyP);
+      content.style.transform = `translateY(${(1 - copyP) * 30}px)`;
+    }
   }
 
+  // Cache la navbar tant qu'on n'a pas commencé à scroller (la home a une intro auto)
+  const root = document.documentElement;
+  root.classList.add('hero-anim-active');
+  const onScrollOnce = () => {
+    if (window.scrollY > 20) {
+      root.classList.remove('hero-anim-active');
+      window.removeEventListener('scroll', onScrollOnce);
+    }
+  };
+  window.addEventListener('scroll', onScrollOnce, { passive: true });
+
   if (prefersReducedMotion) {
-    if (act1) act1.style.opacity = '1';
-    statValues.forEach((el) => {
-      const target = parseFloat(el.dataset.target || '0');
-      const decimal = el.dataset.decimal === 'true';
-      el.textContent = decimal
-        ? target.toFixed(1).replace('.', ',')
-        : Math.round(target).toString();
-    });
+    // Mode réduit : on saute direct à l'état final
+    applyProgress(1);
   } else {
-    gsap.from('[data-act="0"] > *', {
-      opacity: 0,
-      y: 32,
-      duration: 1.1,
-      ease: 'power3.out',
-      stagger: 0.12,
-      delay: 0.4,
+    // Init au state 0 et on lance l'animation auto au mount
+    applyProgress(0);
+
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      val: 1,
+      duration: 3,
+      ease: 'power2.inOut',
+      delay: 0.2,
+      onUpdate: () => applyProgress(obj.val),
+      onComplete: () => applyProgress(1),
     });
-    if (statsBar) {
-      gsap.from(statsBar, {
-        opacity: 0,
-        y: 20,
-        duration: 1,
-        delay: 0.6,
-        ease: 'power3.out',
-      });
-    }
-    runCounters();
-
-    ScrollTrigger.create({
-      trigger: '[data-hero]',
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.6,
-      onUpdate: (self) => {
-        const p = self.progress;
-        (window as unknown as { __heroBus: HeroBus }).__heroBus.progress = p;
-
-        // Acte 1 visible 0-55 %, fade out 55-90 %
-        if (act1) {
-          const visible = p < 0.55 ? 1 : Math.max(0, 1 - (p - 0.55) / 0.35);
-          act1.style.opacity = String(visible);
-          act1.style.transform = `translateY(${(1 - visible) * 32}px)`;
-        }
-        // Barre stats : visible 0-80 %, fade out 80-100 %
-        if (statsBar) {
-          const visible = p < 0.8 ? 1 : Math.max(0, 1 - (p - 0.8) / 0.2);
-          statsBar.style.opacity = String(visible);
-          statsBar.style.transform = `translateY(${(1 - visible) * 16}px)`;
-        }
-        if (cue) cue.style.opacity = String(Math.max(0, 1 - p * 4));
-      },
-    });
-
-    // Refresh ScrollTrigger après load complet (HeroScene R3F est lazy, ScrollTrigger
-    // a besoin de recalculer les positions de pin une fois que le DOM est stable)
-    if (document.readyState === 'complete') {
-      setTimeout(() => ScrollTrigger.refresh(), 100);
-    } else {
-      window.addEventListener('load', () => {
-        setTimeout(() => ScrollTrigger.refresh(), 100);
-      });
-    }
   }
 </script>

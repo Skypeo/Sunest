@@ -40,19 +40,19 @@ const inServicesSection = pathname.startsWith('/services');
 ---
 
 <header
-  class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-ink/40 border-b border-white/5 transition-transform duration-500 ease-out will-change-transform"
+  class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 border-b border-ink/5 transition-transform duration-500 ease-out will-change-transform"
   data-site-header
 >
   <nav class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between gap-6">
     <a href="/" class="flex items-center relative z-[60]" aria-label="Sun Est — accueil">
       <img
-        src="/images/logo_sun_est_blanc.png"
+        src="/images/SunEst_-_le_logo_definitif-2-png-300x195.webp"
         alt="Sun Est"
         class="h-10 lg:h-11 w-auto"
       />
     </a>
 
-    <ul class="hidden lg:flex items-center gap-8 text-sm text-white/70">
+    <ul class="hidden lg:flex items-center gap-8 text-sm text-ink/70">
       {
         links.map((l) => {
           const active = l.match && pathname === l.match;
@@ -66,7 +66,7 @@ const inServicesSection = pathname.startsWith('/services');
                   href={l.href}
                   class:list={[
                     'inline-flex items-center gap-1 transition-colors duration-200',
-                    branchActive ? 'text-white' : 'hover:text-white',
+                    branchActive ? 'text-ink' : 'hover:text-ink',
                   ]}
                   aria-haspopup="menu"
                   data-nav-link
@@ -84,7 +84,7 @@ const inServicesSection = pathname.startsWith('/services');
                   class="absolute top-full left-0 pt-3 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-200"
                   role="menu"
                 >
-                  <ul class="min-w-[220px] py-2 rounded-md bg-ink/95 backdrop-blur-md border border-white/10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]">
+                  <ul class="min-w-[220px] py-2 rounded-md bg-white/95 backdrop-blur-md border border-ink/10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]">
                     {l.children.map((c) => {
                       const cActive = pathname === c.match;
                       return (
@@ -95,7 +95,7 @@ const inServicesSection = pathname.startsWith('/services');
                               'block px-4 py-2.5 text-sm transition-colors duration-150',
                               cActive
                                 ? 'text-sky-brand bg-sky-brand/10'
-                                : 'text-white/75 hover:text-white hover:bg-white/[0.06]',
+                                : 'text-ink/75 hover:text-ink hover:bg-ink/[0.06]',
                             ]}
                             role="menuitem"
                           >
@@ -116,7 +116,7 @@ const inServicesSection = pathname.startsWith('/services');
                 href={l.href}
                 class:list={[
                   'transition-colors duration-200',
-                  active ? 'text-white' : 'hover:text-white',
+                  active ? 'text-ink' : 'hover:text-ink',
                 ]}
                 data-nav-link
               >
@@ -131,14 +131,14 @@ const inServicesSection = pathname.startsWith('/services');
     <div class="flex items-center gap-2 lg:gap-3 relative z-[60]">
       <a
         href="tel:+33372611735"
-        class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-pill text-xs lg:text-sm text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-colors duration-200"
+        class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-pill text-xs lg:text-sm text-ink/70 hover:text-ink border border-ink/15 hover:border-ink/30 transition-colors duration-200"
       >
         <span aria-hidden="true">📞</span>
         <span class="hidden lg:inline">03 72 61 17 35</span>
         <span class="lg:hidden">Appeler</span>
       </a>
       <a
-        href="/contact"
+        href="/mon-bilan-gratuit"
         class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-sky-brand text-ink text-xs lg:text-sm font-bold hover:scale-105 transition-transform duration-200"
       >
         <span class="hidden md:inline">Simuler mon installation</span>
@@ -156,13 +156,13 @@ const inServicesSection = pathname.startsWith('/services');
         data-menu-toggle
       >
         <span
-          class="block w-6 h-px bg-white/85 transition-transform duration-300 ease-out origin-center [.is-open_&]:translate-y-[7px] [.is-open_&]:rotate-45"
+          class="block w-6 h-px bg-ink/85 transition-transform duration-300 ease-out origin-center [.is-open_&]:translate-y-[7px] [.is-open_&]:rotate-45"
           aria-hidden="true"></span>
         <span
-          class="block w-6 h-px bg-white/85 mt-[6px] transition-all duration-300 ease-out [.is-open_&]:opacity-0 [.is-open_&]:scale-x-0"
+          class="block w-6 h-px bg-ink/85 mt-[6px] transition-all duration-300 ease-out [.is-open_&]:opacity-0 [.is-open_&]:scale-x-0"
           aria-hidden="true"></span>
         <span
-          class="block w-6 h-px bg-white/85 mt-[6px] transition-transform duration-300 ease-out origin-center [.is-open_&]:-translate-y-[7px] [.is-open_&]:-rotate-45"
+          class="block w-6 h-px bg-ink/85 mt-[6px] transition-transform duration-300 ease-out origin-center [.is-open_&]:-translate-y-[7px] [.is-open_&]:-rotate-45"
           aria-hidden="true"></span>
       </button>
     </div>
@@ -172,7 +172,7 @@ const inServicesSection = pathname.startsWith('/services');
 {/* Overlay menu mobile/tablette */}
 <div
   id="mobile-menu"
-  class="fixed inset-x-0 top-16 bottom-0 z-40 lg:hidden bg-ink/95 backdrop-blur-xl opacity-0 invisible translate-y-2 transition-[opacity,transform,visibility] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] [.is-open_&]:opacity-100 [.is-open_&]:visible [.is-open_&]:translate-y-0"
+  class="fixed inset-x-0 top-16 bottom-0 z-40 lg:hidden bg-white/95 backdrop-blur-xl opacity-0 invisible translate-y-2 transition-[opacity,transform,visibility] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] [.is-open_&]:opacity-100 [.is-open_&]:visible [.is-open_&]:translate-y-0"
   data-mobile-menu
   aria-hidden="true"
 >
@@ -205,13 +205,13 @@ const inServicesSection = pathname.startsWith('/services');
                     <span
                       class:list={[
                         'font-display tracking-tight text-3xl sm:text-4xl transition-colors duration-200',
-                        branchActive ? 'text-sky-brand' : 'text-white',
+                        branchActive ? 'text-sky-brand' : 'text-ink',
                       ]}
                     >
                       {l.label}
                     </span>
                     <span
-                      class="grid place-items-center w-9 h-9 shrink-0 rounded-full border border-white/20 text-white/70 transition-[transform,background-color,border-color,color] duration-300 ease-out group-aria-expanded:rotate-45 group-aria-expanded:bg-sky-brand/15 group-aria-expanded:border-sky-brand/60 group-aria-expanded:text-sky-brand"
+                      class="grid place-items-center w-9 h-9 shrink-0 rounded-full border border-ink/20 text-ink/70 transition-[transform,background-color,border-color,color] duration-300 ease-out group-aria-expanded:rotate-45 group-aria-expanded:bg-sky-brand/15 group-aria-expanded:border-sky-brand/60 group-aria-expanded:text-sky-brand"
                       aria-hidden="true"
                     >
                       <svg class="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none">
@@ -239,7 +239,7 @@ const inServicesSection = pathname.startsWith('/services');
                                 href={c.href}
                                 class:list={[
                                   'group block py-2 font-display tracking-tight text-xl sm:text-2xl transition-colors duration-200',
-                                  cActive ? 'text-sky-brand' : 'text-white/75 hover:text-white',
+                                  cActive ? 'text-sky-brand' : 'text-ink/75 hover:text-ink',
                                 ]}
                               >
                                 <span class="inline-flex items-center gap-3">
@@ -268,7 +268,7 @@ const inServicesSection = pathname.startsWith('/services');
                   href={l.href}
                   class:list={[
                     'group block py-3 font-display tracking-tight text-3xl sm:text-4xl transition-colors duration-200',
-                    active ? 'text-sky-brand' : 'text-white hover:text-white/85',
+                    active ? 'text-sky-brand' : 'text-ink hover:text-ink/85',
                   ]}
                 >
                   <span class="inline-flex items-center gap-3">
@@ -289,16 +289,16 @@ const inServicesSection = pathname.startsWith('/services');
     </nav>
 
     {/* CTAs bas du panneau */}
-    <div class="mt-8 pt-6 border-t border-white/10 flex flex-col gap-3">
+    <div class="mt-8 pt-6 border-t border-ink/10 flex flex-col gap-3">
       <a
         href="tel:+33372611735"
-        class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-pill text-sm text-white/85 border border-white/15 hover:border-white/30 hover:text-white transition-colors duration-200"
+        class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-pill text-sm text-ink/85 border border-ink/15 hover:border-ink/30 hover:text-ink transition-colors duration-200"
       >
         <span aria-hidden="true">📞</span>
         03 72 61 17 35
       </a>
       <a
-        href="/contact"
+        href="/mon-bilan-gratuit"
         class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-pill bg-sky-brand text-ink text-sm font-bold transition-transform duration-200 active:scale-[0.98]"
       >
         Simuler mon installation

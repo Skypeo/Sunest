@@ -33,7 +33,7 @@ const reviews = [
   style="height: 360vh;"
   data-trust-section
 >
-  <div class="sticky top-0 h-screen w-full overflow-hidden border-t border-white/5">
+  <div class="sticky top-0 h-screen w-full overflow-hidden border-t border-ink/5">
     <!-- Halo signature oryzo derrière la vidéo -->
     <div
       class="absolute left-[10%] top-1/2 -translate-y-1/2 w-[55vw] aspect-video rounded-md bg-sky-brand/10 blur-3xl scale-90 pointer-events-none"
@@ -83,10 +83,10 @@ const reviews = [
           </div>
 
           <p
-            class="mt-3 lg:mt-4 text-white/65 text-xs lg:text-sm leading-relaxed max-w-xl shrink-0 will-change-transform"
+            class="mt-3 lg:mt-4 text-ink/65 text-xs lg:text-sm leading-relaxed max-w-xl shrink-0 will-change-transform"
             data-trust-caption
           >
-            Découvrez le témoignage de <span class="text-white font-bold">Quentin</span>,
+            Découvrez le témoignage de <span class="text-ink font-bold">Quentin</span>,
             habitant du Grand-Est qui a décidé de passer au solaire avec Sun Est.
           </p>
         </div>
@@ -95,7 +95,7 @@ const reviews = [
         <div class="flex flex-col gap-4 min-h-0">
           <!-- Badge EXCELLENT (slide-in depuis la droite, puis statique) -->
           <div
-            class="p-4 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-sm flex items-center justify-between gap-4 will-change-transform shrink-0"
+            class="p-4 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm flex items-center justify-between gap-4 will-change-transform shrink-0"
             data-trust-badge
           >
             <div>
@@ -105,8 +105,8 @@ const reviews = [
               <div class="text-sun text-sm lg:text-base tracking-[0.2em] mt-0.5" aria-hidden="true">
                 ★★★★★
               </div>
-              <p class="mt-1 text-white/55 text-[11px] lg:text-xs">
-                Basé sur <span class="text-white font-bold">+ de 50 avis</span>
+              <p class="mt-1 text-ink/55 text-[11px] lg:text-xs">
+                Basé sur <span class="text-ink font-bold">+ de 50 avis</span>
               </p>
             </div>
             <svg
@@ -142,7 +142,7 @@ const reviews = [
             {
               reviews.map((r, i) => (
                 <article
-                  class="absolute inset-0 p-5 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-sm flex flex-col justify-center will-change-transform"
+                  class="absolute inset-0 p-5 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm flex flex-col justify-center will-change-transform"
                   data-trust-review
                   data-review-index={i}
                 >
@@ -181,11 +181,11 @@ const reviews = [
                         <span class="text-sun text-xs tracking-[0.15em]" aria-hidden="true">
                           ★★★★★
                         </span>
-                        <span class="text-white/45 text-xs">{r.when}</span>
+                        <span class="text-ink/45 text-xs">{r.when}</span>
                       </div>
                     </div>
                   </header>
-                  <p class="text-white/85 text-sm lg:text-base leading-relaxed font-display">
+                  <p class="text-ink/85 text-sm lg:text-base leading-relaxed font-display">
                     «&nbsp;{r.quote}&nbsp;»
                   </p>
                 </article>
@@ -198,7 +198,7 @@ const reviews = [
             {
               reviews.map((_, i) => (
                 <span
-                  class="w-2 h-2 rounded-full bg-white/20 transition-colors duration-300"
+                  class="w-2 h-2 rounded-full bg-ink/20 transition-colors duration-300"
                   data-dot
                   data-dot-index={i}
                 />
@@ -258,7 +258,7 @@ const reviews = [
           }
           dots.forEach((d, i) => {
             d.classList.toggle('bg-sky-brand', i === activeIdx);
-            d.classList.toggle('bg-white/20', i !== activeIdx);
+            d.classList.toggle('bg-ink/20', i !== activeIdx);
             d.classList.toggle('w-6', i === activeIdx);
             d.classList.toggle('w-2', i !== activeIdx);
           });

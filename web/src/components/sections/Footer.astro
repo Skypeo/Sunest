@@ -13,7 +13,7 @@ const servicesLinks = [
 ];
 ---
 
-<footer class="relative w-full border-t border-white/10 bg-ink overflow-hidden" data-footer>
+<footer class="relative w-full border-t border-ink/10 bg-white overflow-hidden" data-footer>
   <div
     class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12 lg:gap-10"
   >
@@ -21,15 +21,15 @@ const servicesLinks = [
     <div data-footer-col>
       <a href="/" class="inline-flex items-center" aria-label="Sun Est — accueil">
         <img
-          src="/images/logo_sun_est_blanc.png"
+          src="/images/SunEst_-_le_logo_definitif-2-png-300x195.webp"
           alt="Sun Est"
           class="h-14 w-auto"
         />
       </a>
-      <p class="mt-6 text-white/55 text-sm leading-relaxed max-w-xs">
+      <p class="mt-6 text-ink/55 text-sm leading-relaxed max-w-xs">
         Entreprise locale et familiale depuis 2015, expert certifié
-        <span class="text-white font-bold">Qualifelec RGE</span>. Nous avons obtenu une note de
-        <span class="text-white font-bold">4,8/5</span> sur + de 1500 installations dans le
+        <span class="text-ink font-bold">Qualifelec RGE</span>. Nous avons obtenu une note de
+        <span class="text-ink font-bold">4,8/5</span> sur + de 1500 installations dans le
         Grand-Est.
       </p>
     </div>
@@ -37,20 +37,20 @@ const servicesLinks = [
     <!-- Colonne 2 : À propos -->
     <div data-footer-col>
       <h3 class="font-display font-bold text-base mb-5">À propos</h3>
-      <ul class="space-y-3 text-sm text-white/60">
+      <ul class="space-y-3 text-sm text-ink/60">
         <li class="flex gap-2.5">
           <span class="text-sky-brand mt-0.5 shrink-0" aria-hidden="true">⚲</span>
           <span>136 Bd de Finlande,<br />54340 Pompey, France</span>
         </li>
         <li class="flex gap-2.5">
           <span class="text-sky-brand mt-0.5 shrink-0" aria-hidden="true">✉</span>
-          <a href="mailto:admin@sunest.fr" class="hover:text-white transition-colors">
+          <a href="mailto:admin@sunest.fr" class="hover:text-ink transition-colors">
             admin@sunest.fr
           </a>
         </li>
         <li class="flex gap-2.5">
           <span class="text-sky-brand mt-0.5 shrink-0" aria-hidden="true">📞</span>
-          <a href="tel:+33372611735" class="hover:text-white transition-colors">
+          <a href="tel:+33372611735" class="hover:text-ink transition-colors">
             03 72 61 17 35
           </a>
         </li>
@@ -60,11 +60,11 @@ const servicesLinks = [
     <!-- Colonne 3 : Menu -->
     <div data-footer-col>
       <h3 class="font-display font-bold text-base mb-5">Menu</h3>
-      <ul class="space-y-3 text-sm text-white/60">
+      <ul class="space-y-3 text-sm text-ink/60">
         {
           menu.map((m) => (
             <li>
-              <a href={m.href} class="hover:text-white transition-colors">
+              <a href={m.href} class="hover:text-ink transition-colors">
                 {m.label}
               </a>
             </li>
@@ -76,11 +76,11 @@ const servicesLinks = [
     <!-- Colonne 4 : Nos services -->
     <div data-footer-col>
       <h3 class="font-display font-bold text-base mb-5">Nos services</h3>
-      <ul class="space-y-3 text-sm text-white/60">
+      <ul class="space-y-3 text-sm text-ink/60">
         {
           servicesLinks.map((s) => (
             <li>
-              <a href={s.href} class="hover:text-white transition-colors">
+              <a href={s.href} class="hover:text-ink transition-colors">
                 {s.label}
               </a>
             </li>
@@ -101,24 +101,24 @@ const servicesLinks = [
         </a>
         <a
           href="tel:+33372611735"
-          class="inline-flex w-full items-center justify-center gap-2 px-5 py-3 rounded-pill bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-sm font-bold transition-colors duration-200"
+          class="inline-flex w-full items-center justify-center gap-2 px-5 py-3 rounded-pill bg-ink/[0.06] hover:bg-ink/[0.12] border border-ink/15 text-sm font-bold transition-colors duration-200"
         >
           Contactez-nous
         </a>
       </div>
-      <ul class="mt-6 space-y-2 text-xs text-white/40">
+      <ul class="mt-6 space-y-2 text-xs text-ink/40">
         <li>
-          <a href="#" class="hover:text-white transition-colors">Mentions Légales</a>
+          <a href="#" class="hover:text-ink transition-colors">Mentions Légales</a>
         </li>
         <li>
-          <a href="#" class="hover:text-white transition-colors">Politique de confidentialité</a>
+          <a href="#" class="hover:text-ink transition-colors">Politique de confidentialité</a>
         </li>
         <li>
           <a
             href="https://skypeo.fr"
             target="_blank"
             rel="noopener"
-            class="hover:text-white transition-colors"
+            class="hover:text-ink transition-colors"
           >
             Made by Skypeo
           </a>
@@ -128,14 +128,14 @@ const servicesLinks = [
   </div>
 
   <!-- Bandeau bas : copyright + wordmark géant en outline (touche oryzo) -->
-  <div class="relative border-t border-white/5 overflow-hidden">
+  <div class="relative border-t border-ink/5 overflow-hidden">
     <div
       class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-8 flex flex-wrap items-center justify-between gap-4"
     >
-      <p class="text-white/40 text-xs">
+      <p class="text-ink/40 text-xs">
         © {new Date().getFullYear()} Sun Est. Tous droits réservés.
       </p>
-      <p class="text-white/40 text-xs uppercase tracking-[0.2em]">
+      <p class="text-ink/40 text-xs uppercase tracking-[0.2em]">
         Installateur photovoltaïque · Grand-Est
       </p>
     </div>
@@ -147,7 +147,7 @@ const servicesLinks = [
     >
       <span
         class="font-display font-black leading-[0.85] tracking-tighter text-transparent whitespace-nowrap"
-        style="font-size: clamp(120px, 22vw, 320px); -webkit-text-stroke: 1px rgba(255,255,255,0.06);"
+        style="font-size: clamp(120px, 22vw, 320px); -webkit-text-stroke: 1px rgba(5,20,46,0.08);"
       >
         SUN EST
       </span>

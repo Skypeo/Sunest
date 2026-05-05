@@ -32,7 +32,7 @@ const steps = [
 
 <section
   id="etapes-particulier"
-  class="relative w-full py-20 lg:py-28 bg-ink overflow-hidden border-t border-white/5"
+  class="relative w-full py-20 lg:py-28 bg-white overflow-hidden border-t border-ink/5"
   data-etapes-section
 >
   <!-- Halo signature -->
@@ -60,7 +60,7 @@ const steps = [
       <div class="relative" role="tablist" aria-label="Étapes de votre projet solaire">
         <!-- Spine verticale (background) — bornée dynamiquement entre 1er et dernier dot -->
         <span
-          class="absolute left-[18px] w-px bg-white/15 pointer-events-none"
+          class="absolute left-[18px] w-px bg-ink/15 pointer-events-none"
           aria-hidden="true"
           data-etape-spine-bg
           style="top: 0; height: 0;"
@@ -81,7 +81,7 @@ const steps = [
               <li>
                 <button
                   type="button"
-                  class={`etape-tab ${i === 0 ? 'is-active' : ''} relative w-full text-left pl-12 pr-5 py-4 lg:py-5 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-md transition-all duration-300 group focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-brand`}
+                  class={`etape-tab ${i === 0 ? 'is-active' : ''} relative w-full text-left pl-12 pr-5 py-4 lg:py-5 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-md transition-all duration-300 group focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-brand`}
                   role="tab"
                   id={`tab-${s.id}`}
                   aria-controls={`panel-${s.id}`}
@@ -91,21 +91,21 @@ const steps = [
                 >
                   {/* Dot sur la timeline */}
                   <span
-                    class="etape-dot absolute left-[10px] top-1/2 -translate-y-1/2 w-[18px] h-[18px] rounded-full bg-ink border-2 border-white/30 z-10 transition-all duration-300 flex items-center justify-center"
+                    class="etape-dot absolute left-[10px] top-1/2 -translate-y-1/2 w-[18px] h-[18px] rounded-full bg-white border-2 border-ink/30 z-10 transition-all duration-300 flex items-center justify-center"
                     aria-hidden="true"
                   >
                     <span class="etape-dot-inner w-2 h-2 rounded-full bg-transparent transition-colors duration-300" />
                   </span>
 
                   <span class="flex items-center gap-3">
-                    <span class="etape-num font-display font-bold text-sm lg:text-base text-white/40 transition-colors duration-300 tabular-nums shrink-0">
+                    <span class="etape-num font-display font-bold text-sm lg:text-base text-ink/40 transition-colors duration-300 tabular-nums shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span class="etape-label font-display font-bold text-sm lg:text-base text-white/70 transition-colors duration-300 leading-tight">
+                    <span class="etape-label font-display font-bold text-sm lg:text-base text-ink/70 transition-colors duration-300 leading-tight">
                       {s.title}
                     </span>
                     <span
-                      class="etape-arrow ml-auto text-white/30 transition-all duration-300 group-hover:translate-x-1"
+                      class="etape-arrow ml-auto text-ink/30 transition-all duration-300 group-hover:translate-x-1"
                       aria-hidden="true"
                     >
                       →
@@ -123,7 +123,7 @@ const steps = [
         {
           steps.map((s, i) => (
             <div
-              class={`etape-panel ${i === 0 ? 'is-active relative' : 'absolute inset-0'} overflow-hidden p-7 lg:p-10 rounded-md bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/12 backdrop-blur-md`}
+              class={`etape-panel ${i === 0 ? 'is-active relative' : 'absolute inset-0'} overflow-hidden p-7 lg:p-10 rounded-md bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-ink/12 backdrop-blur-md`}
               role="tabpanel"
               id={`panel-${s.id}`}
               aria-labelledby={`tab-${s.id}`}
@@ -205,15 +205,15 @@ const steps = [
                   )}
                 </div>
 
-                <span class="px-3 py-1.5 rounded-pill bg-white/[0.06] border border-white/10 text-white/60 text-[10px] lg:text-xs uppercase tracking-[0.18em] font-bold whitespace-nowrap shrink-0">
+                <span class="px-3 py-1.5 rounded-pill bg-ink/[0.06] border border-ink/10 text-ink/60 text-[10px] lg:text-xs uppercase tracking-[0.18em] font-bold whitespace-nowrap shrink-0">
                   Étape {i + 1} / {steps.length}
                 </span>
               </div>
 
-              <h3 class="relative z-10 font-display font-bold text-2xl lg:text-3xl text-white leading-tight mb-4 lg:mb-5">
+              <h3 class="relative z-10 font-display font-bold text-2xl lg:text-3xl text-ink leading-tight mb-4 lg:mb-5">
                 {s.title}
               </h3>
-              <p class="relative z-10 text-white/90 text-sm lg:text-base leading-relaxed">
+              <p class="relative z-10 text-ink/90 text-sm lg:text-base leading-relaxed">
                 {s.body}
               </p>
             </div>
@@ -244,7 +244,7 @@ const steps = [
     color: var(--color-sun);
   }
   .etape-tab.is-active .etape-label {
-    color: #ffffff;
+    color: var(--color-ink);
   }
   .etape-tab.is-active .etape-arrow {
     color: var(--color-sky-brand);
@@ -252,14 +252,14 @@ const steps = [
 
   /* HOVER inactif */
   .etape-tab:not(.is-active):hover {
-    background-color: rgba(255, 255, 255, 0.07);
+    background-color: rgba(5, 20, 46, 0.04);
     border-color: rgba(32, 184, 241, 0.25);
   }
   .etape-tab:not(.is-active):hover .etape-label {
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(5, 20, 46, 0.95);
   }
   .etape-tab:not(.is-active):hover .etape-num {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(5, 20, 46, 0.7);
   }
   .etape-tab:not(.is-active):hover .etape-dot {
     border-color: rgba(32, 184, 241, 0.45);

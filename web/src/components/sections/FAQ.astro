@@ -63,7 +63,7 @@ const faqs = [
 ];
 ---
 
-<section id="faq" class="relative py-24 lg:py-36 border-t border-white/5">
+<section id="faq" class="relative py-24 lg:py-36 border-t border-ink/5">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="grid lg:grid-cols-[1fr_1.6fr] gap-12 lg:gap-20 items-start">
       <!-- Sticky gauche : titre + pitch + CTA + compteur -->
@@ -75,9 +75,9 @@ const faqs = [
         >
           Foire aux
           <br />
-          <span class="text-white/50">questions.</span>
+          <span class="text-sun">questions.</span>
         </h2>
-        <p class="mt-6 text-white/65 text-base leading-relaxed max-w-sm">
+        <p class="mt-6 text-ink/65 text-base leading-relaxed max-w-sm">
           Tout ce qu'il faut savoir sur le photovoltaïque dans le Grand-Est. Si vous ne trouvez
           pas votre réponse, on vous rappelle gratuitement.
         </p>
@@ -88,19 +88,19 @@ const faqs = [
           Demander une étude 100 % gratuite
           <span aria-hidden="true">→</span>
         </a>
-        <p class="mt-10 text-white/40 text-xs uppercase tracking-[0.2em]">
+        <p class="mt-10 text-ink/40 text-xs uppercase tracking-[0.2em]">
           {faqs.length} questions · mise à jour 2026
         </p>
       </div>
 
       <!-- Liste droite : numérotée 01-15 avec accordéons custom -->
-      <ul class="divide-y divide-white/10 border-y border-white/10">
+      <ul class="divide-y divide-white/10 border-y border-ink/10">
         {
           faqs.map((f, i) => (
             <li data-faq-item style="opacity: 0;">
               <details class="group/d" data-faq-details>
                 <summary
-                  class="cursor-pointer flex items-start gap-4 lg:gap-6 list-none py-5 lg:py-6 hover:bg-white/[0.02] transition-colors duration-300 px-2 -mx-2 rounded-md"
+                  class="cursor-pointer flex items-start gap-4 lg:gap-6 list-none py-5 lg:py-6 hover:bg-ink/[0.02] transition-colors duration-300 px-2 -mx-2 rounded-md"
                   data-faq-summary
                 >
                   <span class="font-display font-bold text-sun text-xs shrink-0 mt-1 w-7">
@@ -110,14 +110,14 @@ const faqs = [
                     {f.q}
                   </span>
                   <span
-                    class="shrink-0 w-8 h-8 rounded-full border border-white/20 text-sun flex items-center justify-center text-lg leading-none transition-transform duration-300 group-open/d:rotate-45"
+                    class="shrink-0 w-8 h-8 rounded-full border border-ink/20 text-sun flex items-center justify-center text-lg leading-none transition-transform duration-300 group-open/d:rotate-45"
                     aria-hidden="true"
                   >
                     +
                   </span>
                 </summary>
                 <div class="overflow-hidden" data-faq-content style="height: 0;">
-                  <p class="pb-6 pl-11 pr-2 lg:pr-12 text-white/65 leading-relaxed text-sm lg:text-base max-w-2xl">
+                  <p class="pb-6 pl-11 pr-2 lg:pr-12 text-ink/65 leading-relaxed text-sm lg:text-base max-w-2xl">
                     {f.a}
                   </p>
                 </div>

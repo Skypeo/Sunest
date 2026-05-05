@@ -36,8 +36,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  background: var(--color-ink);
-  color: white;
+  background: white;
+  color: var(--color-ink);
 }
 
 html.lenis,
@@ -100,3 +100,10 @@ body::after {
   transform-style: preserve-3d;
   transform: perspective(900px) rotateX(0) rotateY(0);
 }
+
+/* ---- Home : navbar cachée pendant l'intro auto, visible dès qu'on scroll ---- */
+html.hero-anim-active [data-site-header] {
+  transform: translateY(-110%) !important;
+  pointer-events: none;
+}
+

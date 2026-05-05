@@ -7,7 +7,7 @@ const points = [
 ];
 ---
 
-<section id="about" class="relative py-24 lg:py-36 border-t border-white/5">
+<section id="about" class="relative py-24 lg:py-36 border-t border-ink/5">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-start">
       <div class="lg:sticky lg:top-32">
@@ -17,16 +17,16 @@ const points = [
           data-split-words
         >
           Une équipe d'artisans,
-          <span class="text-white/50">pas de commerciaux.</span>
+          <span class="text-sun">pas de commerciaux.</span>
         </h2>
-        <p class="mt-6 text-white/70 text-lg leading-relaxed max-w-xl">
+        <p class="mt-6 text-ink/70 text-lg leading-relaxed max-w-xl">
           Sun Est est née en 2014 d'une conviction simple : les particuliers méritent un installateur
           honnête, technique et joignable. Aujourd'hui, c'est 12 personnes basées à Metz qui couvrent
           toute la région Grand Est avec un seul mot d'ordre : on installe ce qu'on poserait chez nous.
         </p>
         <a
           href="#devis"
-          class="mt-8 inline-flex items-center gap-2 px-6 py-3.5 rounded-pill border border-white/20 hover:bg-white/5 text-sm font-bold transition-colors duration-200"
+          class="mt-8 inline-flex items-center gap-2 px-6 py-3.5 rounded-pill border border-ink/20 hover:bg-ink/5 text-sm font-bold transition-colors duration-200"
         >
           Demander une étude gratuite →
         </a>
@@ -36,7 +36,7 @@ const points = [
         {
           points.map((p, i) => (
             <li
-              class="group flex gap-6 p-6 rounded-md bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-colors reveal-up"
+              class="group flex gap-6 p-6 rounded-md bg-ink/[0.03] border border-ink/5 hover:bg-ink/[0.06] transition-colors reveal-up"
               data-about-point
               style={`--i:${i}`}
             >
@@ -45,7 +45,7 @@ const points = [
               </span>
               <div>
                 <h3 class="font-display font-bold text-xl">{p.title}</h3>
-                <p class="mt-2 text-white/60 text-sm leading-relaxed">{p.text}</p>
+                <p class="mt-2 text-ink/60 text-sm leading-relaxed">{p.text}</p>
               </div>
             </li>
           ))

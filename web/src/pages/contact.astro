@@ -14,7 +14,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
   <main>
     <!-- Hero contact : photo bandeau + titre central -->
     <section
-      class="relative w-full mt-16 overflow-hidden bg-ink"
+      class="relative w-full mt-16 overflow-hidden bg-white"
       style="height: calc(100vh - 4rem); min-height: 480px;"
       data-contact-hero
     >
@@ -32,7 +32,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
       >
       </div>
       <div
-        class="absolute inset-0 bg-gradient-to-b from-ink/35 via-transparent to-ink"
+        class="absolute inset-0 bg-gradient-to-b from-ink/35 via-transparent to-white"
         aria-hidden="true"
       >
       </div>
@@ -45,7 +45,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
           Contact
         </p>
         <h1
-          class="font-display font-black text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
+          class="font-display font-black text-white text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
           data-split-words
         >
           Échangeons <span class="text-sun">ensemble.</span>
@@ -59,7 +59,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
     </section>
 
     <!-- Section coordonnées + formulaire -->
-    <section class="relative py-24 lg:py-32 border-t border-white/5">
+    <section class="relative py-24 lg:py-32 border-t border-ink/5">
       <div class="max-w-7xl mx-auto px-6 lg:px-10">
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 lg:gap-16 items-start">
           <!-- Colonne gauche : Nos coordonnées + card Avis Google -->
@@ -80,7 +80,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                   📞
                 </span>
                 <div>
-                  <p class="text-white/45 text-xs uppercase tracking-[0.18em] mb-1">Téléphone</p>
+                  <p class="text-ink/45 text-xs uppercase tracking-[0.18em] mb-1">Téléphone</p>
                   <a
                     href="tel:+33372611735"
                     class="font-display font-bold text-lg hover:text-sky-brand transition-colors"
@@ -97,7 +97,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                   ✉
                 </span>
                 <div>
-                  <p class="text-white/45 text-xs uppercase tracking-[0.18em] mb-1">Email</p>
+                  <p class="text-ink/45 text-xs uppercase tracking-[0.18em] mb-1">Email</p>
                   <a
                     href="mailto:contact@sunest.fr"
                     class="font-display font-bold text-lg hover:text-sky-brand transition-colors"
@@ -114,7 +114,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                   ⚲
                 </span>
                 <div>
-                  <p class="text-white/45 text-xs uppercase tracking-[0.18em] mb-1">Adresse</p>
+                  <p class="text-ink/45 text-xs uppercase tracking-[0.18em] mb-1">Adresse</p>
                   <p class="font-display font-bold text-lg leading-snug">
                     136 Bd de Finlande,<br />54340 Pompey
                   </p>
@@ -124,7 +124,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
 
             <!-- Card Avis Google -->
             <div
-              class="mt-10 p-5 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-sm flex items-center gap-4"
+              class="mt-10 p-5 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm flex items-center gap-4"
             >
               <svg
                 class="w-10 h-10 shrink-0"
@@ -150,13 +150,13 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                 />
               </svg>
               <div>
-                <p class="text-xs text-white/55 mb-0.5">Avis Google</p>
+                <p class="text-xs text-ink/55 mb-0.5">Avis Google</p>
                 <div class="flex items-baseline gap-1.5">
                   <span class="font-display font-black text-xl">4,8</span>
                   <span class="text-sun text-sm tracking-[0.2em]" aria-hidden="true">★★★★★</span>
                 </div>
-                <p class="mt-0.5 text-xs text-white/55">
-                  + de <span class="text-white font-bold">1500 installations</span>
+                <p class="mt-0.5 text-xs text-ink/55">
+                  + de <span class="text-ink font-bold">1500 installations</span>
                 </p>
               </div>
             </div>
@@ -164,7 +164,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
 
           <!-- Colonne droite : formulaire -->
           <form
-            class="grid gap-5 p-6 lg:p-8 rounded-md bg-white/[0.03] border border-white/10"
+            class="grid gap-5 p-6 lg:p-8 rounded-md bg-ink/[0.03] border border-ink/10"
             method="post"
             action="/api/contact"
             data-fade-up
@@ -172,13 +172,13 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
           >
             <!-- Type -->
             <label class="block">
-              <span class="block text-xs font-bold text-white/70 mb-2">
+              <span class="block text-xs font-bold text-ink/70 mb-2">
                 Je suis <span class="text-sun">*</span>
               </span>
               <select
                 name="type"
                 required
-                class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white focus:outline-none focus:border-sky-brand transition-colors"
+                class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink focus:outline-none focus:border-sky-brand transition-colors"
               >
                 <option value="particulier">Un particulier</option>
                 <option value="professionnel">Un professionnel</option>
@@ -189,7 +189,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
             <!-- Nom / Prénom -->
             <div class="grid sm:grid-cols-2 gap-4">
               <label class="block">
-                <span class="block text-xs font-bold text-white/70 mb-2">
+                <span class="block text-xs font-bold text-ink/70 mb-2">
                   Nom de famille <span class="text-sun">*</span>
                 </span>
                 <input
@@ -197,11 +197,11 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                   name="lastname"
                   required
                   placeholder="Nom de famille"
-                  class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+                  class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink placeholder:text-ink/30 focus:outline-none focus:border-sky-brand transition-colors"
                 />
               </label>
               <label class="block">
-                <span class="block text-xs font-bold text-white/70 mb-2">
+                <span class="block text-xs font-bold text-ink/70 mb-2">
                   Prénom <span class="text-sun">*</span>
                 </span>
                 <input
@@ -209,7 +209,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                   name="firstname"
                   required
                   placeholder="Prénom"
-                  class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+                  class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink placeholder:text-ink/30 focus:outline-none focus:border-sky-brand transition-colors"
                 />
               </label>
             </div>
@@ -217,7 +217,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
             <!-- Email / Adresse postale -->
             <div class="grid sm:grid-cols-2 gap-4">
               <label class="block">
-                <span class="block text-xs font-bold text-white/70 mb-2">
+                <span class="block text-xs font-bold text-ink/70 mb-2">
                   Email <span class="text-sun">*</span>
                 </span>
                 <input
@@ -225,11 +225,11 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                   name="email"
                   required
                   placeholder="Votre mail"
-                  class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+                  class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink placeholder:text-ink/30 focus:outline-none focus:border-sky-brand transition-colors"
                 />
               </label>
               <label class="block">
-                <span class="block text-xs font-bold text-white/70 mb-2">
+                <span class="block text-xs font-bold text-ink/70 mb-2">
                   Adresse postale <span class="text-sun">*</span>
                 </span>
                 <input
@@ -237,7 +237,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                   name="address"
                   required
                   placeholder="Votre adresse"
-                  class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+                  class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink placeholder:text-ink/30 focus:outline-none focus:border-sky-brand transition-colors"
                 />
               </label>
             </div>
@@ -245,7 +245,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
             <!-- Code postal / Ville -->
             <div class="grid sm:grid-cols-2 gap-4">
               <label class="block">
-                <span class="block text-xs font-bold text-white/70 mb-2">
+                <span class="block text-xs font-bold text-ink/70 mb-2">
                   Code postal <span class="text-sun">*</span>
                 </span>
                 <input
@@ -254,23 +254,23 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                   required
                   pattern="[0-9]{5}"
                   placeholder="Code postal"
-                  class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+                  class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink placeholder:text-ink/30 focus:outline-none focus:border-sky-brand transition-colors"
                 />
               </label>
               <label class="block">
-                <span class="block text-xs font-bold text-white/70 mb-2">Ville</span>
+                <span class="block text-xs font-bold text-ink/70 mb-2">Ville</span>
                 <input
                   type="text"
                   name="city"
                   placeholder="Votre ville"
-                  class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+                  class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink placeholder:text-ink/30 focus:outline-none focus:border-sky-brand transition-colors"
                 />
               </label>
             </div>
 
             <!-- Téléphone -->
             <label class="block">
-              <span class="block text-xs font-bold text-white/70 mb-2">
+              <span class="block text-xs font-bold text-ink/70 mb-2">
                 Numéro de téléphone <span class="text-sun">*</span>
               </span>
               <input
@@ -278,24 +278,24 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                 name="phone"
                 required
                 placeholder="Numéro de téléphone"
-                class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors"
+                class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink placeholder:text-ink/30 focus:outline-none focus:border-sky-brand transition-colors"
               />
             </label>
 
             <!-- Notes -->
             <label class="block">
-              <span class="block text-xs font-bold text-white/70 mb-2">Notes complémentaires</span>
+              <span class="block text-xs font-bold text-ink/70 mb-2">Notes complémentaires</span>
               <textarea
                 name="notes"
                 rows="4"
                 placeholder="Notes complémentaires"
-                class="w-full bg-ink border border-white/15 rounded-md px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-sky-brand transition-colors resize-y"
+                class="w-full bg-white border border-ink/15 rounded-md px-4 py-3 text-ink placeholder:text-ink/30 focus:outline-none focus:border-sky-brand transition-colors resize-y"
               ></textarea>
             </label>
 
             <!-- reCAPTCHA mock -->
             <div
-              class="inline-flex items-center gap-3 px-4 py-3 rounded-md bg-white/[0.04] border border-white/15 w-fit"
+              class="inline-flex items-center gap-3 px-4 py-3 rounded-md bg-ink/[0.04] border border-ink/15 w-fit"
             >
               <input
                 type="checkbox"
@@ -304,10 +304,10 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
                 required
                 class="w-5 h-5 accent-sky-brand"
               />
-              <label for="not-robot" class="text-sm text-white/80 cursor-pointer">
+              <label for="not-robot" class="text-sm text-ink/80 cursor-pointer">
                 Je ne suis pas un robot
               </label>
-              <span class="ml-2 text-[10px] text-white/40 leading-tight">
+              <span class="ml-2 text-[10px] text-ink/40 leading-tight">
                 reCAPTCHA<br />Confidentialité · Conditions
               </span>
             </div>
@@ -320,7 +320,7 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
               <span aria-hidden="true">→</span>
             </button>
 
-            <p class="text-xs text-white/40 leading-relaxed">
+            <p class="text-xs text-ink/40 leading-relaxed">
               En soumettant ce formulaire, vous acceptez d'être recontacté par Sun Est. Vos données
               ne sont jamais partagées.
             </p>

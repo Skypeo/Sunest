@@ -44,7 +44,7 @@ const photos = [
 
 <section
   id="galerie"
-  class="relative w-full py-20 lg:py-32 bg-ink overflow-hidden border-t border-white/5"
+  class="relative w-full py-20 lg:py-32 bg-white overflow-hidden border-t border-ink/5"
 >
   <!-- Halo signature en fond -->
   <div
@@ -67,8 +67,8 @@ const photos = [
       >
         Visualisez certaines de nos réalisations dans le <span class="text-sun">Grand-Est.</span>
       </h2>
-      <p class="mt-5 lg:mt-6 text-white/65 text-base lg:text-lg leading-relaxed">
-        <span class="text-white font-bold">{photos.length}</span> chantiers en images — cliquez sur
+      <p class="mt-5 lg:mt-6 text-ink/65 text-base lg:text-lg leading-relaxed">
+        <span class="text-ink font-bold">{photos.length}</span> chantiers en images — cliquez sur
         une photo pour l'agrandir.
       </p>
     </div>
@@ -79,7 +79,7 @@ const photos = [
         photos.map((p, i) => (
           <button
             type="button"
-            class="galerie-tile relative w-full overflow-hidden rounded-md ring-1 ring-white/[0.08] bg-white/[0.02] group focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-brand transition-all duration-300 hover:ring-sky-brand/45"
+            class="galerie-tile relative w-full overflow-hidden rounded-md ring-1 ring-white/[0.08] bg-ink/[0.02] group focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-brand transition-all duration-300 hover:ring-sky-brand/45"
             style="aspect-ratio: 4 / 3; cursor: zoom-in;"
             data-galerie-photo
             data-photo-index={i}
@@ -94,7 +94,7 @@ const photos = [
               decoding="async"
             />
             <div
-              class="absolute inset-0 bg-gradient-to-t from-ink/60 via-ink/0 to-ink/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
               aria-hidden="true"
             />
             <span

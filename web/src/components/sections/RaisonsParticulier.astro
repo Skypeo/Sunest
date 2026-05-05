@@ -22,7 +22,7 @@ const reasons = [
 
 <section
   id="raisons-particulier"
-  class="relative w-full py-20 lg:py-28 bg-ink overflow-hidden border-t border-white/5"
+  class="relative w-full py-20 lg:py-28 bg-white overflow-hidden border-t border-ink/5"
   data-raisons-section
 >
   <!-- Halo signature -->
@@ -46,7 +46,7 @@ const reasons = [
       {
         reasons.map((r) => (
           <article
-            class="raison-card relative p-7 lg:p-8 rounded-md bg-white/[0.04] border border-white/10 backdrop-blur-md transition-all duration-300"
+            class="raison-card relative p-7 lg:p-8 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-md transition-all duration-300"
             data-raison
           >
             {/* Icône (sky-brand, dans un cercle subtil) */}
@@ -112,10 +112,10 @@ const reasons = [
             </div>
 
             {/* Titre + texte */}
-            <h3 class="font-display font-bold text-xl lg:text-2xl text-white leading-tight mb-3 lg:mb-4">
+            <h3 class="font-display font-bold text-xl lg:text-2xl text-ink leading-tight mb-3 lg:mb-4">
               {r.title}
             </h3>
-            <p class="text-white/70 text-sm lg:text-base leading-relaxed">{r.desc}</p>
+            <p class="text-ink/70 text-sm lg:text-base leading-relaxed">{r.desc}</p>
           </article>
         ))
       }

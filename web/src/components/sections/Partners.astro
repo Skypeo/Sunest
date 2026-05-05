@@ -13,9 +13,9 @@ const partners = [
 const loop = [...partners, ...partners];
 ---
 
-<section class="relative py-16 lg:py-24 border-t border-white/5 overflow-hidden">
+<section class="relative py-16 lg:py-24 border-t border-ink/5 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 mb-10">
-    <p class="text-center text-white/40 text-xs uppercase tracking-[0.2em]">
+    <p class="text-center text-ink/40 text-xs uppercase tracking-[0.2em]">
       Partenaires & certifications
     </p>
   </div>
@@ -28,7 +28,7 @@ const loop = [...partners, ...partners];
     <div class="flex gap-16 lg:gap-24 whitespace-nowrap will-change-transform" data-marquee>
       {
         loop.map((p) => (
-          <div class="text-white/40 hover:text-white/80 transition-colors duration-300 font-display font-bold text-2xl lg:text-3xl tracking-tight">
+          <div class="text-ink/40 hover:text-ink/80 transition-colors duration-300 font-display font-bold text-2xl lg:text-3xl tracking-tight">
             {p}
           </div>
         ))

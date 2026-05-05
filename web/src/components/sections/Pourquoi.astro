@@ -25,10 +25,10 @@ const points = [
   style="height: 360vh;"
   data-pourquoi-section
 >
-  <div class="sticky top-0 h-screen w-full overflow-hidden bg-ink">
+  <div class="sticky top-0 h-screen w-full overflow-hidden bg-white">
     <!-- Photo : démarre petite/centrée, grandit jusqu'à full bleed -->
     <div
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md overflow-hidden bg-white/5 will-change-transform"
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md overflow-hidden bg-ink/5 will-change-transform"
       data-pourquoi-frame
     >
       <img
@@ -43,7 +43,7 @@ const points = [
 
     <!-- Voile sombre côté gauche : apparaît quand la photo grandit pour rendre le texte lisible -->
     <div
-      class="absolute inset-0 z-10 bg-gradient-to-r from-ink via-ink/70 to-transparent pointer-events-none opacity-0"
+      class="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/70 to-transparent pointer-events-none opacity-0"
       data-pourquoi-overlay
       aria-hidden="true"
     >
@@ -62,9 +62,9 @@ const points = [
       >
         Une entreprise familiale,
         <br />
-        <span class="text-white/50">un engagement total.</span>
+        <span class="text-sun">un engagement total.</span>
       </h2>
-      <p class="mt-6 text-white/60 text-xs lg:text-sm uppercase tracking-[0.2em]">
+      <p class="mt-6 text-ink/60 text-xs lg:text-sm uppercase tracking-[0.2em]">
         Scroll ↓
       </p>
     </div>
@@ -83,9 +83,9 @@ const points = [
         >
           Une entreprise familiale,
           <br />
-          <span class="text-white/50">un engagement total.</span>
+          <span class="text-sun">un engagement total.</span>
         </h2>
-        <p class="mt-4 text-white/70 text-sm lg:text-base leading-relaxed">
+        <p class="mt-4 text-ink/70 text-sm lg:text-base leading-relaxed">
           Depuis 2015, nous équipons les toits du Grand-Est sans sous-traiter.
           1500 chantiers, une seule équipe.
         </p>
@@ -109,7 +109,7 @@ const points = [
                   <h3 class="font-display font-bold text-base lg:text-lg leading-tight">
                     {p.title}
                   </h3>
-                  <p class="mt-1 text-white/55 text-xs lg:text-sm leading-relaxed">
+                  <p class="mt-1 text-ink/55 text-xs lg:text-sm leading-relaxed">
                     {p.desc}
                   </p>
                 </div>
@@ -122,7 +122,7 @@ const points = [
 
     <!-- Badge en bas-droite (apparaît dans la phase finale) -->
     <div
-      class="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 z-30 inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-ink/65 backdrop-blur-md border border-white/15 opacity-0"
+      class="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 z-30 inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-ink/65 backdrop-blur-md border border-ink/15 opacity-0"
       data-pourquoi-badge
     >
       <span class="w-1.5 h-1.5 rounded-full bg-sun" aria-hidden="true"></span>

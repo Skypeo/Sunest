@@ -14,6 +14,7 @@ Travail réalisé par **Skypeo** (l'utilisateur, monke). Le client a validé l'a
 |---|---|---|
 | Accueil | `/` | ✅ Complet (12 sections scroll-pinnées) |
 | Contact | `/contact` | ✅ Complet (Hero + form + zones + FAQ + CTA + Footer) |
+| Mon bilan gratuit | `/mon-bilan-gratuit` | ✅ Complet (Hero compact + iframe Solteo + FAQ + CTA + Footer) |
 | Particulier | `/services/particulier` | 🚧 En cours (Hero + Stats + Raisons + TrustClients + Étapes + Bifaces + Local) |
 
 ### Pages à faire (prochaines sessions)
@@ -173,6 +174,17 @@ L'utilisateur procède **section par section** en envoyant une capture du site a
 - 10 sections initiales avec contenu fictif (la plupart depuis abandonnées)
 - Hero 3D R3F : panneau procédural 192 cellules avec assembly animation
 - Bundle HeroScene : 853 KB / 230 KB gzipped (`client:visible`)
+
+### Session 2026-05-05 (page mon-bilan-gratuit)
+- Le simulateur original sunest.fr/mon-bilan-gratuit est en réalité un **iframe Solteo** (SaaS tiers, app.solteo.fr/lead-magnet?companyId=cb8be60a-…). Le client paye un abonnement Solteo qui fournit le widget + calcul Google Solar + collecte des leads.
+- Décision : **on réembed le même iframe Solteo** (option A) plutôt que de refaire le simulateur from scratch — ça évite de casser le flux lead actuel et le calcul Google Solar
+- Page créée : `web/src/pages/mon-bilan-gratuit.astro`
+  - Hero compact (~56vh) avec halo solaire bleu/orange + grille subtile + titre splittable + 3 puces trust (données satellite / estimation en direct / sans engagement)
+  - Container blanc rounded-md qui encadre l'iframe (height fixe 1100px, listener postMessage en bonus si Solteo émet sa hauteur)
+  - Loader spinner sky-brand pendant le chargement de l'iframe (fallback timeout 8s)
+  - FAQ + Contact CTA + Footer partagés
+- TODO côté client : si on change de domaine au déploiement, demander à Solteo d'ajouter le nouveau domaine en allowed-origins (sinon iframe peut être bloquée)
+- TODO Skypeo : faire pointer le CTA "Simuler mon installation" du SiteHeader vers `/mon-bilan-gratuit` au lieu de `/contact` (à valider avec Mika)
 
 ### Session 2026-05-03 (page particulier — sections Bifaces et Local)
 1. **BifacesParticulier** créé (`web/src/components/sections/BifacesParticulier.astro`)
