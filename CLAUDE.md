@@ -164,6 +164,29 @@ L'utilisateur procède **section par section** en envoyant une capture du site a
 
 ## Travail réalisé — sessions
 
+### Session 2026-05-06 (SolarBackground + ajustements + perf)
+
+1. **Section Services (home)** :
+   - Titre H2 réduit (`text-3xl lg:text-5xl` au lieu de `text-4xl lg:text-6xl`)
+   - `computeOpacity` modifié : le 1er stage reste à plein avant son centre, le dernier (Maintenance & suivi) reste plein après son centre → **plus d'image vide à la fin de la section**
+   - **Sur mobile/tablette** : la photo a été **sortie du `absolute top-6 right-6`** (qui chevauchait le titre) et placée **en flux normal, centrée (`mx-auto`) entre le H2 et le bloc stage**
+
+2. **Composant `SolarBackground.astro`** créé dans `web/src/components/ui/` après plusieurs itérations :
+   - **Itérations** : pattern grille (trop chargé) → halos colorés diffus avec `filter: blur` (validé puis user a changé d'avis) → fragments de panneau
+   - **Version finale** : 2 fragments par variant (un grand + un petit, opposés) qui dépassent en bord de section
+   - SVG inline statique : cellules carrées avec coins arrondis + bus bars verticaux argentés + 1 cellule colorée (jaune ou bleue)
+   - **Pas de `filter: blur`** (perf GPU)
+   - Props : `variant: 'a' | 'b' | 'c'`, `intensity: 'subtle' | 'normal' | 'strong'`
+   - **Posé sur 22 sections** (cf. mémoire `reference_solar_background.md`)
+   - Sections délibérément ignorées : Hero, Contact CTA, HeroStats, Heros services (photo fullbleed), Choisir/Pourquoi/Processus*Borne/Maintenance (photos), Trust*+Temoignage* (vidéos)
+
+3. **Optimisations performance** (le user trouvait que ça laggait) :
+   - **Reveal engine `Layout.astro`** : refactor en lazy-init via `IntersectionObserver` (rootMargin 25%) — split-words/parallax/magnetic/tilt ne s'initialisent plus au load mais quand la cible approche
+   - `will-change` libéré après animation (split-words via `onComplete`, tilt via `setTimeout` au mouseleave)
+   - 2 `will-change-transform` virés sur les halos statiques de `Contact.astro` (lignes 35, 40)
+   - `SecteursPro` : 5 cards passées en `loading="lazy"` (étaient `eager`)
+   - **Pas touché** : grain filmique global (parti-pris esthétique), HeroScene R3F (déjà `client:visible`), will-change sur photos qui bougent au scroll (légitimes)
+
 ### Session 2026-04-28
 - Skill `clone-study` installé en global, capture sunest.fr complète
 - Tokens design extraits dans `tokens.json`

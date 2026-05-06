@@ -1,0 +1,113 @@
+---
+// Bouton CTA flottant en bas-droite, présent sur tout le site sauf la page
+// du simulateur (où il serait redondant). Animation pulse continue + entrée
+// retardée (~1.4 s) pour ne pas distraire au load.
+
+const path = Astro.url.pathname.replace(/\/$/, '');
+const isOnSimulator = path === '/mon-bilan-gratuit';
+---
+
+{
+  !isOnSimulator && (
+    <a
+      href="/mon-bilan-gratuit"
+      class="floating-cta fixed bottom-5 right-5 lg:bottom-7 lg:right-7 z-[60] group rounded-pill focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sun/50"
+      aria-label="Simuler mon installation gratuitement"
+      data-floating-cta
+    >
+      {/* Anneaux pulse en arrière-plan (2 décalés, discrets) */}
+      <span class="floating-cta-ring absolute inset-0 rounded-pill" style="animation-delay: 0s;" aria-hidden="true" />
+      <span class="floating-cta-ring absolute inset-0 rounded-pill" style="animation-delay: 1.4s;" aria-hidden="true" />
+
+      {/* Bouton principal */}
+      <span class="relative flex items-center gap-1.5 sm:gap-2.5 px-3 sm:px-5 lg:px-6 py-2.5 sm:py-3.5 lg:py-4 rounded-pill bg-sun text-ink font-bold text-[11px] sm:text-sm lg:text-base shadow-[0_12px_32px_-6px_rgba(255,183,0,0.55)] ring-1 ring-sun/40 transition-transform duration-200 ease-out group-hover:scale-[1.04] group-active:scale-[0.97]">
+        {/* Icône soleil avec rayons */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="floating-cta-sun shrink-0 w-4 h-4 sm:w-5 sm:h-5"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="m4.93 4.93 1.41 1.41" />
+          <path d="m17.66 17.66 1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="m6.34 17.66-1.41 1.41" />
+          <path d="m19.07 4.93-1.41 1.41" />
+        </svg>
+        <span class="whitespace-nowrap">Simuler mon installation</span>
+      </span>
+    </a>
+  )
+}
+
+<style>
+  /* Anneaux qui pulsent depuis le bouton */
+  .floating-cta-ring {
+    background: rgb(255, 183, 0);
+    animation: floating-cta-pulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    transform-origin: center;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  @keyframes floating-cta-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.28;
+    }
+    70% {
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1.25);
+      opacity: 0;
+    }
+  }
+
+  /* Soleil qui tourne très lentement */
+  .floating-cta-sun {
+    animation: floating-cta-sunspin 18s linear infinite;
+    transform-origin: center;
+  }
+
+  @keyframes floating-cta-sunspin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Entrée retardée pour ne pas distraire au load */
+  [data-floating-cta] {
+    animation: floating-cta-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.4s both;
+  }
+
+  @keyframes floating-cta-enter {
+    from {
+      opacity: 0;
+      transform: translateY(24px) scale(0.85);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Respect prefers-reduced-motion : visible mais sans animation */
+  @media (prefers-reduced-motion: reduce) {
+    .floating-cta-ring {
+      display: none;
+    }
+    .floating-cta-sun,
+    [data-floating-cta] {
+      animation: none;
+    }
+  }
+</style>
