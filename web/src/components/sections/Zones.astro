@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Liste ordonnée par numéro de département (cohérent avec la capture)
 const zones = [
   { id: '08', name: 'Ardennes', cities: 'Charleville-Mézières, Sedan, Rethel…' },
@@ -20,6 +22,7 @@ const zones = [
   data-zones-section
 >
   <div class="relative w-full lg:sticky lg:top-0 lg:h-screen overflow-hidden py-20 lg:py-0">
+    <SolarBackground variant="c" intensity="subtle" />
     <div
       class="relative z-10 lg:h-full max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 items-center"
     >

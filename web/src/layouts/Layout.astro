@@ -55,145 +55,176 @@ const {
         (window as unknown as { lenis: Lenis }).lenis = lenis;
       }
 
-      // ---- Reveal engine global -------------------------------------------
+      // ---- Reveal engine global (LAZY-INIT via IntersectionObserver) -------
       // [data-split-words]   → splitte chaque mot et fait un fly-up au scroll
       // [data-parallax="N"]  → translation Y proportionnelle au scroll (N = facteur)
       // [data-magnetic]      → CTA qui suit légèrement le curseur (effet aimant)
+      // [data-tilt="N"]      → card 3D au mousemove
+      //
+      // PERF : on n'init un effet que lorsque sa cible approche du viewport
+      // (rootMargin 25 %), au lieu de tout initialiser au load. Ça évite des
+      // dizaines de ScrollTriggers actifs simultanément en bas de page.
 
-      function initSplitWords() {
-        const targets = document.querySelectorAll<HTMLElement>('[data-split-words]');
-        targets.forEach((el) => {
-          if (el.dataset.splitDone === 'true') return;
-          const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-          const textNodes: Text[] = [];
-          let n: Node | null;
-          while ((n = walker.nextNode())) textNodes.push(n as Text);
+      const noHover = matchMedia('(hover: none)').matches;
 
-          textNodes.forEach((tn) => {
-            const parent = tn.parentNode;
-            if (!parent) return;
-            const parts = tn.textContent?.split(/(\s+)/) ?? [];
-            const frag = document.createDocumentFragment();
-            parts.forEach((w) => {
-              if (/^\s*$/.test(w)) {
-                frag.appendChild(document.createTextNode(w));
-              } else {
-                const span = document.createElement('span');
-                span.className = 'split-word';
-                span.style.display = 'inline-block';
-                span.style.willChange = 'transform, opacity';
-                span.textContent = w;
-                frag.appendChild(span);
-              }
-            });
-            parent.replaceChild(frag, tn);
-          });
-          el.dataset.splitDone = 'true';
+      function initSplitWords(el: HTMLElement) {
+        if (el.dataset.splitDone === 'true') return;
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        const textNodes: Text[] = [];
+        let n: Node | null;
+        while ((n = walker.nextNode())) textNodes.push(n as Text);
 
-          const words = el.querySelectorAll<HTMLElement>('.split-word');
-          if (prefersReducedMotion) {
-            words.forEach((w) => {
-              w.style.opacity = '1';
-              w.style.transform = 'none';
-            });
-            return;
-          }
-
-          gsap.set(words, { yPercent: 80, opacity: 0 });
-          gsap.to(words, {
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: 'power3.out',
-            stagger: 0.04,
-          });
-        });
-      }
-
-      function initParallax() {
-        if (prefersReducedMotion) return;
-        document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-          const factor = parseFloat(el.dataset.parallax ?? '0.2');
-          gsap.fromTo(
-            el,
-            { yPercent: factor * 50 },
-            {
-              yPercent: -factor * 50,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: el,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1,
-              },
-            }
-          );
-        });
-      }
-
-      function initMagnetic() {
-        if (prefersReducedMotion) return;
-        document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
-          const strength = parseFloat(el.dataset.magnetic || '0.35');
-          let raf = 0;
-          let tx = 0,
-            ty = 0,
-            cx = 0,
-            cy = 0;
-          const tick = () => {
-            cx += (tx - cx) * 0.18;
-            cy += (ty - cy) * 0.18;
-            el.style.transform = `translate(${cx}px, ${cy}px)`;
-            if (Math.abs(tx - cx) > 0.05 || Math.abs(ty - cy) > 0.05) {
-              raf = requestAnimationFrame(tick);
+        textNodes.forEach((tn) => {
+          const parent = tn.parentNode;
+          if (!parent) return;
+          const parts = tn.textContent?.split(/(\s+)/) ?? [];
+          const frag = document.createDocumentFragment();
+          parts.forEach((w) => {
+            if (/^\s*$/.test(w)) {
+              frag.appendChild(document.createTextNode(w));
             } else {
-              raf = 0;
+              const span = document.createElement('span');
+              span.className = 'split-word';
+              span.style.display = 'inline-block';
+              span.textContent = w;
+              frag.appendChild(span);
             }
-          };
-          el.addEventListener('mousemove', (e) => {
-            const rect = el.getBoundingClientRect();
-            tx = (e.clientX - (rect.left + rect.width / 2)) * strength;
-            ty = (e.clientY - (rect.top + rect.height / 2)) * strength;
-            if (!raf) raf = requestAnimationFrame(tick);
           });
-          el.addEventListener('mouseleave', () => {
-            tx = 0;
-            ty = 0;
-            if (!raf) raf = requestAnimationFrame(tick);
+          parent.replaceChild(frag, tn);
+        });
+        el.dataset.splitDone = 'true';
+
+        const words = el.querySelectorAll<HTMLElement>('.split-word');
+        if (prefersReducedMotion) {
+          words.forEach((w) => {
+            w.style.opacity = '1';
+            w.style.transform = 'none';
           });
+          return;
+        }
+
+        // Init avec yPercent + opacity à 0, puis play immédiat (l'élément est
+        // déjà dans la viewport à 25 % près grâce à l'IntersectionObserver).
+        gsap.set(words, { yPercent: 80, opacity: 0 });
+        gsap.to(words, {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+          stagger: 0.04,
+          // onComplete : libérer les words du compositing layer une fois finis
+          onComplete: () => {
+            words.forEach((w) => {
+              w.style.willChange = 'auto';
+            });
+          },
         });
       }
 
-      function initTilt() {
+      function initParallax(el: HTMLElement) {
         if (prefersReducedMotion) return;
-        // Touche à éviter sur écrans tactiles : pas de hover précis
-        if (matchMedia('(hover: none)').matches) return;
-        document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
-          const max = parseFloat(el.dataset.tilt || '6');
-          el.style.willChange = 'transform';
-          el.addEventListener('mouseenter', () => {
-            el.style.transition = 'transform 0.08s linear';
-          });
-          el.addEventListener('mousemove', (e) => {
-            const rect = el.getBoundingClientRect();
-            const px = (e.clientX - rect.left) / rect.width;
-            const py = (e.clientY - rect.top) / rect.height;
-            const rx = (0.5 - py) * max;
-            const ry = (px - 0.5) * max;
-            el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
-          });
-          el.addEventListener('mouseleave', () => {
-            el.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
-            el.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateZ(0)';
-          });
+        if (el.dataset.parallaxDone === 'true') return;
+        el.dataset.parallaxDone = 'true';
+        const factor = parseFloat(el.dataset.parallax ?? '0.2');
+        gsap.fromTo(
+          el,
+          { yPercent: factor * 50 },
+          {
+            yPercent: -factor * 50,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1,
+            },
+          }
+        );
+      }
+
+      function initMagnetic(el: HTMLElement) {
+        if (prefersReducedMotion) return;
+        if (el.dataset.magneticDone === 'true') return;
+        el.dataset.magneticDone = 'true';
+        const strength = parseFloat(el.dataset.magnetic || '0.35');
+        let raf = 0;
+        let tx = 0,
+          ty = 0,
+          cx = 0,
+          cy = 0;
+        const tick = () => {
+          cx += (tx - cx) * 0.18;
+          cy += (ty - cy) * 0.18;
+          el.style.transform = `translate(${cx}px, ${cy}px)`;
+          if (Math.abs(tx - cx) > 0.05 || Math.abs(ty - cy) > 0.05) {
+            raf = requestAnimationFrame(tick);
+          } else {
+            raf = 0;
+          }
+        };
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          tx = (e.clientX - (rect.left + rect.width / 2)) * strength;
+          ty = (e.clientY - (rect.top + rect.height / 2)) * strength;
+          if (!raf) raf = requestAnimationFrame(tick);
+        });
+        el.addEventListener('mouseleave', () => {
+          tx = 0;
+          ty = 0;
+          if (!raf) raf = requestAnimationFrame(tick);
         });
       }
 
-      initSplitWords();
-      initParallax();
-      initMagnetic();
-      initTilt();
+      function initTilt(el: HTMLElement) {
+        if (prefersReducedMotion || noHover) return;
+        if (el.dataset.tiltDone === 'true') return;
+        el.dataset.tiltDone = 'true';
+        const max = parseFloat(el.dataset.tilt || '6');
+        el.addEventListener('mouseenter', () => {
+          el.style.willChange = 'transform';
+          el.style.transition = 'transform 0.08s linear';
+        });
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          const rx = (0.5 - py) * max;
+          const ry = (px - 0.5) * max;
+          el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+        });
+        el.addEventListener('mouseleave', () => {
+          el.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+          el.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateZ(0)';
+          // Libérer le compositing layer une fois revenu à l'état repos
+          setTimeout(() => {
+            el.style.willChange = 'auto';
+          }, 600);
+        });
+      }
+
+      // IntersectionObserver unifié : init un effet quand sa cible approche du
+      // viewport (à 25 % de distance), puis unobserve pour ne plus jamais
+      // re-déclencher le check.
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target as HTMLElement;
+            if (el.hasAttribute('data-split-words')) initSplitWords(el);
+            if (el.hasAttribute('data-parallax')) initParallax(el);
+            if (el.hasAttribute('data-magnetic')) initMagnetic(el);
+            if (el.hasAttribute('data-tilt')) initTilt(el);
+            io.unobserve(el);
+          });
+        },
+        { rootMargin: '25% 0px 25% 0px', threshold: 0 }
+      );
+
+      document
+        .querySelectorAll<HTMLElement>(
+          '[data-split-words], [data-parallax], [data-magnetic], [data-tilt]'
+        )
+        .forEach((el) => io.observe(el));
     </script>
   </body>
 </html>

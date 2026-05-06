@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section "Secteurs d'activité" — page Pro
 //   5 cards en mode "spotlight" oryzo (style portrait, photo fullbleed, contenu bottom overlay)
 //   - Section 320vh sticky h-screen
@@ -61,6 +63,7 @@ const cards = [
   data-secteurs-pro
 >
   <div class="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
+    <SolarBackground variant="b" intensity="normal" />
     <!-- En-tête (pb augmenté pour remplacer le pt du stage que je viens de virer) -->
     <div
       class="relative z-20 max-w-7xl mx-auto px-6 lg:px-10 pt-12 lg:pt-16 pb-12 lg:pb-16 text-center"
@@ -141,7 +144,7 @@ const cards = [
               <img
                 src={card.image}
                 alt={card.title}
-                loading="eager"
+                loading="lazy"
                 decoding="async"
                 class="absolute inset-0 w-full h-full object-cover"
                 style="filter: brightness(0.72) saturate(1.08) contrast(1.05);"

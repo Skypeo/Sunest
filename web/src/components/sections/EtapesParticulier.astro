@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section "Votre solution solaire clé en main en 4 étapes"
 // Layout signature : timeline verticale (spine + dots) à gauche, panneau hero à droite
 // avec numéro filigrane géant, icône thématique, titre & texte contrastés.
@@ -35,6 +37,7 @@ const steps = [
   class="relative w-full py-20 lg:py-28 bg-white overflow-hidden border-t border-ink/5"
   data-etapes-section
 >
+  <SolarBackground variant="a" intensity="normal" />
   <!-- Halo signature -->
   <div
     class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] rounded-full bg-sky-brand/[0.06] blur-[180px] pointer-events-none"

@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section "Autoconsommation directe" — page Pro
 //   Clone du composant Services.astro (page d'accueil) adapté avec 2 stages au lieu de 4
 //   Sans les gros numéros outline (l'user n'en veut pas ici)
@@ -27,6 +29,7 @@ const stages = [
   data-autoconso-section
 >
   <div class="sticky top-0 h-screen w-full overflow-hidden">
+    <SolarBackground variant="a" intensity="subtle" />
     <div
       class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] items-center gap-8 lg:gap-12"
     >

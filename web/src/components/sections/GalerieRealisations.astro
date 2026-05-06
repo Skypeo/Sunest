@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Galerie en GRILLE UNIFORME 4 colonnes × 9 rangées (36 photos).
 // Mobile : 2 cols × 18 rangs ; tablette : 3 cols × 12 rangs ; desktop : 4 cols × 9 rangs.
 // Clic sur une photo → lightbox plein écran.
@@ -46,6 +48,7 @@ const photos = [
   id="galerie"
   class="relative w-full py-20 lg:py-32 bg-white overflow-hidden border-t border-ink/5"
 >
+  <SolarBackground variant="a" intensity="normal" />
   <!-- Halo signature en fond -->
   <div
     class="absolute left-1/2 top-1/3 -translate-x-1/2 w-[60vw] h-[50vh] rounded-full bg-sky-brand/[0.07] blur-[180px] pointer-events-none"

@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section "Nous équipons nos clients..."
 // Layout : H2 en haut + grid 2 cols (photo gauche + texte droite, même hauteur).
 // Animation : la photo démarre au-dessus de sa colonne et descend tout droit (translateY)
@@ -8,9 +10,10 @@ const imgSrc = '/images/plaquette-5-65c5e9d4e5b8b-768x1024.webp';
 
 <section
   id="bifaces-particulier"
-  class="relative w-full bg-white lg:h-[260vh] py-20 lg:py-0"
+  class="relative w-full bg-white lg:h-[260vh] py-20 lg:py-0 overflow-hidden"
   data-bifaces-section
 >
+  <SolarBackground variant="c" intensity="normal" />
   <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden lg:flex lg:items-center">
     <div class="mx-auto max-w-7xl w-full px-6 lg:px-10 lg:py-[4vh]">
       <!-- Titre H2 en haut (taille réduite pour tenir dans le viewport) -->

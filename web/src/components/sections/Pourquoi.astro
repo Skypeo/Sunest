@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 const points = [
   {
     title: '0 % sous-traitance',
@@ -26,6 +28,7 @@ const points = [
   data-pourquoi-section
 >
   <div class="sticky top-0 h-screen w-full overflow-hidden bg-white">
+    <SolarBackground variant="b" intensity="normal" />
     <!-- Photo : démarre petite/centrée, grandit jusqu'à full bleed -->
     <div
       class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md overflow-hidden bg-ink/5 will-change-transform"

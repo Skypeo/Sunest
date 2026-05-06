@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section vidéo "Découvrez le savoir-faire Sun Est"
 // — Section linéaire avec halo bleu signature, vidéo YouTube en cadre stylé
 //   (ring sky-brand + glow + shadow), reveal scale + fade au scroll.
@@ -8,6 +10,7 @@
   id="video-savoir-faire"
   class="relative w-full py-20 lg:py-32 bg-white overflow-hidden border-t border-ink/5"
 >
+  <SolarBackground variant="b" intensity="normal" />
   <!-- Halo bleu signature en fond -->
   <div
     class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[60vh] rounded-full bg-sky-brand/[0.10] blur-[200px] pointer-events-none"

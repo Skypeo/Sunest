@@ -31,7 +31,12 @@
       "Bash(cat C:\\\\\\\\Users\\\\\\\\monke\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\C--Users-monke-OneDrive-Bureau-Site-Claude-Code-Sunest\\\\\\\\6a15085b-ebcb-4f47-9fc3-3a7165206f36\\\\\\\\tasks\\\\\\\\b8u4r5zi1.output)",
       "WebFetch(domain:sunest.fr)",
       "Bash(mkdir -p /tmp/design_extract)",
-      "Bash(tar -xzf \"C:/Users/monke/.claude/projects/C--Users-monke-OneDrive-Bureau-Site-Claude-Code-Sunest/ee32d885-ea4f-4c28-8735-2bcf071f4fca/tool-results/webfetch-1777983716546-llllih.bin\")"
+      "Bash(tar -xzf \"C:/Users/monke/.claude/projects/C--Users-monke-OneDrive-Bureau-Site-Claude-Code-Sunest/ee32d885-ea4f-4c28-8735-2bcf071f4fca/tool-results/webfetch-1777983716546-llllih.bin\")",
+      "Bash(grep -n \"^<section\\\\|^---$\" web/src/components/sections/ServicesMaintenance.astro)",
+      "PowerShell(Get-ChildItem -Path \"web/public/images/team\" -File | Sort-Object Length -Descending | Select-Object -First 6 -Property Name, @{Name=\"KB\";Expression={[math]::Round\\($_.Length/1KB,1\\)}})",
+      "PowerShell(Get-ChildItem -Path \"public/images/team\" -File | Sort-Object Length -Descending | Select-Object -First 6 -Property Name, @{Name=\"KB\";Expression={[math]::Round\\($_.Length/1KB,1\\)}})",
+      "PowerShell(Get-ChildItem -Path \"C:/Users/monke/OneDrive/Bureau/Site_Claude_Code/Sunest/web/public/images/team\" -File | Sort-Object Length -Descending | Select-Object -First 6 Name, @{N='KB';E={[math]::Round\\($_.Length/1KB,1\\)}})",
+      "Bash(awk '{print $5, $9}')"
     ]
   }
 }

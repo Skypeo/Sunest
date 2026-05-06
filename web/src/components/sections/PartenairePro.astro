@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section "Votre partenaire photovoltaïque local" — page Pro
 // Clone du composant BifacesParticulier.astro (photo gauche / texte droite + photo descend en se défloutant)
 // Adapté avec contenu Grand Est + badge Qualifelec
@@ -7,9 +9,10 @@ const imgSrc = '/images/votre_partenaire_maintenance.webp';
 
 <section
   id="partenaire-pro"
-  class="relative w-full bg-white lg:h-[280vh] py-20 lg:py-0"
+  class="relative w-full bg-white lg:h-[280vh] py-20 lg:py-0 overflow-hidden"
   data-partenaire-section
 >
+  <SolarBackground variant="a" intensity="normal" />
   <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden lg:flex lg:items-center">
     <div class="mx-auto max-w-7xl w-full px-6 lg:px-10 lg:py-[4vh]">
       <!-- Titre H2 en haut (taille réduite pour tenir dans le viewport) -->

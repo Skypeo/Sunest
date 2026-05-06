@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 const faqs = [
   {
     q: "Qu'est-ce que l'énergie photovoltaïque ?",
@@ -63,8 +65,9 @@ const faqs = [
 ];
 ---
 
-<section id="faq" class="relative py-24 lg:py-36 border-t border-ink/5">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+<section id="faq" class="relative py-24 lg:py-36 border-t border-ink/5 overflow-hidden">
+  <SolarBackground variant="b" intensity="subtle" />
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
     <div class="grid lg:grid-cols-[1fr_1.6fr] gap-12 lg:gap-20 items-start">
       <!-- Sticky gauche : titre + pitch + CTA + compteur -->
       <div class="lg:sticky lg:top-32">

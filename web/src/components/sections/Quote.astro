@@ -1,8 +1,10 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
 ---
 
-<section id="devis" class="relative py-24 lg:py-36 border-t border-ink/5">
-  <div class="max-w-5xl mx-auto px-6 lg:px-10">
+<section id="devis" class="relative py-24 lg:py-36 border-t border-ink/5 overflow-hidden">
+  <SolarBackground variant="c" intensity="subtle" />
+  <div class="relative max-w-5xl mx-auto px-6 lg:px-10">
     <div class="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-start">
       <div>
         <p class="text-sun font-bold uppercase tracking-[0.2em] text-xs mb-4">Devis gratuit</p>

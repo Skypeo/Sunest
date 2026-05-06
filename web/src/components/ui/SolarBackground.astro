@@ -1,0 +1,190 @@
+---
+// Morceaux de panneau solaire qui dépassent en bord de section.
+// Pas de halos colorés : juste des fragments de panneau (cellules carrées avec
+// coins arrondis + bus bars) qui pointent depuis les bords gauche/droite,
+// inclinés et discrets, avec 1 cellule colorée (jaune ou bleue) par fragment.
+//
+// 3 variantes (a/b/c) avec 2 fragments chacune (un grand + un petit, opposés)
+// pour que l'œil ait toujours quelque chose à découvrir sans surcharger.
+
+interface Props {
+  variant?: 'a' | 'b' | 'c';
+  intensity?: 'subtle' | 'normal' | 'strong';
+}
+
+const { variant = 'a', intensity = 'subtle' } = Astro.props;
+
+// Opacité globale selon intensity
+const opacityMap = {
+  subtle: 0.42,
+  normal: 0.55,
+  strong: 0.72,
+};
+const baseOp = opacityMap[intensity];
+
+const sun = '255,183,0';
+const sky = '32,184,241';
+
+type Fragment = {
+  side: 'left' | 'right';
+  yPercent: number; // position verticale 0-100
+  cols: number;
+  rows: number;
+  cellSize: number;
+  tilt: number;
+  highlight: [number, number, 'sun' | 'sky']; // cellule colorée
+  outsidePct?: number; // % du fragment qui dépasse (défaut 0.55)
+  scale?: number; // multiplicateur d'opacité local (1 = base)
+};
+
+const variants: Record<'a' | 'b' | 'c', Fragment[]> = {
+  a: [
+    // Grand fragment droite-haut (incliné en avant)
+    {
+      side: 'right',
+      yPercent: 22,
+      cols: 5,
+      rows: 3,
+      cellSize: 58,
+      tilt: 9,
+      highlight: [1, 1, 'sun'],
+      outsidePct: 0.20,
+    },
+    // Petit fragment gauche-bas (incliné inverse)
+    {
+      side: 'left',
+      yPercent: 78,
+      cols: 3,
+      rows: 2,
+      cellSize: 50,
+      tilt: -6,
+      highlight: [2, 0, 'sky'],
+      outsidePct: 0.22,
+      scale: 0.85,
+    },
+  ],
+  b: [
+    // Grand fragment gauche-bas
+    {
+      side: 'left',
+      yPercent: 70,
+      cols: 4,
+      rows: 4,
+      cellSize: 56,
+      tilt: -8,
+      highlight: [1, 2, 'sky'],
+      outsidePct: 0.22,
+    },
+    // Petit fragment droite-haut
+    {
+      side: 'right',
+      yPercent: 18,
+      cols: 3,
+      rows: 2,
+      cellSize: 50,
+      tilt: 7,
+      highlight: [0, 1, 'sun'],
+      outsidePct: 0.24,
+      scale: 0.85,
+    },
+  ],
+  c: [
+    // Grand fragment droite-milieu
+    {
+      side: 'right',
+      yPercent: 55,
+      cols: 4,
+      rows: 3,
+      cellSize: 60,
+      tilt: -10,
+      highlight: [2, 1, 'sun'],
+      outsidePct: 0.20,
+    },
+    // Petit fragment gauche-haut
+    {
+      side: 'left',
+      yPercent: 18,
+      cols: 3,
+      rows: 3,
+      cellSize: 48,
+      tilt: 8,
+      highlight: [1, 1, 'sky'],
+      outsidePct: 0.22,
+      scale: 0.85,
+    },
+  ],
+};
+
+const fragments = variants[variant];
+const GAP = 3;
+---
+
+<div
+  class="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+  aria-hidden="true"
+>
+  {
+    fragments.map((f) => {
+      const W = f.cols * f.cellSize + (f.cols - 1) * GAP;
+      const H = f.rows * f.cellSize + (f.rows - 1) * GAP;
+      const offset = Math.round(W * (f.outsidePct ?? 0.55));
+      const posStyle = f.side === 'right' ? `right: -${offset}px;` : `left: -${offset}px;`;
+      const op = (baseOp * (f.scale ?? 1)).toFixed(3);
+
+      // Cellules colorées (highlight) avec une saturation un peu plus forte
+      // pour que la couleur "passe" malgré l'opacité globale du fragment.
+      const hlFill =
+        f.highlight[2] === 'sun' ? `rgba(${sun},0.85)` : `rgba(${sky},0.75)`;
+      const cellFill = `rgba(${sky},0.05)`;
+      const stroke = `rgba(${sky},0.55)`;
+
+      return (
+        <div
+          class="absolute"
+          style={`${posStyle} top: ${f.yPercent}%; width: ${W}px; height: ${H}px; transform: translateY(-50%) rotate(${f.tilt}deg); opacity: ${op};`}
+        >
+          <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} xmlns="http://www.w3.org/2000/svg">
+            {Array.from({ length: f.rows }).flatMap((_, r) =>
+              Array.from({ length: f.cols }).map((_, c) => {
+                const x = c * (f.cellSize + GAP);
+                const y = r * (f.cellSize + GAP);
+                const isHL = f.highlight[0] === c && f.highlight[1] === r;
+                return (
+                  <g>
+                    <rect
+                      x={x}
+                      y={y}
+                      width={f.cellSize}
+                      height={f.cellSize}
+                      rx="3"
+                      fill={isHL ? hlFill : cellFill}
+                      stroke={stroke}
+                      stroke-width="1"
+                    />
+                    {/* 2 bus bars verticaux argentés (signature cellule mono) */}
+                    <line
+                      x1={x + f.cellSize * 0.32}
+                      y1={y + 4}
+                      x2={x + f.cellSize * 0.32}
+                      y2={y + f.cellSize - 4}
+                      stroke={`rgba(${sky},0.32)`}
+                      stroke-width="0.5"
+                    />
+                    <line
+                      x1={x + f.cellSize * 0.68}
+                      y1={y + 4}
+                      x2={x + f.cellSize * 0.68}
+                      y2={y + f.cellSize - 4}
+                      stroke={`rgba(${sky},0.32)`}
+                      stroke-width="0.5"
+                    />
+                  </g>
+                );
+              })
+            )}
+          </svg>
+        </div>
+      );
+    })
+  }
+</div>

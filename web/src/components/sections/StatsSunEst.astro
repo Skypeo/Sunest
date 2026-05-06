@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section "Sun Est en chiffres" — 5 stats clés, compteurs animés au reveal scroll.
 // Utilisable sur toutes les pages services.
 const stats = [
@@ -15,6 +17,7 @@ const stats = [
   class="relative w-full py-20 lg:py-28 bg-white overflow-hidden border-t border-ink/5"
   data-stats-section
 >
+  <SolarBackground variant="c" intensity="normal" />
   <!-- Halo signature en fond -->
   <div
     class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] rounded-full bg-sky-brand/[0.07] blur-[180px] pointer-events-none"

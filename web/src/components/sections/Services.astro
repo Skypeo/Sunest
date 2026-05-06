@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 const services = [
   {
     tag: 'Particulier',
@@ -34,6 +36,8 @@ const services = [
   data-services-section
 >
   <div class="sticky top-0 h-screen w-full overflow-hidden">
+    <SolarBackground variant="a" intensity="normal" />
+
     <div
       class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] items-center gap-8 lg:gap-12"
     >
@@ -41,13 +45,32 @@ const services = [
       <div class="relative">
         <p class="text-sky-brand font-bold uppercase tracking-[0.2em] text-xs mb-4">Nos services</p>
         <h2
-          class="font-display font-black text-4xl lg:text-6xl leading-[1.0] tracking-tight mb-10 lg:mb-14"
+          class="font-display font-black text-3xl lg:text-5xl leading-[1.05] tracking-tight mb-6 lg:mb-14"
           data-split-words
         >
           Du toit familial au parc industriel,
           <br />
           <span class="text-sun">une expertise unique.</span>
         </h2>
+
+        <!-- Mobile/tablette : photo entre H2 et stages (centrée, en flux) -->
+        <div
+          class="lg:hidden relative mx-auto mb-6 w-36 sm:w-44 aspect-[4/5] rounded-md overflow-hidden bg-ink/5 ring-1 ring-white/10 z-20"
+        >
+          {
+            services.map((s, i) => (
+              <img
+                data-service-photo-mobile={i}
+                src={s.photo}
+                alt={s.title}
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+                style={`opacity: ${i === 0 ? 1 : 0};`}
+              />
+            ))
+          }
+        </div>
 
         <!-- Stages services (crossfade au scroll) -->
         <div class="relative min-h-[260px] lg:min-h-[280px]">
@@ -123,25 +146,6 @@ const services = [
         </div>
       </div>
 
-      <!-- Mobile/tablette : photo compacte en haut + numéro géant arrière-plan -->
-      <div
-        class="lg:hidden absolute top-6 right-6 w-32 sm:w-44 aspect-[4/5] rounded-md overflow-hidden bg-ink/5 ring-1 ring-white/10 z-20"
-      >
-        {
-          services.map((s, i) => (
-            <img
-              data-service-photo-mobile={i}
-              src={s.photo}
-              alt={s.title}
-              loading="lazy"
-              decoding="async"
-              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-              style={`opacity: ${i === 0 ? 1 : 0};`}
-            />
-          ))
-        }
-      </div>
-
       <!-- Mobile : numéro géant en arrière-plan derrière le contenu -->
       <div
         class="absolute inset-0 lg:hidden flex items-center justify-end pr-6 -z-10 pointer-events-none"
@@ -184,6 +188,10 @@ const services = [
 
     function computeOpacity(p: number, idx: number): number {
       const center = (idx + 0.5) / N;
+      // Premier stage : reste plein avant son centre (pas de fade-in en bas de section)
+      if (idx === 0 && p <= center) return 1;
+      // Dernier stage : reste plein après son centre (pas de fade-out en fin de section)
+      if (idx === N - 1 && p >= center) return 1;
       const dist = Math.abs(p - center);
       const cutoff = HALF_STAGE - TRANSITION;
       if (dist <= cutoff) return 1;

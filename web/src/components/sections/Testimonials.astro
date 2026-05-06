@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 const testimonials = [
   {
     initials: 'EJ',
@@ -53,6 +55,7 @@ const testimonials = [
   </div>
 
   <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden">
+    <SolarBackground variant="b" intensity="subtle" />
     <!-- Piste avis : pin/scroll desktop / overflow-x mobile-touch -->
     <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:flex lg:items-center overflow-x-auto lg:overflow-x-visible testimonials-scroll">
       <div

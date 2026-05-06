@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section "Revente totale de la production" — page Pro
 // Clone strict de BifacesParticulier.astro (photo gauche / texte droite + photo descend en se défloutant)
 const imgSrc = '/images/revente.webp';
@@ -6,9 +8,10 @@ const imgSrc = '/images/revente.webp';
 
 <section
   id="revente-pro"
-  class="relative w-full bg-white lg:h-[280vh] py-20 lg:py-0"
+  class="relative w-full bg-white lg:h-[280vh] py-20 lg:py-0 overflow-hidden"
   data-revente-section
 >
+  <SolarBackground variant="c" intensity="normal" />
   <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden lg:flex lg:items-center">
     <div class="mx-auto max-w-7xl w-full px-6 lg:px-10 lg:py-[4vh]">
       <!-- Titre H2 en haut -->

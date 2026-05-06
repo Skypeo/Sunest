@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 const team = [
   '/images/team/1DSC07086-scaled.webp',
   '/images/team/DSC07059-scaled.webp',
@@ -16,6 +18,7 @@ const team = [
   data-team-section
 >
   <div class="sticky top-0 h-screen w-full overflow-hidden">
+    <SolarBackground variant="a" intensity="subtle" />
     <!-- Piste photos qui translate horizontalement au scroll vertical -->
     <div class="absolute inset-y-0 left-0 flex items-center">
       <div

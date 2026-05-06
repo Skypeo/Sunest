@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Hero "Nos réalisations" — pattern signature oryzo : la photo zoom du fond
 // Inspiré de Pourquoi.astro, mais avec :
 //   - Texte final en BAS de l'écran (pas à gauche → différent de Pourquoi)
@@ -13,6 +15,7 @@
   data-hero-section
 >
   <div class="sticky top-0 h-screen w-full overflow-hidden bg-white">
+    <SolarBackground variant="c" intensity="normal" />
     <!-- Photo : démarre petite/centrée, grandit jusqu'à full bleed -->
     <div
       class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md overflow-hidden bg-ink/5 ring-1 ring-white/15 will-change-transform"

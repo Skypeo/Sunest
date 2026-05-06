@@ -1,4 +1,6 @@
 ---
+import SolarBackground from '../ui/SolarBackground.astro';
+
 // Section "Installateur photovoltaïque du Grand-Est"
 // Layout : H2 en haut + grid 2 cols (TEXTE gauche + PHOTO droite, même hauteur).
 // Animation : la photo démarre floutée + décalée vers le haut, descend tout droit
@@ -8,9 +10,10 @@ const imgSrc = '/images/pourquoiSunEst/DSC06837-1024x683.webp';
 
 <section
   id="local-particulier"
-  class="relative w-full bg-white lg:h-[220vh] py-20 lg:py-0"
+  class="relative w-full bg-white lg:h-[220vh] py-20 lg:py-0 overflow-hidden"
   data-local-section
 >
+  <SolarBackground variant="a" intensity="normal" />
   <div class="lg:sticky lg:top-0 lg:h-screen w-full lg:overflow-hidden lg:flex lg:items-center">
     <div class="mx-auto max-w-7xl w-full px-6 lg:px-10 lg:py-[4vh]">
       <!-- Titre H2 en haut -->
