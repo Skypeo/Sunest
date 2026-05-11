@@ -29,11 +29,10 @@ const reviews = [
 
 <section
   id="trust-grand-est"
-  class="relative w-full"
-  style="height: 360vh;"
+  class="relative w-full lg:[height:360vh]"
   data-trust-section
 >
-  <div class="sticky top-0 h-screen w-full overflow-hidden border-t border-ink/5">
+  <div class="lg:sticky lg:top-0 lg:h-screen w-full overflow-hidden border-t border-ink/5">
     <!-- Halo signature oryzo derrière la vidéo -->
     <div
       class="absolute left-[10%] top-1/2 -translate-y-1/2 w-[55vw] aspect-video rounded-md bg-sky-brand/10 blur-3xl scale-90 pointer-events-none"
@@ -43,7 +42,7 @@ const reviews = [
     </div>
 
     <div
-      class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10 pt-20 lg:pt-24 pb-10 lg:pb-12 flex flex-col"
+      class="relative z-10 lg:h-full max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:pt-24 lg:pb-12 flex flex-col"
     >
       <!-- Titre centré (fly-up split-words) -->
       <div class="text-center max-w-3xl mx-auto mb-6 lg:mb-8 shrink-0" data-trust-title>
@@ -62,7 +61,7 @@ const reviews = [
 
       <!-- Grid : vidéo (60%) + carousel d'avis (40%) -->
       <div
-        class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-10 items-stretch flex-1 min-h-0"
+        class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-10 items-stretch lg:flex-1 lg:min-h-0"
       >
         <!-- Colonne gauche : vidéo (zoom puis fixe) + caption -->
         <div class="relative flex flex-col min-h-0" data-trust-video-wrap>
@@ -134,15 +133,15 @@ const reviews = [
             </svg>
           </div>
 
-          <!-- SLOT carousel : 3 avis empilés en absolute, défilent un par un -->
+          <!-- SLOT carousel : empilé en mobile (flow normal), absolute en desktop (un par un au scroll) -->
           <div
-            class="relative min-h-[260px] sm:min-h-[220px] lg:flex-1 lg:min-h-0 rounded-md overflow-hidden"
+            class="flex flex-col gap-3 lg:block lg:relative lg:min-h-0 lg:flex-1 lg:rounded-md lg:overflow-hidden"
             data-trust-reviews-slot
           >
             {
               reviews.map((r, i) => (
                 <article
-                  class="absolute inset-0 p-5 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm flex flex-col justify-center will-change-transform"
+                  class="relative lg:absolute lg:inset-0 p-5 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm flex flex-col justify-start lg:justify-center will-change-transform"
                   data-trust-review
                   data-review-index={i}
                 >
@@ -194,7 +193,7 @@ const reviews = [
           </div>
 
           <!-- Indicateur de progression (3 dots, le dot actif change avec le scroll) -->
-          <div class="flex items-center justify-center gap-2 shrink-0" data-trust-dots>
+          <div class="hidden lg:flex items-center justify-center gap-2 shrink-0" data-trust-dots>
             {
               reviews.map((_, i) => (
                 <span
@@ -218,6 +217,9 @@ const reviews = [
   gsap.registerPlugin(ScrollTrigger);
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Le scroll-pin ne tourne qu'à partir de lg (≥ 1024px). En mobile/tablette, contenu
+  // empilé en flow normal (vidéo en haut, badge + 3 avis en dessous), sans animation.
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
   const section = document.querySelector<HTMLElement>('[data-trust-section]');
   const video = document.querySelector<HTMLElement>('[data-trust-video]');
   const caption = document.querySelector<HTMLElement>('[data-trust-caption]');
@@ -227,7 +229,7 @@ const reviews = [
   const reviews = gsap.utils.toArray<HTMLElement>('[data-trust-review]');
   const dots = gsap.utils.toArray<HTMLElement>('[data-dot]');
 
-  if (section && !prefersReducedMotion) {
+  if (section && !prefersReducedMotion && isDesktop) {
     // Pré-état : titre / vidéo / caption / badge cachés, avis hors-écran à gauche
     gsap.set([title, video, caption, badge], { opacity: 0 });
     if (video) gsap.set(video, { scale: 0.6, y: 50 });
@@ -315,8 +317,8 @@ const reviews = [
         },
       });
     }
-  } else if (prefersReducedMotion) {
-    // Reduced motion : tout visible direct, on garde seulement le dernier avis affiché
+  } else if (prefersReducedMotion && isDesktop) {
+    // Reduced motion (desktop) : tout visible direct, on garde seulement le dernier avis affiché
     [title, video, caption, badge].forEach((el) => {
       if (el) {
         el.style.opacity = '1';
@@ -328,4 +330,5 @@ const reviews = [
       r.style.transform = 'none';
     });
   }
+  // Sur mobile/tablette : aucune animation, tout est en flow normal et visible via CSS
 </script>
