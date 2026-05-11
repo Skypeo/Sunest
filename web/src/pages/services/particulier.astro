@@ -5,12 +5,51 @@ import HeroParticulier from '~/components/sections/HeroParticulier.astro';
 import StatsSunEst from '~/components/sections/StatsSunEst.astro';
 import RaisonsParticulier from '~/components/sections/RaisonsParticulier.astro';
 import TrustClientsParticulier from '~/components/sections/TrustClientsParticulier.astro';
+import AvisGoogleMobile from '~/components/sections/AvisGoogleMobile.astro';
 import EtapesParticulier from '~/components/sections/EtapesParticulier.astro';
 import BifacesParticulier from '~/components/sections/BifacesParticulier.astro';
 import LocalParticulier from '~/components/sections/LocalParticulier.astro';
 import FAQ from '~/components/sections/FAQ.astro';
 import ContactCta from '~/components/sections/Contact.astro';
 import Footer from '~/components/sections/Footer.astro';
+
+// Mêmes 5 avis que TrustClientsParticulier (rendus en mobile uniquement, lg:hidden)
+const avisMobile = [
+  {
+    initials: 'JE',
+    name: 'Jean-Pierre Euriat',
+    when: 'il y a 1 an',
+    quote:
+      "Je recommande cette société pour l'efficacité, le dynamisme et surtout le savoir-faire de toute l'équipe (poseurs de panneaux et électriciens).",
+  },
+  {
+    initials: 'BM',
+    name: 'Bernard Metzinger',
+    when: 'il y a 2 ans',
+    quote:
+      "Je recommande vivement Sun Est. Leur professionnalisme, leur fiabilité et leur engagement font d'eux un partenaire de choix pour vos projets d'énergie solaire.",
+  },
+  {
+    initials: 'ZZ',
+    name: 'Zaza Zouzou',
+    when: 'il y a 1 an',
+    quote:
+      "Entreprise sérieuse, des vrais pros du début à l'installation. Super équipe de jeunes sérieux, volontaires et très serviables. Merci à tous !",
+  },
+  {
+    initials: 'JM',
+    name: 'Jocelyne Meckler',
+    when: 'il y a 1 an',
+    quote: 'Entreprise sérieuse, techniciens compétents. Je recommande Sun Est.',
+  },
+  {
+    initials: 'SC',
+    name: 'Sandrine Charis',
+    when: 'il y a 1 an',
+    quote:
+      'Du devis à la réalisation des travaux, une équipe au top. Travail dans les temps, propre et soigné. À recommander.',
+  },
+];
 ---
 
 <Layout
@@ -23,6 +62,7 @@ import Footer from '~/components/sections/Footer.astro';
     <StatsSunEst />
     <RaisonsParticulier />
     <TrustClientsParticulier />
+    <AvisGoogleMobile reviews={avisMobile} />
     <EtapesParticulier />
     <BifacesParticulier />
     <LocalParticulier />

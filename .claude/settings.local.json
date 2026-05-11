@@ -36,7 +36,11 @@
       "PowerShell(Get-ChildItem -Path \"web/public/images/team\" -File | Sort-Object Length -Descending | Select-Object -First 6 -Property Name, @{Name=\"KB\";Expression={[math]::Round\\($_.Length/1KB,1\\)}})",
       "PowerShell(Get-ChildItem -Path \"public/images/team\" -File | Sort-Object Length -Descending | Select-Object -First 6 -Property Name, @{Name=\"KB\";Expression={[math]::Round\\($_.Length/1KB,1\\)}})",
       "PowerShell(Get-ChildItem -Path \"C:/Users/monke/OneDrive/Bureau/Site_Claude_Code/Sunest/web/public/images/team\" -File | Sort-Object Length -Descending | Select-Object -First 6 Name, @{N='KB';E={[math]::Round\\($_.Length/1KB,1\\)}})",
-      "Bash(awk '{print $5, $9}')"
+      "Bash(awk '{print $5, $9}')",
+      "Bash(tasklist)",
+      "Bash(findstr /i node)",
+      "Bash(git checkout *)",
+      "Bash(npx serve *)"
     ]
   }
 }

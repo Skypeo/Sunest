@@ -40,7 +40,6 @@ const stages = [
         </p>
         <h2
           class="font-display font-black text-3xl md:text-4xl xl:text-4xl leading-[1.1] tracking-tight mb-8 lg:mb-10"
-          data-split-words
         >
           Le photovoltaïque pour
           <br />
@@ -144,16 +143,17 @@ const stages = [
 
   if (section && stagesEls.length && !prefersReducedMotion) {
     const N = stagesEls.length;
-    const HALF_STAGE = 0.5 / N;
-    const TRANSITION = HALF_STAGE * 0.45;
 
+    // Crossfade linéaire propre entre stages — la somme des opacités est
+    // toujours ≥ 1 (jamais de trou de visibilité). Le 1er stage reste à plein
+    // AVANT son centre, le dernier reste à plein APRÈS son centre.
     function computeOpacity(p: number, idx: number): number {
       const center = (idx + 0.5) / N;
+      if (idx === 0 && p <= center) return 1;
+      if (idx === N - 1 && p >= center) return 1;
       const dist = Math.abs(p - center);
-      const cutoff = HALF_STAGE - TRANSITION;
-      if (dist <= cutoff) return 1;
-      if (dist >= HALF_STAGE) return 0;
-      return (HALF_STAGE - dist) / TRANSITION;
+      // dist=0 → op=1 ; dist=1/N (centre du voisin) → op=0
+      return Math.max(0, 1 - N * dist);
     }
 
     ScrollTrigger.create({

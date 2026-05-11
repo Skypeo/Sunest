@@ -45,11 +45,10 @@ const reviews = [
 
 <section
   id="trust-clients-particulier"
-  class="relative w-full"
-  style="height: 460vh;"
+  class="relative w-full lg:[height:460vh]"
   data-trustp-section
 >
-  <div class="sticky top-0 h-screen w-full overflow-hidden border-t border-ink/5">
+  <div class="lg:sticky lg:top-0 lg:h-screen w-full overflow-hidden border-t border-ink/5">
     <!-- Halo signature derrière la vidéo -->
     <div
       class="absolute left-[10%] top-1/2 -translate-y-1/2 w-[55vw] aspect-video rounded-md bg-sky-brand/10 blur-3xl scale-90 pointer-events-none"
@@ -59,7 +58,7 @@ const reviews = [
     </div>
 
     <div
-      class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-10 pt-20 lg:pt-24 pb-10 lg:pb-12 flex flex-col"
+      class="relative z-10 lg:h-full max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:pt-24 lg:pb-12 flex flex-col"
     >
       <!-- Titre centré -->
       <div class="text-center max-w-3xl mx-auto mb-6 lg:mb-8 shrink-0" data-trustp-title>
@@ -77,13 +76,14 @@ const reviews = [
       </div>
 
       <!-- Grid : vidéo (60 %) + carousel d'avis (40 %) -->
+      <!-- Mobile/tablette : seule la vidéo s'affiche. Avis Google rendus dans une section séparée (<AvisGoogleMobile />). -->
       <div
-        class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-10 items-stretch flex-1 min-h-0"
+        class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-10 items-stretch lg:flex-1 lg:min-h-0"
       >
         <!-- Colonne gauche : vidéo -->
         <div class="relative flex flex-col min-h-0">
           <div
-            class="relative w-full aspect-video lg:aspect-auto lg:flex-1 lg:min-h-0 lg:max-h-[60vh] rounded-md overflow-hidden bg-black/50 ring-1 ring-white/15 shadow-[0_30px_80px_-20px_rgba(32,184,241,0.45)] will-change-transform"
+            class="relative w-full aspect-[4/5] sm:aspect-video lg:aspect-auto lg:flex-1 lg:min-h-0 lg:max-h-[60vh] rounded-md overflow-hidden bg-black/50 ring-1 ring-white/15 shadow-[0_30px_80px_-20px_rgba(32,184,241,0.45)] will-change-transform"
             data-trustp-video
           >
             <iframe
@@ -108,7 +108,8 @@ const reviews = [
         </div>
 
         <!-- Colonne droite : badge EXCELLENT + carousel des 5 avis -->
-        <div class="flex flex-col gap-4 min-h-0">
+        <!-- Cachée en mobile/tablette : remplacée par la section <AvisGoogleMobile /> en dessous -->
+        <div class="hidden lg:flex flex-col gap-4 min-h-0">
           <!-- Badge EXCELLENT (slide-in droite, puis fixe) -->
           <div
             class="p-4 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm flex items-center justify-between gap-4 will-change-transform shrink-0"
@@ -234,6 +235,8 @@ const reviews = [
   gsap.registerPlugin(ScrollTrigger);
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Pin desktop only (≥ 1024px). Mobile/tablette : pas d'animation, vidéo seule en flux normal.
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
   const section = document.querySelector<HTMLElement>('[data-trustp-section]');
   const video = document.querySelector<HTMLElement>('[data-trustp-video]');
   const caption = document.querySelector<HTMLElement>('[data-trustp-caption]');
@@ -243,12 +246,14 @@ const reviews = [
   const reviews = gsap.utils.toArray<HTMLElement>('[data-trustp-review]');
   const dots = gsap.utils.toArray<HTMLElement>('[data-trustp-dot]');
 
-  if (section && !prefersReducedMotion) {
-    gsap.set([title, video, caption, badge], { opacity: 0 });
-    if (video) gsap.set(video, { scale: 0.6, y: 50 });
-    if (caption) gsap.set(caption, { y: 20 });
-    if (title) gsap.set(title, { y: 40 });
-    if (badge) gsap.set(badge, { x: 60 });
+  if (section && !prefersReducedMotion && isDesktop) {
+    // Pré-état : uniquement des transformations, jamais opacity 0 (sinon
+    // écran blanc tant que le pin n'a pas commencé à scroller).
+    if (video) gsap.set(video, { scale: 0.88, y: 30 });
+    if (caption) gsap.set(caption, { y: 15 });
+    if (title) gsap.set(title, { y: 25 });
+    if (badge) gsap.set(badge, { x: 40 });
+    // Carousel avis : hors-écran (logique défilement)
     gsap.set(reviews, { xPercent: -110, opacity: 0 });
 
     const tl = gsap.timeline({
@@ -258,7 +263,7 @@ const reviews = [
         end: 'bottom bottom',
         scrub: 0.6,
         onUpdate: (self) => {
-          const introEnd = 0.2;
+          const introEnd = 0.08;
           const reviewSpan = (1 - introEnd) / reviews.length;
           let activeIdx = -1;
           if (self.progress >= introEnd) {
@@ -277,14 +282,14 @@ const reviews = [
       },
     });
 
-    // Phase intro
-    tl.to(title, { opacity: 1, y: 0, duration: 0.5 }, 0);
-    tl.to(badge, { opacity: 1, x: 0, duration: 0.6 }, 0.2);
-    tl.to(video, { opacity: 1, scale: 1, y: 0, duration: 1.2 }, 0.3);
-    tl.to(caption, { opacity: 1, y: 0, duration: 0.5 }, 1.0);
+    // Phase intro — uniquement transformations, pas d'opacity (les éléments restent visibles)
+    tl.to(title, { y: 0, duration: 0.15 }, 0);
+    tl.to(badge, { x: 0, duration: 0.2 }, 0.05);
+    tl.to(video, { scale: 1, y: 0, duration: 0.45 }, 0.05);
+    tl.to(caption, { y: 0, duration: 0.15 }, 0.3);
 
     // Phase carousel : 5 avis qui défilent
-    const carouselStart = 1.5;
+    const carouselStart = 0.5;
     const reviewDuration = 1.2;
     const enterDuration = 0.4;
     const exitDuration = 0.4;
@@ -318,7 +323,7 @@ const reviews = [
         },
       });
     }
-  } else if (prefersReducedMotion) {
+  } else if (prefersReducedMotion && isDesktop) {
     [title, video, caption, badge].forEach((el) => {
       if (el) {
         el.style.opacity = '1';
@@ -330,4 +335,5 @@ const reviews = [
       r.style.transform = 'none';
     });
   }
+  // Mobile/tablette : aucune animation. Vidéo visible via CSS, avis dans <AvisGoogleMobile />.
 </script>

@@ -6,6 +6,30 @@ import ContactCta from '~/components/sections/Contact.astro';
 import Footer from '~/components/sections/Footer.astro';
 import Zones from '~/components/sections/Zones.astro';
 import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
+import AvisGoogleMobile from '~/components/sections/AvisGoogleMobile.astro';
+
+// Mêmes 3 avis que TrustGrandEst (rendus en mobile uniquement, lg:hidden)
+const avisMobile = [
+  {
+    initials: 'EV',
+    name: 'Enzo Vauclaire',
+    when: 'il y a 2 mois',
+    quote: 'Super personnel et installateur, travail soigné.',
+  },
+  {
+    initials: 'SC',
+    name: 'Sandrine Charis',
+    when: 'il y a 3 mois',
+    quote:
+      'Du devis à la réalisation des travaux, une équipe au top. Travail dans les temps, propre et soigné.',
+  },
+  {
+    initials: 'JM',
+    name: 'Jocelyne Meckler',
+    when: 'il y a 4 mois',
+    quote: 'Entreprise sérieuse, techniciens compétents. Je recommande Sun Est.',
+  },
+];
 ---
 
 <Layout title="Contact — Sun Est | Échangeons ensemble">
@@ -334,6 +358,9 @@ import TrustGrandEst from '~/components/sections/TrustGrandEst.astro';
 
     <!-- Témoignage vidéo Quentin + score Google + avis -->
     <TrustGrandEst />
+
+    <!-- Avis Google : section dédiée en mobile/tablette uniquement -->
+    <AvisGoogleMobile reviews={avisMobile} />
 
     <!-- Sections partagées : FAQ + CTA + Footer -->
     <FAQ />

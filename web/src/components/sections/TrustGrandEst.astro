@@ -60,13 +60,15 @@ const reviews = [
       </div>
 
       <!-- Grid : vidéo (60%) + carousel d'avis (40%) -->
+      <!-- Mobile/tablette : seule la vidéo s'affiche ici. Les avis Google
+           sont rendus dans une section séparée (<AvisGoogleMobile />) plus bas. -->
       <div
         class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-10 items-stretch lg:flex-1 lg:min-h-0"
       >
         <!-- Colonne gauche : vidéo (zoom puis fixe) + caption -->
         <div class="relative flex flex-col min-h-0" data-trust-video-wrap>
           <div
-            class="relative w-full aspect-video lg:aspect-auto lg:flex-1 lg:min-h-0 lg:max-h-[60vh] rounded-md overflow-hidden bg-black/50 ring-1 ring-white/15 shadow-[0_30px_80px_-20px_rgba(32,184,241,0.45)] will-change-transform"
+            class="relative w-full aspect-[4/5] sm:aspect-video lg:aspect-auto lg:flex-1 lg:min-h-0 lg:max-h-[60vh] rounded-md overflow-hidden bg-black/50 ring-1 ring-white/15 shadow-[0_30px_80px_-20px_rgba(32,184,241,0.45)] will-change-transform"
             data-trust-video
           >
             <iframe
@@ -91,7 +93,8 @@ const reviews = [
         </div>
 
         <!-- Colonne droite : badge EXCELLENT (fixe) + carousel avis (un slot, 3 avis défilent) -->
-        <div class="flex flex-col gap-4 min-h-0">
+        <!-- Cachée en mobile/tablette : remplacée par la section <AvisGoogleMobile /> en dessous -->
+        <div class="hidden lg:flex flex-col gap-4 min-h-0">
           <!-- Badge EXCELLENT (slide-in depuis la droite, puis statique) -->
           <div
             class="p-4 rounded-md bg-ink/[0.04] border border-ink/10 backdrop-blur-sm flex items-center justify-between gap-4 will-change-transform shrink-0"
@@ -230,13 +233,14 @@ const reviews = [
   const dots = gsap.utils.toArray<HTMLElement>('[data-dot]');
 
   if (section && !prefersReducedMotion && isDesktop) {
-    // Pré-état : titre / vidéo / caption / badge cachés, avis hors-écran à gauche
-    gsap.set([title, video, caption, badge], { opacity: 0 });
-    if (video) gsap.set(video, { scale: 0.6, y: 50 });
-    if (caption) gsap.set(caption, { y: 20 });
-    if (title) gsap.set(title, { y: 40 });
-    if (badge) gsap.set(badge, { x: 60 });
-    // Tous les avis : hors-écran à gauche
+    // Pré-état : on n'anime QUE les transformations, jamais l'opacity (sinon
+    // écran blanc tant que le pin n'a pas commencé à scroller).
+    // Les éléments restent visibles via le CSS dès le chargement.
+    if (video) gsap.set(video, { scale: 0.88, y: 30 });
+    if (caption) gsap.set(caption, { y: 15 });
+    if (title) gsap.set(title, { y: 25 });
+    if (badge) gsap.set(badge, { x: 40 });
+    // Les avis du carousel : eux restent hors-écran (logique carousel)
     gsap.set(reviews, { xPercent: -110, opacity: 0 });
 
     // Timeline scrubbée sur la durée du pin (360vh)
@@ -248,8 +252,8 @@ const reviews = [
         scrub: 0.6,
         onUpdate: (self) => {
           // Met à jour les dots selon la progression
-          // Phase intro = ~25% de la timeline, ensuite chaque avis prend ~25%
-          const introEnd = 0.25;
+          // Phase intro compressée à ~12% de la timeline
+          const introEnd = 0.12;
           const reviewSpan = (1 - introEnd) / reviews.length;
           let activeIdx = -1;
           if (self.progress >= introEnd) {
@@ -268,19 +272,16 @@ const reviews = [
       },
     });
 
-    // ─── PHASE INTRO (0 → 1.5 sur la timeline) ───
-    // 1. Titre arrive
-    tl.to(title, { opacity: 1, y: 0, duration: 0.5 }, 0);
-    // 2. Badge slide-in depuis la droite
-    tl.to(badge, { opacity: 1, x: 0, duration: 0.6 }, 0.2);
-    // 3. Vidéo zoom du fond
-    tl.to(video, { opacity: 1, scale: 1, y: 0, duration: 1.2 }, 0.3);
-    tl.to(caption, { opacity: 1, y: 0, duration: 0.5 }, 1.0);
+    // ─── PHASE INTRO (0 → 0.5) — uniquement transformations, pas d'opacity ───
+    tl.to(title, { y: 0, duration: 0.15 }, 0);
+    tl.to(badge, { x: 0, duration: 0.2 }, 0.05);
+    tl.to(video, { scale: 1, y: 0, duration: 0.45 }, 0.05);
+    tl.to(caption, { y: 0, duration: 0.15 }, 0.3);
 
-    // ─── PHASE CAROUSEL (1.5 → fin) ───
+    // ─── PHASE CAROUSEL (0.5 → fin) ───
     // Chaque avis : entre depuis la gauche, reste un moment, sort vers la droite
     // (sauf le dernier qui reste affiché)
-    const carouselStart = 1.5;
+    const carouselStart = 0.5;
     const reviewDuration = 1.2; // durée totale d'un cycle (entrée + pause + sortie)
     const enterDuration = 0.4;
     const exitDuration = 0.4;
